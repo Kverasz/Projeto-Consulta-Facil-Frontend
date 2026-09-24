@@ -1,0 +1,83 @@
+.login {
+  max-width: 430px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 16px 20px 32px;
+  background-color: #ffffff;
+}
+
+/* ----- Topo: botão voltar + título centralizado ----- */
+.login-topo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+}
+
+.login-topo .botao-voltar {
+  position: absolute;
+  left: 0;
+}
+
+.login-topo-titulo {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--cor-titulo);
+}
+
+/* ----- Título e subtítulo ----- */
+.login-boas-vindas {
+  margin-top: 32px;
+}
+
+.login-boas-vindas h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--cor-titulo);
+}
+
+.login-boas-vindas p {
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--cor-subtitulo);
+}
+
+/* ----- Formulário ----- */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.login-esqueci {
+  align-self: flex-end;
+  border: none;
+  background: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--cor-primaria);
+  cursor: pointer;
+}
+
+.login-form .botao {
+  margin-top: 8px;
+}
+
+/* ----- Rodapé: cadastro ----- */
+.login-cadastro {
+  margin-top: 32px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--cor-texto-suave);
+}
+
+.login-cadastro button {
+  border: none;
+  background: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--cor-primaria);
+  cursor: pointer;
+}

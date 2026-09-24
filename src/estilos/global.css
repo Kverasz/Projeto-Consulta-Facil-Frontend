@@ -1,0 +1,30 @@
+/* Cores e fonte usadas no projeto inteiro.
+   Se mudar a cor aqui, muda em todas as telas. */
+:root {
+  --cor-primaria: #00b8dd;
+  --cor-titulo: #1b2333;
+  --cor-texto: #2b3445;
+  --cor-texto-suave: #6b7688;
+  --cor-subtitulo: #9aa5b8;
+  --cor-borda: #e9eef4;
+  --cor-placeholder: #c3ccd9;
+  --cor-fundo-botao-voltar: #f0f3f8;
+  --fonte: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--fonte);
+  background-color: #ffffff;
+  color: var(--cor-texto);
+}
+
+button,
+input {
+  font-family: inherit;
+}

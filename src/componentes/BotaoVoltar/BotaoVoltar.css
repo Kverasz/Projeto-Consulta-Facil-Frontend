@@ -1,0 +1,12 @@
+.botao-voltar {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--cor-fundo-botao-voltar);
+  color: var(--cor-titulo);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}

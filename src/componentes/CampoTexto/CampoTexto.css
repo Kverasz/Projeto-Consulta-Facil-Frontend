@@ -1,0 +1,31 @@
+.campo-texto {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.campo-texto label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--cor-texto);
+}
+
+.campo-texto input {
+  height: 54px;
+  padding: 0 18px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 16px;
+  background-color: #ffffff;
+  font-size: 15px;
+  color: var(--cor-titulo);
+  outline: none;
+}
+
+.campo-texto input::placeholder {
+  color: var(--cor-placeholder);
+}
+
+/* Destaque quando o usuário clica no campo */
+.campo-texto input:focus {
+  border-color: var(--cor-primaria);
+}
