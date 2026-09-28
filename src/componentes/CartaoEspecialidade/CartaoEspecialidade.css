@@ -1,0 +1,22 @@
+.cartao-especialidade {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 8px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 18px;
+  background-color: #ffffff;
+}
+
+.cartao-especialidade-icone {
+  font-size: 22px;
+}
+
+.cartao-especialidade-nome {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--cor-texto);
+  text-align: center;
+}

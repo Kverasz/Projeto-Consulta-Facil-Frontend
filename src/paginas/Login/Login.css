@@ -6,7 +6,6 @@
   background-color: #ffffff;
 }
 
-/* ----- Topo: botão voltar + título centralizado ----- */
 .login-topo {
   position: relative;
   display: flex;
@@ -26,7 +25,6 @@
   color: var(--cor-titulo);
 }
 
-/* ----- Título e subtítulo ----- */
 .login-boas-vindas {
   margin-top: 32px;
 }
@@ -43,7 +41,6 @@
   color: var(--cor-subtitulo);
 }
 
-/* ----- Formulário ----- */
 .login-form {
   display: flex;
   flex-direction: column;
@@ -58,14 +55,12 @@
   font-size: 14px;
   font-weight: 600;
   color: var(--cor-primaria);
-  cursor: pointer;
 }
 
 .login-form .botao {
   margin-top: 8px;
 }
 
-/* ----- Rodapé: cadastro ----- */
 .login-cadastro {
   margin-top: 32px;
   text-align: center;
@@ -79,5 +74,4 @@
   font-size: 14px;
   font-weight: 600;
   color: var(--cor-primaria);
-  cursor: pointer;
 }

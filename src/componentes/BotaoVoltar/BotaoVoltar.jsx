@@ -8,7 +8,6 @@ function BotaoVoltar({ aoClicar }) {
       onClick={aoClicar}
       aria-label="Voltar"
     >
-      {/* Setinha desenhada com SVG */}
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
         <path
           d="M15 5l-7 7 7 7"

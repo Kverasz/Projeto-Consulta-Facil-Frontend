@@ -1,0 +1,39 @@
+.cabecalho-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cabecalho-topo-esquerda {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cabecalho-saudacao {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--cor-texto-suave);
+}
+
+.cabecalho-sino,
+.cabecalho-menu {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--cor-fundo-botao-voltar);
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cabecalho-titulo {
+  margin-top: 10px;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--cor-titulo);
+}

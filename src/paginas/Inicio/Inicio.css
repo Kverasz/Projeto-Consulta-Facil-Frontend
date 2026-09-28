@@ -1,0 +1,90 @@
+.pagina-fundo {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  background-color: #ffffff;
+}
+
+.inicio {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100vh;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+.inicio-conteudo {
+  flex: 1;
+  min-height: 0; /* sem isso, o flex não deixa este bloco rolar sozinho */
+  overflow-y: auto;
+  padding: 16px 20px 24px;
+}
+
+.inicio-acoes {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.inicio-acoes .cartao-acao {
+  width: 100%;
+}
+
+.inicio-secao {
+  margin-top: 28px;
+}
+
+.inicio-secao-titulo {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cor-texto-suave);
+  margin-bottom: 12px;
+}
+
+.inicio-grade-especialidades {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+/* ---------- Tablet: a tela ganha mais largura e "respira" mais ---------- */
+@media (min-width: 700px) {
+  .inicio {
+    max-width: 700px;
+  }
+
+  .inicio-conteudo {
+    padding: 28px 40px 32px;
+  }
+
+  .inicio-acoes {
+    flex-direction: row;
+  }
+
+  .inicio-acoes .cartao-acao {
+    flex: 1;
+  }
+
+  .inicio-grade-especialidades {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+/* ---------- Notebook/desktop: ainda mais espaço, cabeçalho maior ---------- */
+@media (min-width: 1024px) {
+  .inicio {
+    max-width: 960px;
+  }
+
+  .inicio-conteudo {
+    padding: 40px 56px 48px;
+  }
+
+  .cabecalho-titulo {
+    font-size: 30px;
+  }
+}

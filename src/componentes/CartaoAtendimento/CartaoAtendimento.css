@@ -1,0 +1,77 @@
+.cartao-atendimento {
+  padding: 16px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 20px;
+  background-color: #ffffff;
+}
+
+.cartao-atendimento-topo {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.cartao-atendimento-icone {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 14px;
+  background-color: var(--cor-primaria-clara);
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cartao-atendimento-info {
+  flex: 1;
+}
+
+.cartao-atendimento-linha-nome {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.cartao-atendimento-nome {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--cor-titulo);
+}
+
+.cartao-atendimento-status {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--cor-sucesso);
+  background-color: var(--cor-fundo-sucesso);
+  padding: 4px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.cartao-atendimento-especialidade {
+  margin-top: 2px;
+  font-size: 13px;
+  color: var(--cor-texto-suave);
+}
+
+.cartao-atendimento-quando {
+  display: flex;
+  gap: 20px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--cor-borda);
+  font-size: 13px;
+  color: var(--cor-texto);
+}
+
+.cartao-atendimento-detalhes {
+  margin-top: 12px;
+  border: none;
+  background: none;
+  padding: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cor-primaria);
+}

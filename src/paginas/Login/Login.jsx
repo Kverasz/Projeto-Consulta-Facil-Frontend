@@ -9,9 +9,8 @@ function Login() {
   const [senha, setSenha] = useState('')
 
   function entrar(evento) {
-    evento.preventDefault() // impede a página de recarregar
+    evento.preventDefault()
     console.log('Login:', email, senha)
-    // Aqui depois entra a chamada para o back-end
   }
 
   return (

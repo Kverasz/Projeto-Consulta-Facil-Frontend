@@ -2,6 +2,7 @@
    Se mudar a cor aqui, muda em todas as telas. */
 :root {
   --cor-primaria: #00b8dd;
+  --cor-primaria-clara: #e3f7fb;
   --cor-titulo: #1b2333;
   --cor-texto: #2b3445;
   --cor-texto-suave: #6b7688;
@@ -9,6 +10,9 @@
   --cor-borda: #e9eef4;
   --cor-placeholder: #c3ccd9;
   --cor-fundo-botao-voltar: #f0f3f8;
+  --cor-fundo-pagina: #eef1f6;
+  --cor-sucesso: #16a34a;
+  --cor-fundo-sucesso: #dcfce7;
   --fonte: 'Plus Jakarta Sans', system-ui, sans-serif;
 }
 
@@ -27,4 +31,8 @@ body {
 button,
 input {
   font-family: inherit;
+}
+
+button {
+  cursor: pointer;
 }

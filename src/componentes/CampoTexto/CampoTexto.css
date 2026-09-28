@@ -25,7 +25,6 @@
   color: var(--cor-placeholder);
 }
 
-/* Destaque quando o usuário clica no campo */
 .campo-texto input:focus {
   border-color: var(--cor-primaria);
 }
