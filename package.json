@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "name": "saude-recife",
+=======
+  "name": "login-pwa",
+>>>>>>> 67ba2d69406735d8df7b8882aa36a78782ca899d
   "private": true,
   "version": "0.1.0",
   "type": "module",

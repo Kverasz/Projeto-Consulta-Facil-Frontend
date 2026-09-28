@@ -1,0 +1,53 @@
+.cadastro {
+  max-width: 430px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 16px 20px 32px;
+  background-color: #ffffff;
+}
+
+.cadastro-topo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+}
+
+.botao-voltar-container {
+  position: absolute;
+  left: 0;
+}
+
+.cadastro-topo-titulo {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--cor-titulo);
+}
+
+.cadastro-boas-vindas {
+  margin-top: 32px;
+}
+
+.cadastro-boas-vindas h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--cor-titulo);
+}
+
+.cadastro-boas-vindas p {
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--cor-subtitulo);
+}
+
+.cadastro-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.cadastro-form .botao {
+  margin-top: 16px;
+}
