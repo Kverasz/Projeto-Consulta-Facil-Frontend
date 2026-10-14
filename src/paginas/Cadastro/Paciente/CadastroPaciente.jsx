@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import BotaoVoltar from '../../componentes/BotaoVoltar/BotaoVoltar'
-import CampoTexto from '../../componentes/CampoTexto/CampoTexto'
-import Botao from '../../componentes/Botao/Botao'
-import './Cadastro.css'
+import BotaoVoltar from '../../../componentes/BotaoVoltar/BotaoVoltar'
+import CampoTexto from '../../../componentes/CampoTexto/CampoTexto'
+import Botao from '../../../componentes/Botao/Botao'
+import './CadastroPaciente.css'
 
-function Cadastro({ aoVoltar }) {
+function CadastroPaciente({ aoVoltar }) {
   const [nome, setNome] = useState('')
   const [cpf, setCpf] = useState('')
   const [dataNascimento, setDataNascimento] = useState('')
@@ -22,14 +22,13 @@ function Cadastro({ aoVoltar }) {
       return
     }
 
-    // Dados enviados para a API do backend
     const dadosPaciente = {
       nome: nome,
-      email: email,
       cpf: cpf,
-      senha: senha,
+      data_nascimento: dataNascimento,
       telefone: telefone,
-      data_nascimento: dataNascimento ? new Date(dataNascimento).toISOString() : null,
+      email: email,
+      senha: senha,
       endereco: endereco || 'Recife - PE'
     }
 
@@ -133,4 +132,4 @@ function Cadastro({ aoVoltar }) {
   )
 }
 
-export default Cadastro
+export default CadastroPaciente

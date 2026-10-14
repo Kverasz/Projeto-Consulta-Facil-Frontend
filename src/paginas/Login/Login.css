@@ -1,101 +1,83 @@
 .login {
-  max-width: 430px;
+  padding: 24px;
+  background-color: #f4fbfb;
   min-height: 100vh;
-  margin: 0 auto;
-  padding: 16px 20px 32px;
-  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-<<<<<<< HEAD
-=======
-/* ----- Topo: botão voltar + título centralizado ----- */
->>>>>>> 67ba2d69406735d8df7b8882aa36a78782ca899d
 .login-topo {
-  position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
-  height: 40px;
-}
-
-.login-topo .botao-voltar {
-  position: absolute;
-  left: 0;
+  gap: 16px;
+  margin-bottom: 24px;
 }
 
 .login-topo-titulo {
-  font-size: 16px;
+  font-size: 18px;
+  color: #0b1e2d;
   font-weight: 600;
-  color: var(--cor-titulo);
 }
 
-<<<<<<< HEAD
-=======
-/* ----- Título e subtítulo ----- */
->>>>>>> 67ba2d69406735d8df7b8882aa36a78782ca899d
 .login-boas-vindas {
-  margin-top: 32px;
+  margin-bottom: 28px;
 }
 
 .login-boas-vindas h2 {
-  font-size: 24px;
+  font-size: 26px;
+  color: #0b1e2d;
+  margin-bottom: 8px;
   font-weight: 700;
-  color: var(--cor-titulo);
 }
 
 .login-boas-vindas p {
-  margin-top: 6px;
   font-size: 14px;
-  color: var(--cor-subtitulo);
+  color: #64748b;
 }
 
-<<<<<<< HEAD
-=======
-/* ----- Formulário ----- */
->>>>>>> 67ba2d69406735d8df7b8882aa36a78782ca899d
 .login-form {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin-top: 24px;
+  flex: 1;
 }
 
 .login-esqueci {
-  align-self: flex-end;
-  border: none;
   background: none;
+  border: none;
+  color: var(--cor-primaria);
   font-size: 14px;
   font-weight: 600;
-  color: var(--cor-primaria);
-<<<<<<< HEAD
-=======
+  text-align: left;
   cursor: pointer;
->>>>>>> 67ba2d69406735d8df7b8882aa36a78782ca899d
+  padding: 0;
+  margin-top: -4px;
+  margin-bottom: 8px;
 }
 
 .login-form .botao {
   margin-top: 8px;
 }
 
-<<<<<<< HEAD
-=======
-/* ----- Rodapé: cadastro ----- */
->>>>>>> 67ba2d69406735d8df7b8882aa36a78782ca899d
 .login-cadastro {
-  margin-top: 32px;
+  margin-top: auto;
   text-align: center;
+  padding: 24px 0;
   font-size: 14px;
-  color: var(--cor-texto-suave);
+  color: #64748b;
+  display: flex;
+  justify-content: center;
+  gap: 4px;
 }
 
 .login-cadastro button {
-  border: none;
   background: none;
-  font-size: 14px;
-  font-weight: 600;
+  border: none;
   color: var(--cor-primaria);
-<<<<<<< HEAD
-=======
+  font-weight: 600;
   cursor: pointer;
->>>>>>> 67ba2d69406735d8df7b8882aa36a78782ca899d
+  font-size: 14px;
+  padding: 0;
 }

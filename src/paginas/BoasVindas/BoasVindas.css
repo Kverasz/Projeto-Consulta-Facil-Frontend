@@ -1,0 +1,57 @@
+.boas-vindas-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+  padding: 40px 24px;
+  background-color: #f4fbfb;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.boas-vindas-conteudo {
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.boas-vindas-conteudo h1 {
+  font-size: 32px;
+  color: #0b1e2d;
+  margin-bottom: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.boas-vindas-conteudo p {
+  font-size: 15px;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+.boas-vindas-botoes {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.botao-secundario {
+  background-color: transparent;
+  border: 1px solid #e2e8f0;
+  color: #0b1e2d;
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  width: 100%;
+}
+
+.botao-secundario:hover {
+  background-color: #e6f2f2;
+}

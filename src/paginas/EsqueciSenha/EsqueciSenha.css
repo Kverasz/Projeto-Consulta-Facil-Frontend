@@ -1,0 +1,89 @@
+.esqueci-senha {
+  padding: 24px;
+  background-color: #f4fbfb;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.esqueci-topo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.esqueci-topo-titulo {
+  font-size: 18px;
+  color: #0b1e2d;
+  font-weight: 600;
+}
+
+.esqueci-icone-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.icone-chave {
+  width: 64px;
+  height: 64px;
+  background-color: #e6f9fa;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+}
+
+.esqueci-titulo {
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.esqueci-titulo h2 {
+  font-size: 26px;
+  color: #0b1e2d;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.esqueci-titulo p {
+  font-size: 14px;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+.esqueci-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  flex: 1;
+}
+
+.esqueci-botoes {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: auto;
+  padding-bottom: 24px;
+}
+
+.botao-voltar-login {
+  background-color: transparent;
+  border: 1px solid #cbd5e1;
+  color: #0b1e2d;
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.2s;
+}
+
+.botao-voltar-login:hover {
+  background-color: #e2e8f0;
+}
