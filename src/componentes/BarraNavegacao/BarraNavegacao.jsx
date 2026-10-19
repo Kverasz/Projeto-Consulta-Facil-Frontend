@@ -1,7 +1,7 @@
 import './BarraNavegacao.css'
 
-// Lista dos itens do menu.
-const itens = [
+// Itens padrão do menu (paciente). Outras telas podem passar a própria lista pela prop "itens".
+const itensPadrao = [
   { id: 'inicio', rotulo: 'Início', icone: '🏠' },
   { id: 'agendamentos', rotulo: 'Agendamentos', icone: '📅' },
   { id: 'historico', rotulo: 'Histórico', icone: '⏱️' },
@@ -9,11 +9,17 @@ const itens = [
 ]
 
 function BarraNavegacao({
+  itens = itensPadrao,
   itemAtivo,
   aoIrParaInicio,
   aoIrParaAgendamentos,
+  aoSelecionar,
 }) {
   function aoClicarItem(id) {
+    if (aoSelecionar) {
+      aoSelecionar(id)
+    }
+
     if (id === 'inicio' && aoIrParaInicio) {
       aoIrParaInicio()
     }

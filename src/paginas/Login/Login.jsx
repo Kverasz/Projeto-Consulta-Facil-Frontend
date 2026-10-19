@@ -2,25 +2,36 @@ import { useState } from 'react'
 import BotaoVoltar from '../../componentes/BotaoVoltar/BotaoVoltar'
 import CampoTexto from '../../componentes/CampoTexto/CampoTexto'
 import Botao from '../../componentes/Botao/Botao'
+import { realizarLogin } from '../../servicos/autenticacao'
 import './Login.css'
 
-function Login({ aoIrParaCadastro, aoEsqueciSenha, aoLoginSucesso }) {
+function Login({ aoVoltar, aoIrParaCadastro, aoEsqueciSenha, aoLoginSucesso }) {
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
 
-  async function realizarLogin(evento) {
-  evento.preventDefault()
+  const [erro, setErro] = useState('')
+  const [carregando, setCarregando] = useState(false)
 
-  console.log('Login:', email, senha)
+  async function enviarLogin(evento) {
+    evento.preventDefault()
+    setErro('')
+    setCarregando(true)
 
-  aoLoginSucesso()
-}
+    try {
+      const usuario = await realizarLogin(email, senha)
+      aoLoginSucesso(usuario)
+    } catch (e) {
+      setErro(e.message)
+    } finally {
+      setCarregando(false)
+    }
+  }
 
   return (
     <div className="login">
       <div className="login-topo">
         <div className="botao-voltar-container">
-          <BotaoVoltar aoClicar={() => window.history.back()} />
+          <BotaoVoltar aoClicar={aoVoltar} />
         </div>
         <h1 className="login-topo-titulo">Entrar</h1>
       </div>
@@ -30,7 +41,7 @@ function Login({ aoIrParaCadastro, aoEsqueciSenha, aoLoginSucesso }) {
         <p>Entre com seus dados para continuar</p>
       </div>
 
-      <form className="login-form" onSubmit={realizarLogin}>
+      <form className="login-form" onSubmit={enviarLogin}>
         <CampoTexto 
           rotulo="E-mail" 
           tipo="email" 
@@ -54,7 +65,9 @@ function Login({ aoIrParaCadastro, aoEsqueciSenha, aoLoginSucesso }) {
           Esqueci minha senha
         </button>
 
-        <Botao texto="Entrar" tipo="submit" />
+        {erro && <p className="login-erro" role="alert">{erro}</p>}
+
+        <Botao texto={carregando ? 'Entrando...' : 'Entrar'} tipo="submit" />
 
         <div className="login-cadastro">
           <p>Não tem uma conta?</p>

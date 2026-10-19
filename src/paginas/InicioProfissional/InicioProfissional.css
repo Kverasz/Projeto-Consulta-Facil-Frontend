@@ -1,0 +1,341 @@
+/* Usa as mesmas variáveis de cor do global.css e o mesmo "quadro" de largura das outras telas
+   (.pagina-fundo está definido em Inicio.css). */
+
+.inicio-prof {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f0fcfd;
+}
+
+.inicio-prof-rolagem {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.inicio-prof-mensagem {
+  margin: auto;
+  padding: 24px;
+  text-align: center;
+  color: var(--cor-texto-suave);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.inicio-prof-botao-texto {
+  border: none;
+  background: none;
+  color: var(--cor-primaria);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* ---------- Topo azul ---------- */
+.inicio-prof-topo {
+  padding: 24px 20px 56px;
+  color: #ffffff;
+  background: linear-gradient(180deg, var(--cor-primaria) 0%, #0097b8 100%);
+}
+
+.inicio-prof-topo-linha {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.inicio-prof-saudacao {
+  font-size: 14px;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+.inicio-prof-nome {
+  margin-top: 4px;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.inicio-prof-subtitulo {
+  margin-top: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--cor-primaria-clara);
+}
+
+.inicio-prof-topo-acoes {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.inicio-prof-sino,
+.inicio-prof-sair {
+  height: 40px;
+  border: none;
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+}
+
+.inicio-prof-sino {
+  position: relative;
+  width: 40px;
+  font-size: 16px;
+}
+
+.inicio-prof-sino-ponto {
+  position: absolute;
+  top: 8px;
+  right: 9px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background-color: #fbbf24;
+  border: 1.5px solid #0097b8;
+}
+
+.inicio-prof-topo-esquerda {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
+}
+
+/* Botão ☰: só aparece no desktop */
+.inicio-prof-menu {
+  display: none;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+  font-size: 16px;
+  align-items: center;
+  justify-content: center;
+}
+
+.inicio-prof-sair {
+  padding: 0 14px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.inicio-prof-numeros {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.inicio-prof-numero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 14px 6px;
+  border-radius: 16px;
+  background-color: rgba(255, 255, 255, 0.18);
+  text-align: center;
+}
+
+.inicio-prof-numero strong {
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.inicio-prof-numero span {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* ---------- Corpo ---------- */
+.inicio-prof-corpo {
+  padding: 0 20px 24px;
+}
+
+.inicio-prof-proxima {
+  margin-top: -36px;
+  padding: 16px;
+  border-radius: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 8px 24px rgba(27, 35, 51, 0.12);
+}
+
+.inicio-prof-proxima-topo,
+.inicio-prof-agenda-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.inicio-prof-secao-titulo {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cor-texto-suave);
+}
+
+.inicio-prof-proxima-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.inicio-prof-avatar {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  border-radius: 16px;
+  background-color: var(--cor-primaria-clara);
+  font-size: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inicio-prof-proxima-nome {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--cor-titulo);
+}
+
+.inicio-prof-proxima-especialidade {
+  font-size: 14px;
+  color: var(--cor-subtitulo);
+}
+
+.inicio-prof-proxima-quando {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin-top: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--cor-texto-suave);
+}
+
+.inicio-prof-detalhes {
+  width: 100%;
+  height: 48px;
+  margin-top: 16px;
+  border: none;
+  border-radius: 16px;
+  background-color: var(--cor-primaria);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.inicio-prof-detalhes:active {
+  opacity: 0.85;
+}
+
+.inicio-prof-agenda {
+  margin-top: 24px;
+}
+
+.inicio-prof-link {
+  border: none;
+  background: none;
+  color: var(--cor-primaria);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.inicio-prof-lista {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.inicio-prof-item {
+  width: 100%;
+  border: none;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(27, 35, 51, 0.08);
+}
+
+.inicio-prof-hora {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--cor-titulo);
+}
+
+.inicio-prof-paciente {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+  color: var(--cor-texto);
+}
+
+.inicio-prof-vazio {
+  margin-top: 12px;
+  font-size: 14px;
+  color: var(--cor-texto-suave);
+}
+
+/* ---------- Situação da consulta ---------- */
+.inicio-prof-status {
+  flex-shrink: 0;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.inicio-prof-status-confirmada { color: var(--cor-sucesso); background-color: var(--cor-fundo-sucesso); }
+.inicio-prof-status-aguardando { color: #b45309; background-color: #fef3c7; }
+.inicio-prof-status-realizada { color: var(--cor-texto-suave); background-color: var(--cor-fundo-botao-voltar); }
+.inicio-prof-status-cancelada { color: #dc2626; background-color: #fee2e2; }
+
+.inicio-prof-ponto {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border-radius: 50%;
+}
+
+.inicio-prof-ponto-confirmada { background-color: var(--cor-sucesso); }
+.inicio-prof-ponto-aguardando { background-color: #f59e0b; }
+.inicio-prof-ponto-realizada { background-color: var(--cor-subtitulo); }
+.inicio-prof-ponto-cancelada { background-color: #dc2626; }
+
+/* ---------- Tablet e desktop, como nas outras telas ---------- */
+@media (min-width: 700px) {
+  .inicio-prof { max-width: 700px; }
+  .inicio-prof-topo { padding: 32px 40px 64px; }
+  .inicio-prof-corpo { padding: 0 40px 32px; }
+}
+
+@media (min-width: 1024px) {
+  .inicio-prof-menu { display: flex; }
+  .inicio-prof-rodape { display: none; }
+  .inicio-prof { max-width: 960px; }
+  .inicio-prof-topo { padding: 40px 56px 72px; }
+  .inicio-prof-corpo { padding: 0 56px 48px; }
+}

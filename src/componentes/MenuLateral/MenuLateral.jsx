@@ -1,7 +1,7 @@
 import './MenuLateral.css'
 
-// Lista dos itens do menu.
-const itens = [
+// Itens padrão do menu (paciente). Outras telas podem passar a própria lista pela prop "itens".
+const itensPadrao = [
   { id: 'inicio', rotulo: 'Início', icone: '🏠' },
   { id: 'agendamentos', rotulo: 'Agendamentos', icone: '📅' },
   { id: 'historico', rotulo: 'Histórico', icone: '⏱️' },
@@ -9,11 +9,13 @@ const itens = [
 ]
 
 function MenuLateral({
+  itens = itensPadrao,
   aberto,
   aoFechar,
   itemAtivo,
   aoIrParaInicio,
   aoIrParaAgendamentos,
+  aoSelecionar,
 }) {
   const classeFundo = aberto
     ? 'menu-lateral-fundo menu-lateral-fundo-visivel'
@@ -25,6 +27,10 @@ function MenuLateral({
 
   function aoClicarItem(id) {
     aoFechar()
+
+    if (aoSelecionar) {
+      aoSelecionar(id)
+    }
 
     if (id === 'inicio' && aoIrParaInicio) {
       aoIrParaInicio()
