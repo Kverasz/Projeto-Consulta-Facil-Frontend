@@ -2,10 +2,7 @@
    Se mudar a cor aqui, muda em todas as telas. */
 :root {
   --cor-primaria: #00b8dd;
-<<<<<<< HEAD
   --cor-primaria-clara: #e3f7fb;
-=======
->>>>>>> 67ba2d69406735d8df7b8882aa36a78782ca899d
   --cor-titulo: #1b2333;
   --cor-texto: #2b3445;
   --cor-texto-suave: #6b7688;
@@ -13,13 +10,10 @@
   --cor-borda: #e9eef4;
   --cor-placeholder: #c3ccd9;
   --cor-fundo-botao-voltar: #f0f3f8;
-<<<<<<< HEAD
   --cor-fundo-pagina: #eef1f6;
   --cor-sucesso: #16a34a;
   --cor-fundo-sucesso: #dcfce7;
-=======
->>>>>>> 67ba2d69406735d8df7b8882aa36a78782ca899d
-  --fonte: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --fonte: 'Plus Jakarta Sans', system-ui,sans-serif;
 }
 
 * {
@@ -38,10 +32,7 @@ button,
 input {
   font-family: inherit;
 }
-<<<<<<< HEAD
 
 button {
   cursor: pointer;
 }
-=======
->>>>>>> 67ba2d69406735d8df7b8882aa36a78782ca899d

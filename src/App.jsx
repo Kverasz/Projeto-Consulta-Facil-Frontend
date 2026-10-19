@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-import Inicio from './paginas/Inicio/Inicio'
-
-function App() {
-  // Por enquanto o App mostra direto a tela de Início.
-  // Quando tivermos mais telas, é aqui que vamos trocar entre elas.
-  return <Inicio />
-}
-
-export default App
-=======
 import { useState } from 'react'
 import BoasVindas from './paginas/BoasVindas/BoasVindas'
 import SelecaoPerfil from './paginas/SelecaoPerfil/SelecaoPerfil'
@@ -17,6 +6,7 @@ import CadastroMedico from './paginas/Cadastro/Medico/CadastroMedico'
 import Login from './paginas/Login/Login'
 import EsqueciSenha from './paginas/EsqueciSenha/EsqueciSenha'
 import EmailEnviado from './paginas/EsqueciSenha/EmailEnviado'
+import Inicio from './paginas/Inicio/Inicio'
 
 function App() {
   const [telaAtual, setTelaAtual] = useState('boas-vindas')
@@ -24,16 +14,16 @@ function App() {
 
   if (telaAtual === 'boas-vindas') {
     return (
-      <BoasVindas 
-        aoComecar={() => setTelaAtual('selecao-perfil')} 
-        aoIrParaLogin={() => setTelaAtual('login')} 
+      <BoasVindas
+        aoComecar={() => setTelaAtual('selecao-perfil')}
+        aoIrParaLogin={() => setTelaAtual('login')}
       />
     )
   }
 
   if (telaAtual === 'selecao-perfil') {
     return (
-      <SelecaoPerfil 
+      <SelecaoPerfil
         aoVoltar={() => setTelaAtual('boas-vindas')}
         aoSelecionarPaciente={() => setTelaAtual('cadastro-paciente')}
         aoSelecionarMedico={() => setTelaAtual('cadastro-medico')}
@@ -43,45 +33,59 @@ function App() {
   }
 
   if (telaAtual === 'cadastro-paciente') {
-    return <CadastroPaciente aoVoltar={() => setTelaAtual('selecao-perfil')} aoIrParaLogin={() => setTelaAtual('login')} />
+    return (
+      <CadastroPaciente
+        aoVoltar={() => setTelaAtual('selecao-perfil')}
+        aoIrParaLogin={() => setTelaAtual('login')}
+      />
+    )
   }
 
   if (telaAtual === 'cadastro-medico') {
-    return <CadastroMedico aoVoltar={() => setTelaAtual('selecao-perfil')} aoIrParaLogin={() => setTelaAtual('login')} />
+    return (
+      <CadastroMedico
+        aoVoltar={() => setTelaAtual('selecao-perfil')}
+        aoIrParaLogin={() => setTelaAtual('login')}
+      />
+    )
   }
 
   if (telaAtual === 'login') {
     return (
-      <Login 
-        aoIrParaCadastro={() => setTelaAtual('selecao-perfil')} 
-        aoEsqueciSenha={() => setTelaAtual('esqueci-senha')} 
+      <Login
+        aoIrParaCadastro={() => setTelaAtual('selecao-perfil')}
+        aoEsqueciSenha={() => setTelaAtual('esqueci-senha')}
+        aoLoginSucesso={() => setTelaAtual('inicio')}
       />
     )
   }
 
   if (telaAtual === 'esqueci-senha') {
     return (
-      <EsqueciSenha 
-        aoVoltar={() => setTelaAtual('login')} 
+      <EsqueciSenha
+        aoVoltar={() => setTelaAtual('login')}
         aoEnviarSucesso={(email) => {
           setEmailRecuperacao(email)
           setTelaAtual('email-enviado')
-        }} 
+        }}
       />
     )
   }
 
   if (telaAtual === 'email-enviado') {
     return (
-      <EmailEnviado 
-        email={emailRecuperacao} 
-        aoVoltarLogin={() => setTelaAtual('login')} 
+      <EmailEnviado
+        email={emailRecuperacao}
+        aoVoltarLogin={() => setTelaAtual('login')}
       />
     )
+  }
+
+  if (telaAtual === 'inicio') {
+    return <Inicio />
   }
 
   return null
 }
 
 export default App
->>>>>>> 67ba2d69406735d8df7b8882aa36a78782ca899d

@@ -4,15 +4,17 @@ import CampoTexto from '../../componentes/CampoTexto/CampoTexto'
 import Botao from '../../componentes/Botao/Botao'
 import './Login.css'
 
-function Login({ aoIrParaCadastro, aoEsqueciSenha }) {
+function Login({ aoIrParaCadastro, aoEsqueciSenha, aoLoginSucesso }) {
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
 
   async function realizarLogin(evento) {
-    evento.preventDefault()
-    // Lógica de login futura
-    console.log('Login:', email, senha)
-  }
+  evento.preventDefault()
+
+  console.log('Login:', email, senha)
+
+  aoLoginSucesso()
+}
 
   return (
     <div className="login">
