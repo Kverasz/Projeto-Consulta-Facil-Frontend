@@ -41,7 +41,7 @@ const especialidades = [
   { icone: '🔬', nome: 'Dermatologia' },
 ]
 
-function Inicio() {
+function Inicio({ aoIrParaAgendamentos }) {
   const [menuAberto, setMenuAberto] = useState(false)
 
   return (
@@ -50,6 +50,7 @@ function Inicio() {
         aberto={menuAberto}
         aoFechar={() => setMenuAberto(false)}
         itemAtivo="inicio"
+       aoIrParaAgendamentos={aoIrParaAgendamentos}
       />
 
       <div className="inicio">

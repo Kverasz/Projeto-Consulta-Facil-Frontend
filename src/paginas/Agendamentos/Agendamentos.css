@@ -1,0 +1,77 @@
+.pagina-fundo {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  background-color: #ffffff;
+}
+
+.agendamentos {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100vh;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+.agendamentos-conteudo {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 20px 20px 24px;
+}
+
+.agendamentos-cabecalho h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--cor-titulo);
+}
+
+.agendamentos-cabecalho p {
+  margin-top: 4px;
+  font-size: 14px;
+  color: var(--cor-primaria);
+  font-weight: 600;
+}
+
+.agendamentos-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+/* ---------- Tablet / notebook: mais largura, cartões em grade ---------- */
+@media (min-width: 700px) {
+  .agendamentos {
+    max-width: 700px;
+  }
+
+  .agendamentos-conteudo {
+    padding: 32px 40px 32px;
+  }
+
+  .agendamentos-lista {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .agendamentos {
+    max-width: 960px;
+  }
+
+  .agendamentos-conteudo {
+    padding: 40px 56px 48px;
+  }
+
+  .agendamentos-cabecalho h1 {
+    font-size: 26px;
+  }
+
+  .agendamentos-lista {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

@@ -7,6 +7,7 @@ import Login from './paginas/Login/Login'
 import EsqueciSenha from './paginas/EsqueciSenha/EsqueciSenha'
 import EmailEnviado from './paginas/EsqueciSenha/EmailEnviado'
 import Inicio from './paginas/Inicio/Inicio'
+import Agendamentos from './paginas/Agendamentos/Agendamentos'
 
 function App() {
   const [telaAtual, setTelaAtual] = useState('boas-vindas')
@@ -81,8 +82,20 @@ function App() {
     )
   }
 
-  if (telaAtual === 'inicio') {
-    return <Inicio />
+    if (telaAtual === 'inicio') {
+    return (
+      <Inicio
+        aoIrParaAgendamentos={() => setTelaAtual('agendamentos')}
+      />
+    )
+  }
+
+  if (telaAtual === 'agendamentos') {
+    return (
+      <Agendamentos
+        aoIrParaInicio={() => setTelaAtual('inicio')}
+      />
+    )
   }
 
   return null

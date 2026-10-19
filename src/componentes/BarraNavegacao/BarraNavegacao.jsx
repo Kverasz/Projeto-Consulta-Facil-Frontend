@@ -1,7 +1,6 @@
 import './BarraNavegacao.css'
 
-// Lista dos itens do menu. Para adicionar um item novo, basta
-// acrescentar um objeto aqui.
+// Lista dos itens do menu.
 const itens = [
   { id: 'inicio', rotulo: 'Início', icone: '🏠' },
   { id: 'agendamentos', rotulo: 'Agendamentos', icone: '📅' },
@@ -9,7 +8,21 @@ const itens = [
   { id: 'perfil', rotulo: 'Perfil', icone: '👤' },
 ]
 
-function BarraNavegacao({ itemAtivo }) {
+function BarraNavegacao({
+  itemAtivo,
+  aoIrParaInicio,
+  aoIrParaAgendamentos,
+}) {
+  function aoClicarItem(id) {
+    if (id === 'inicio' && aoIrParaInicio) {
+      aoIrParaInicio()
+    }
+
+    if (id === 'agendamentos' && aoIrParaAgendamentos) {
+      aoIrParaAgendamentos()
+    }
+  }
+
   return (
     <nav className="barra-navegacao">
       {itens.map((item) => {
@@ -19,7 +32,12 @@ function BarraNavegacao({ itemAtivo }) {
           : 'barra-navegacao-item'
 
         return (
-          <button type="button" key={item.id} className={classes}>
+          <button
+            type="button"
+            key={item.id}
+            className={classes}
+            onClick={() => aoClicarItem(item.id)}
+          >
             <span className="barra-navegacao-icone">{item.icone}</span>
             <span className="barra-navegacao-rotulo">{item.rotulo}</span>
           </button>
