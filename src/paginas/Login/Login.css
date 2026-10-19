@@ -81,3 +81,8 @@
   font-size: 14px;
   padding: 0;
 }
+.login-erro {
+  color: #dc2626;
+  font-size: 14px;
+  font-weight: 500;
+}

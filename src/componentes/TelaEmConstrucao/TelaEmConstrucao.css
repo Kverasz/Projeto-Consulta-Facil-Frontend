@@ -1,0 +1,21 @@
+.em-construcao {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+  padding: 24px;
+  max-width: 480px;
+  margin: 0 auto;
+  color: var(--cor-texto-suave);
+}
+
+.em-construcao h1 {
+  color: var(--cor-titulo);
+  font-size: 24px;
+}
+
+.em-construcao-nome {
+  color: var(--cor-texto);
+  font-weight: 600;
+}

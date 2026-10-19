@@ -4,7 +4,7 @@ import CampoTexto from '../../../componentes/CampoTexto/CampoTexto'
 import Botao from '../../../componentes/Botao/Botao'
 import './CadastroPaciente.css'
 
-function CadastroPaciente({ aoVoltar }) {
+function CadastroPaciente({ aoVoltar, aoIrParaLogin }) {
   const [nome, setNome] = useState('')
   const [cpf, setCpf] = useState('')
   const [dataNascimento, setDataNascimento] = useState('')
@@ -45,7 +45,7 @@ function CadastroPaciente({ aoVoltar }) {
 
       if (resposta.ok) {
         alert('Cadastro realizado com sucesso!')
-        if (aoVoltar) aoVoltar()
+        if (aoIrParaLogin) aoIrParaLogin()
       } else {
         alert('Erro ao realizar o cadastro. Verifica os dados preenchidos.')
       }
@@ -59,7 +59,7 @@ function CadastroPaciente({ aoVoltar }) {
     <div className="cadastro">
       <div className="cadastro-topo">
         <div className="botao-voltar-container">
-          <BotaoVoltar aoClicar={aoVoltar || (() => window.history.back())} />
+          <BotaoVoltar aoClicar={aoVoltar} />
         </div>
         <h1 className="cadastro-topo-titulo">Criar conta</h1>
       </div>
