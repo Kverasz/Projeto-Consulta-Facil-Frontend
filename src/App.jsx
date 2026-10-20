@@ -275,15 +275,16 @@ function confirmarReagendamento(horario) {
   // INÍCIO DO PACIENTE
 
   if (telaAtual === 'inicio') {
-    return (
-      <Inicio
-        usuario={usuario}
-        consultas={consultasAgendadas}
-        aoIrParaAgendamentos={() => setTelaAtual('agendamentos')}
-        aoVerDetalhes={abrirDetalhesPaciente}
-      />
-    )
-  }
+  return (
+    <Inicio
+      usuario={usuario}
+      consultas={consultasAgendadas}
+      aoIrParaAgendamentos={() => setTelaAtual('agendamentos')}
+      aoIrParaHistorico={() => setTelaAtual('historico')}
+      aoVerDetalhes={abrirDetalhesPaciente}
+    />
+  )
+}
   
 
   // AGENDAMENTOS DO PACIENTE

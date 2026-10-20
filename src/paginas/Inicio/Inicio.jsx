@@ -1,9 +1,9 @@
-import { useState } from 'react'
+
 import Cabecalho from '../../componentes/Cabecalho/Cabecalho'
 import CartaoAcao from '../../componentes/CartaoAcao/CartaoAcao'
 import CartaoAtendimento from '../../componentes/CartaoAtendimento/CartaoAtendimento'
 import CartaoEspecialidade from '../../componentes/CartaoEspecialidade/CartaoEspecialidade'
-import MenuLateral from '../../componentes/MenuLateral/MenuLateral'
+import BarraNavegacao from '../../componentes/BarraNavegacao/BarraNavegacao'
 import './Inicio.css'
 
 // Dados de exemplo. Depois isso pode vir de uma API ou do back-end.
@@ -31,8 +31,13 @@ const especialidades = [
   { icone: '🔬', nome: 'Dermatologia' },
 ]
 
-function Inicio({ usuario, consultas = [], aoIrParaAgendamentos, aoVerDetalhes }) {
-  const [menuAberto, setMenuAberto] = useState(false)
+function Inicio({
+  usuario,
+  consultas = [],
+  aoIrParaAgendamentos,
+  aoIrParaHistorico,
+  aoVerDetalhes,
+}) {
 
   const nomeCompleto = usuario?.nome ?? usuario?.name ?? usuario?.nomeCompleto ?? ''
   const primeiroNome = nomeCompleto.trim().split(/\s+/)[0] || 'Paciente'
@@ -83,19 +88,11 @@ function Inicio({ usuario, consultas = [], aoIrParaAgendamentos, aoVerDetalhes }
 
   return (
     <div className="pagina-fundo">
-      <MenuLateral
-        aberto={menuAberto}
-        aoFechar={() => setMenuAberto(false)}
-        itemAtivo="inicio"
-       aoIrParaAgendamentos={aoIrParaAgendamentos}
-      />
-
       <div className="inicio">
         <div className="inicio-conteudo">
           <Cabecalho
             nome={primeiroNome}
             titulo="Como podemos ajudar você hoje?"
-            aoAbrirMenu={() => setMenuAberto(true)}
           />
 
           <section className="inicio-acoes">
@@ -136,6 +133,14 @@ function Inicio({ usuario, consultas = [], aoIrParaAgendamentos, aoVerDetalhes }
             </div>
           </section>
         </div>
+
+        <BarraNavegacao
+          itemAtivo="inicio"
+          aoSelecionar={(id) => {
+            if (id === 'agendamentos') aoIrParaAgendamentos?.()
+            if (id === 'historico') aoIrParaHistorico?.()
+          }}
+        />
       </div>
     </div>
   )

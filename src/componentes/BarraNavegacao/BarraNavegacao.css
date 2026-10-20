@@ -29,3 +29,9 @@
 .barra-navegacao-item-ativo {
   color: var(--cor-primaria);
 }
+.barra-navegacao {
+  flex-shrink: 0;
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+}
