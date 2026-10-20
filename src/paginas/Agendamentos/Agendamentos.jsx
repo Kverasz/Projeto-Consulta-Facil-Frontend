@@ -5,6 +5,7 @@ import './Agendamentos.css'
 function Agendamentos({
   consultas,
   aoIrParaInicio,
+  aoIrParaHistorico,
   aoVerDetalhes,
 }) {
   return (
@@ -30,7 +31,10 @@ function Agendamentos({
         <BarraNavegacao
           itemAtivo="agendamentos"
           aoIrParaInicio={aoIrParaInicio}
-        />
+          aoSelecionar={(id) => {
+            if (id === 'historico') aoIrParaHistorico?.()
+  }}
+/>
       </div>
     </div>
   )

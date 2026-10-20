@@ -21,6 +21,12 @@ import InicioAdmin from './paginas/InicioAdmin/InicioAdmin'
 import Detalhes from './paginas/Detalhes/Detalhes'
 import Reagendar from './paginas/Reagendar/Reagendar'
 import HorariosDisponiveis from './paginas/HorariosDisponiveis/HorariosDisponiveis'
+import Historico from './paginas/Historico/Historico'
+
+import {
+  obterDataHoraConsulta,
+  obterStatusConsulta,
+} from './servicos/datasConsultas'
 
 import { PERFIS } from './servicos/autenticacao'
 
@@ -73,6 +79,30 @@ function App() {
     (filtro) => setFiltroAgenda(filtro),
     []
   )
+    const agora = new Date()
+
+  const consultasAgendadas = consultasPaciente.filter((consulta) => {
+    const status = obterStatusConsulta(consulta)
+    const data = obterDataHoraConsulta(consulta)
+
+    return (
+      status !== 'cancelado' &&
+      status !== 'realizado' &&
+      data !== null &&
+      data >= agora
+    )
+  })
+
+  const consultasHistorico = consultasPaciente.filter((consulta) => {
+    const status = obterStatusConsulta(consulta)
+    const data = obterDataHoraConsulta(consulta)
+
+    return (
+      status === 'cancelado' ||
+      status === 'realizado' ||
+      (data !== null && data < agora)
+    )
+  })
 
 function confirmarReagendamento(horario) {
   if (!consultaPaciente || !dataReagendamento || !horario) return
@@ -109,6 +139,25 @@ function confirmarReagendamento(horario) {
   setDataReagendamento(null)
   setTelaAtual('agendamentos')
 }
+  function cancelarConsultaPaciente() {
+    if (!consultaPaciente) return
+
+    const consultaCancelada = {
+      ...consultaPaciente,
+      status: 'Cancelado',
+    }
+
+    setConsultasPaciente((anteriores) =>
+      anteriores.map((consulta) =>
+        consulta.codigo === consultaPaciente.codigo
+          ? consultaCancelada
+          : consulta
+      )
+    )
+
+    setConsultaPaciente(consultaCancelada)
+    setTelaAtual('historico')
+  }
   function navegarProfissional(id) {
     if (id === 'inicio') {
       setTelaAtual('inicio-profissional')
@@ -229,7 +278,7 @@ function confirmarReagendamento(horario) {
     return (
       <Inicio
         usuario={usuario}
-        consultas={consultasPaciente}
+        consultas={consultasAgendadas}
         aoIrParaAgendamentos={() => setTelaAtual('agendamentos')}
         aoVerDetalhes={abrirDetalhesPaciente}
       />
@@ -239,15 +288,16 @@ function confirmarReagendamento(horario) {
 
   // AGENDAMENTOS DO PACIENTE
 
-if (telaAtual === 'agendamentos') {
-  return (
-    <Agendamentos
-      consultas={consultasPaciente}
-      aoIrParaInicio={() => setTelaAtual('inicio')}
-      aoVerDetalhes={abrirDetalhesPaciente}
-    />
-  )
-}
+  if (telaAtual === 'agendamentos') {
+    return (
+      <Agendamentos
+        consultas={consultasAgendadas}
+        aoIrParaInicio={() => setTelaAtual('inicio')}
+        aoIrParaHistorico={() => setTelaAtual('historico')}
+        aoVerDetalhes={abrirDetalhesPaciente}
+      />
+    )
+  }
 
   // DETALHES DO AGENDAMENTO DO PACIENTE
 
@@ -257,7 +307,7 @@ if (telaAtual === 'agendamentos') {
         consulta={consultaPaciente}
         aoVoltar={() => setTelaAtual('agendamentos')}
         aoReagendar={() => setTelaAtual('reagendar')}
-        aoCancelar={() => setTelaAtual('agendamentos')}
+        aoCancelar={cancelarConsultaPaciente}
       />
     )
   }
@@ -276,6 +326,18 @@ if (telaAtual === 'reagendar' && consultaPaciente) {
     />
   )
 }
+
+// HISTÓRICO DO PACIENTE
+
+  if (telaAtual === 'historico') {
+    return (
+      <Historico
+        consultas={consultasHistorico}
+        aoIrParaInicio={() => setTelaAtual('inicio')}
+        aoIrParaAgendamentos={() => setTelaAtual('agendamentos')}
+      />
+    )
+  }
 
   // INÍCIO DO PROFISSIONAL
 
