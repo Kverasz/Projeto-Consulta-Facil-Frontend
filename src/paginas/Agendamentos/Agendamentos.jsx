@@ -33,6 +33,7 @@ function Agendamentos({
           aoIrParaInicio={aoIrParaInicio}
           aoSelecionar={(id) => {
             if (id === 'historico') aoIrParaHistorico?.()
+            if (id === 'perfil') aoIrParaPerfil?.()
   }}
 />
       </div>

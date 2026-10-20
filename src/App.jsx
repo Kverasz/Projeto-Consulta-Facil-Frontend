@@ -22,6 +22,7 @@ import Detalhes from './paginas/Detalhes/Detalhes'
 import Reagendar from './paginas/Reagendar/Reagendar'
 import HorariosDisponiveis from './paginas/HorariosDisponiveis/HorariosDisponiveis'
 import Historico from './paginas/Historico/Historico'
+import PerfilPaciente from './paginas/PerfilPaciente/PerfilPaciente'
 
 import {
   obterDataHoraConsulta,
@@ -282,6 +283,7 @@ function confirmarReagendamento(horario) {
       aoIrParaAgendamentos={() => setTelaAtual('agendamentos')}
       aoIrParaHistorico={() => setTelaAtual('historico')}
       aoVerDetalhes={abrirDetalhesPaciente}
+      aoIrParaPerfil={() => setTelaAtual('perfil-paciente')}
     />
   )
 }
@@ -296,6 +298,7 @@ function confirmarReagendamento(horario) {
         aoIrParaInicio={() => setTelaAtual('inicio')}
         aoIrParaHistorico={() => setTelaAtual('historico')}
         aoVerDetalhes={abrirDetalhesPaciente}
+        aoIrParaPerfil={() => setTelaAtual('perfil-paciente')}
       />
     )
   }
@@ -336,6 +339,26 @@ if (telaAtual === 'reagendar' && consultaPaciente) {
         consultas={consultasHistorico}
         aoIrParaInicio={() => setTelaAtual('inicio')}
         aoIrParaAgendamentos={() => setTelaAtual('agendamentos')}
+        aoIrParaPerfil={() => setTelaAtual('perfil-paciente')}
+      />
+    )
+  }
+    // PERFIL DO PACIENTE
+
+  if (telaAtual === 'perfil-paciente') {
+    return (
+      <PerfilPaciente
+        usuario={usuario}
+        aoAtualizarUsuario={(dados) =>
+          setUsuario((anterior) => ({
+            ...anterior,
+            ...dados,
+          }))
+        }
+        aoIrParaInicio={() => setTelaAtual('inicio')}
+        aoIrParaAgendamentos={() => setTelaAtual('agendamentos')}
+        aoIrParaHistorico={() => setTelaAtual('historico')}
+        aoSair={sair}
       />
     )
   }

@@ -139,6 +139,7 @@ function Inicio({
           aoSelecionar={(id) => {
             if (id === 'agendamentos') aoIrParaAgendamentos?.()
             if (id === 'historico') aoIrParaHistorico?.()
+            if (id === 'perfil') aoIrParaPerfil?.()
           }}
         />
       </div>
