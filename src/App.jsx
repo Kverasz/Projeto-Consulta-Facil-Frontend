@@ -7,6 +7,9 @@ import EmailEnviado from './paginas/EsqueciSenha/EmailEnviado'
 import Inicio from './paginas/Inicio/Inicio'
 import Agendamentos from './paginas/Agendamentos/Agendamentos'
 import InicioProfissional from './paginas/InicioProfissional/InicioProfissional'
+import Perfil from './paginas/Perfil/Perfil'
+import Consultas from './paginas/Consultas/Consultas'
+import Horarios from './paginas/Horarios/Horarios'
 import Agenda from './paginas/Agenda/Agenda'
 import DetalhesConsulta from './paginas/DetalhesConsulta/DetalhesConsulta'
 import InicioAdmin from './paginas/InicioAdmin/InicioAdmin'
@@ -19,6 +22,8 @@ function App() {
   const [consultaAberta, setConsultaAberta] = useState(null) // { consulta, profissional, origem }
   const [filtroAgenda, setFiltroAgenda] = useState(null) // { visao, data }: lembra a aba e o dia da agenda
 
+  const [filtroConsultas, setFiltroConsultas] = useState(null) // 'hoje', 'proximas'...: lembra o filtro da aba Consultas
+
   const guardarFiltroAgenda = useCallback((filtro) => setFiltroAgenda(filtro), [])
 
   // Menu do profissional (rodapé e menu lateral)
@@ -28,8 +33,15 @@ function App() {
       setFiltroAgenda(null)
       setTelaAtual('agenda-profissional')
     }
-    // Horários, Consultas e Perfil: telas ainda não criadas
+    if (id === 'horarios') setTelaAtual('horarios-profissional')
+    if (id === 'consultas') {
+      setFiltroConsultas(null)
+      setTelaAtual('consultas-profissional')
+    }
+    if (id === 'perfil') setTelaAtual('perfil-profissional')
   }
+
+  const guardarFiltroConsultas = useCallback((filtro) => setFiltroConsultas(filtro), [])
 
   function abrirDetalhes(origem) {
     return (consulta, profissional) => {
@@ -118,6 +130,26 @@ function App() {
         aoNavegar={navegarProfissional}
       />
     )
+  }
+
+  if (telaAtual === 'perfil-profissional') {
+    return <Perfil usuario={usuario} aoNavegar={navegarProfissional} aoSair={sair} />
+  }
+
+  if (telaAtual === 'consultas-profissional') {
+    return (
+      <Consultas
+        usuario={usuario}
+        filtroInicial={filtroConsultas}
+        aoMudarFiltro={guardarFiltroConsultas}
+        aoNavegar={navegarProfissional}
+        aoVerDetalhes={abrirDetalhes('consultas-profissional')}
+      />
+    )
+  }
+
+  if (telaAtual === 'horarios-profissional') {
+    return <Horarios usuario={usuario} aoNavegar={navegarProfissional} />
   }
 
   if (telaAtual === 'agenda-profissional') {

@@ -1,0 +1,215 @@
+.consultas {
+  width: 100%;
+  max-width: 430px;
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f0fcfd;
+}
+
+.consultas-topo {
+  padding: 16px 20px 14px;
+  background-color: #ffffff;
+}
+
+.consultas-topo-linha {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.consultas-titulo {
+  flex: 1;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--cor-titulo);
+}
+
+/* ☰ só aparece no desktop (ver @media no fim) */
+.consultas-menu {
+  display: none;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--cor-fundo-botao-voltar);
+  font-size: 16px;
+  align-items: center;
+  justify-content: center;
+}
+
+.consultas-filtros {
+  display: flex;
+  gap: 8px;
+  margin: 14px -20px 0;
+  padding: 0 20px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.consultas-filtros::-webkit-scrollbar {
+  display: none;
+}
+
+.consultas-filtro {
+  flex-shrink: 0;
+  height: 40px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 999px;
+  background-color: var(--cor-fundo-botao-voltar);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--cor-texto-suave);
+}
+
+.consultas-filtro-ativo {
+  background-color: var(--cor-primaria);
+  color: #ffffff;
+}
+
+.consultas-rolagem {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.consultas-conteudo {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 16px 20px 24px;
+}
+
+.consultas-vazio {
+  padding: 16px 0;
+  font-size: 14px;
+  color: var(--cor-texto-suave);
+}
+
+.consultas-erro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--cor-texto-suave);
+}
+
+.consultas-link {
+  border: none;
+  background: none;
+  color: var(--cor-primaria);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.consultas-lista {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.consultas-cartao {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px;
+  border: none;
+  border-radius: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(27, 35, 51, 0.08);
+  text-align: left;
+}
+
+.consultas-cartao:active {
+  opacity: 0.85;
+}
+
+.consultas-avatar {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  border-radius: 16px;
+  background-color: var(--cor-fundo-botao-voltar);
+  font-size: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.consultas-cartao-corpo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.consultas-cartao-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.consultas-nome {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--cor-titulo);
+}
+
+.consultas-especialidade {
+  font-size: 14px;
+  color: var(--cor-subtitulo);
+}
+
+.consultas-detalhes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin-top: 2px;
+  font-size: 13px;
+  color: var(--cor-texto-suave);
+}
+
+.consultas-clinica {
+  min-width: 0;
+}
+
+.consultas-status {
+  flex-shrink: 0;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.consultas-status-confirmada { color: var(--cor-sucesso); background-color: var(--cor-fundo-sucesso); }
+.consultas-status-aguardando { color: #b45309; background-color: #fef3c7; }
+.consultas-status-realizada { color: var(--cor-texto-suave); background-color: var(--cor-fundo-botao-voltar); }
+.consultas-status-cancelada { color: #dc2626; background-color: #fee2e2; }
+
+/* ---------- Tablet e desktop, como nas outras telas ---------- */
+@media (min-width: 700px) {
+  .consultas { max-width: 700px; }
+  .consultas-topo { padding: 24px 40px 16px; }
+  .consultas-filtros { margin: 14px -40px 0; padding: 0 40px; }
+  .consultas-conteudo { padding: 24px 40px 32px; }
+}
+
+@media (min-width: 1024px) {
+  .consultas { max-width: 960px; }
+  .consultas-menu { display: flex; }
+  .consultas-rodape { display: none; }
+  .consultas-topo { padding: 32px 56px 16px; }
+  .consultas-filtros { margin: 14px -56px 0; padding: 0 56px; }
+}

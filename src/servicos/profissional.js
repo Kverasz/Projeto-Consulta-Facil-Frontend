@@ -193,7 +193,8 @@ export async function buscarStatusAgendamento(id, token) {
   return status ? String(status).toUpperCase() : null
 }
 
-async function enviar(caminho, metodo, corpo, token, mensagemErro) {
+// mensagensPorStatus: textos específicos por código de erro, ex.: { 409: 'E-mail já em uso.' }
+export async function enviar(caminho, metodo, corpo, token, mensagemErro, mensagensPorStatus = {}) {
   let resposta
   try {
     resposta = await fetch(`${URL_API}${caminho}`, {
@@ -207,7 +208,7 @@ async function enviar(caminho, metodo, corpo, token, mensagemErro) {
   } catch {
     throw new Error('Não foi possível conectar ao servidor.')
   }
-  if (!resposta.ok) throw new Error(mensagemErro)
+  if (!resposta.ok) throw new Error(mensagensPorStatus[resposta.status] ?? mensagemErro)
 }
 
 // PUT /agendamentos/{id} com { status: 'CONFIRMADO' }
@@ -218,4 +219,69 @@ export function confirmarAgendamento(id, token) {
 // PATCH /agendamentos/{id}/cancelar
 export function cancelarAgendamento(id, token) {
   return enviar(`/agendamentos/${id}/cancelar`, 'PATCH', null, token, 'Não foi possível cancelar a consulta.')
+}
+
+// ---------- Perfil ----------
+
+// Dados do cadastro do profissional logado (GET /profissionais/{id}).
+// "cadastro" guarda o registro como veio da API: ele é reenviado inteiro ao salvar (ver salvarContato).
+export async function carregarPerfil(usuario) {
+  const token = usuario.token
+  const id = await descobrirIdProfissional(usuario)
+  const bruto = comoObjeto(await buscar(`/profissionais/${id}`, token))
+
+  let clinica = bruto.clinica_nome ?? bruto.nome_clinica ?? bruto.clinica?.nome ?? null
+  const idClinica = bruto.id_clinica ?? bruto.clinica?.id_clinica
+  if (!clinica && idClinica != null) {
+    try {
+      clinica = comoObjeto(await buscar(`/clinicas/${idClinica}`, token)).nome ?? null
+    } catch {
+      clinica = null
+    }
+  }
+
+  const especialidade =
+    bruto.especialidade_nome ??
+    bruto.nome_especialidade ??
+    (typeof bruto.especialidade === 'string' ? bruto.especialidade : bruto.especialidade?.nome) ??
+    null
+
+  const ativo = bruto.ativo ?? bruto.status
+  return {
+    id,
+    cadastro: bruto,
+    nome: formatarNomeProfissional(bruto.nome ?? usuario.nome ?? ''),
+    cpf: bruto.cpf ?? null,
+    registro: bruto.registro_profissional ?? null,
+    conselho: bruto.conselho ?? null,
+    especialidade,
+    clinica,
+    telefone: bruto.telefone ?? '',
+    email: bruto.email ?? '',
+    // true, false ou null (a API não informou)
+    ativo: ativo == null ? null : ativo === true || ativo === 1 || String(ativo).toUpperCase() === 'ATIVO'
+  }
+}
+
+// PUT /profissionais/{id}. A documentação não descreve o corpo do PUT, então enviamos o cadastro
+// completo (os mesmos campos do POST) com só telefone e e-mail trocados. Assim nada é apagado
+// e o nome continua gravado exatamente como estava.
+export function salvarContato(perfil, { telefone, email }, token) {
+  const c = perfil.cadastro
+  const corpo = {
+    id_clinica: c.id_clinica ?? c.clinica?.id_clinica,
+    id_especialidade: c.id_especialidade ?? c.especialidade?.id_especialidade,
+    nome: c.nome,
+    cpf: c.cpf,
+    registro_profissional: c.registro_profissional,
+    conselho: c.conselho,
+    telefone,
+    email
+  }
+  Object.keys(corpo).forEach((chave) => corpo[chave] == null && delete corpo[chave])
+
+  return enviar(`/profissionais/${perfil.id}`, 'PUT', corpo, token, 'Não foi possível salvar suas alterações.', {
+    400: 'Confira o telefone e o e-mail informados.',
+    409: 'Este e-mail já está em uso por outro cadastro.'
+  })
 }
