@@ -1,0 +1,30 @@
+.linha-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.linha-info:last-child {
+  border-bottom: none;
+}
+
+.linha-info-icone {
+  font-size: 17px;
+  width: 22px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.linha-info-rotulo {
+  font-size: 12px;
+  color: var(--cor-texto-suave);
+}
+
+.linha-info-valor {
+  margin-top: 2px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--cor-titulo);
+}

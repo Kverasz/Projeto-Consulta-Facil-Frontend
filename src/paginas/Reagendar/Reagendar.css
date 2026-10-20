@@ -1,0 +1,194 @@
+.reagendar {
+  max-width: 430px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 16px 20px 24px;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+.reagendar-topo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.reagendar-profissional {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--cor-atencao);
+}
+
+.reagendar-titulo {
+  margin-top: 22px;
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--cor-titulo);
+}
+
+.reagendar-subtitulo {
+  margin-top: 2px;
+  font-size: 13px;
+  color: var(--cor-texto-suave);
+}
+
+/* ----- Calendário ----- */
+.reagendar-calendario {
+  margin-top: 18px;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.reagendar-calendario th {
+  padding-bottom: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--cor-texto-suave);
+}
+
+.reagendar-calendario td {
+  text-align: center;
+  padding: 4px 0;
+}
+
+.reagendar-dia {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  background: none;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cor-atencao);
+}
+
+.reagendar-dia-indisponivel {
+  color: var(--cor-placeholder);
+}
+
+.reagendar-dia-selecionado {
+  border-color: var(--cor-primaria);
+  color: var(--cor-primaria);
+  background-color: var(--cor-primaria-clara);
+}
+
+/* ----- Botão fixo embaixo ----- */
+.reagendar-botao {
+  margin-top: auto;
+  padding-top: 24px;
+  width: 100%;
+  height: 56px;
+  border: none;
+  border-radius: 20px;
+  background-color: #8adbe8;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.reagendar-botao:active {
+  opacity: 0.85;
+}
+
+/* ----- Notebook: mais espaço ao redor ----- */
+@media (min-width: 700px) {
+  .reagendar {
+    max-width: 480px;
+    margin-top: 32px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 24px;
+    min-height: 0;
+    padding-bottom: 32px;
+  }
+  /* Navegação entre os meses */
+
+.reagendar-navegacao-mes {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.reagendar-navegacao-mes button {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 50%;
+  background-color: #ffffff;
+  color: var(--cor-primaria);
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.reagendar-navegacao-mes button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.reagendar-navegacao-mes .reagendar-subtitulo {
+  margin-top: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--cor-titulo);
+}
+
+/* Interação com os dias */
+
+.reagendar-dia {
+  cursor: pointer;
+}
+
+.reagendar-dia:disabled {
+  cursor: not-allowed;
+}
+
+/* Botão de continuar */
+
+.reagendar-botao {
+  cursor: pointer;
+}
+
+.reagendar-botao:disabled {
+  background-color: #d6e8eb;
+  color: #8a9ca0;
+  cursor: not-allowed;
+}
+/* Centralização do botão de horários */
+
+.reagendar-botao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  text-align: center;
+  line-height: 1.2;
+  box-sizing: border-box;
+}
+/* Alinhamento da navegação entre meses */
+
+.reagendar-navegacao-mes {
+  display: grid;
+  grid-template-columns: 36px 1fr 36px;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.reagendar-navegacao-mes button {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+  border-radius: 50%;
+}
+
+.reagendar-navegacao-mes .reagendar-subtitulo {
+  margin: 0;
+  text-align: center;
+}
+
+}

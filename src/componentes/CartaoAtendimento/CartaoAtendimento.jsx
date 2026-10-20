@@ -1,6 +1,15 @@
 import './CartaoAtendimento.css'
 
-function CartaoAtendimento({ icone, nome, especialidade, clinica, data, hora, status, aoClicar }) {
+function CartaoAtendimento({
+  icone,
+  nome,
+  especialidade,
+  clinica,
+  data,
+  hora,
+  status,
+  aoClicar,
+}) {
   return (
     <div className="cartao-atendimento">
       <div className="cartao-atendimento-topo">
@@ -11,6 +20,7 @@ function CartaoAtendimento({ icone, nome, especialidade, clinica, data, hora, st
             <span className="cartao-atendimento-nome">{nome}</span>
             <span className="cartao-atendimento-status">{status}</span>
           </div>
+
           <p className="cartao-atendimento-especialidade">
             {especialidade} · {clinica}
           </p>
@@ -19,10 +29,14 @@ function CartaoAtendimento({ icone, nome, especialidade, clinica, data, hora, st
 
       <div className="cartao-atendimento-quando">
         <span>📅 {data}</span>
-        <span>⏰ {hora}</span>
+        <span>🕒 {hora}</span>
       </div>
 
-      <button type="button" className="cartao-atendimento-detalhes" onClick={aoClicar}>
+      <button
+        type="button"
+        className="cartao-atendimento-detalhes"
+        onClick={aoClicar}
+      >
         Ver detalhes →
       </button>
     </div>

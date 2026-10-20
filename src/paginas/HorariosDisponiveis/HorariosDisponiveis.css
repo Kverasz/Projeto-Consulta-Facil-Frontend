@@ -1,0 +1,106 @@
+.horarios-pagina {
+  max-width: 430px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 16px 20px 24px;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+.horarios-topo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.horarios-topo h1 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--cor-titulo);
+}
+
+.horarios-consulta {
+  margin-top: 24px;
+  padding: 18px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 18px;
+}
+
+.horarios-consulta h2 {
+  font-size: 17px;
+  color: var(--cor-titulo);
+}
+
+.horarios-consulta p {
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--cor-texto-suave);
+}
+
+.horarios-aviso {
+  margin-top: 14px;
+  font-size: 12px;
+  color: var(--cor-texto-suave);
+}
+
+.horarios-secao {
+  margin-top: 26px;
+}
+
+.horarios-secao h2 {
+  font-size: 15px;
+  margin-bottom: 14px;
+  color: var(--cor-titulo);
+}
+
+.horarios-grade {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.horario-opcao {
+  min-height: 44px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 12px;
+  background: #ffffff;
+  color: var(--cor-texto);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.horario-opcao-selecionado {
+  background: var(--cor-primaria-clara);
+  border-color: var(--cor-primaria);
+  color: var(--cor-primaria);
+}
+
+.horarios-confirmar {
+  margin-top: auto;
+  min-height: 56px;
+  border: none;
+  border-radius: 20px;
+  background: #8adbe8;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.horarios-confirmar:disabled {
+  background: #d6e8eb;
+  color: #8a9ca0;
+  cursor: not-allowed;
+}
+
+@media (min-width: 700px) {
+  .horarios-pagina {
+    max-width: 480px;
+    margin-top: 32px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 24px;
+    min-height: 650px;
+  }
+}

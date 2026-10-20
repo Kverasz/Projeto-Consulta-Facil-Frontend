@@ -1,44 +1,135 @@
 import { useCallback, useState } from 'react'
+
 import BoasVindas from './paginas/BoasVindas/BoasVindas'
 import CadastroPaciente from './paginas/Cadastro/Paciente/CadastroPaciente'
 import Login from './paginas/Login/Login'
 import EsqueciSenha from './paginas/EsqueciSenha/EsqueciSenha'
 import EmailEnviado from './paginas/EsqueciSenha/EmailEnviado'
+
 import Inicio from './paginas/Inicio/Inicio'
 import Agendamentos from './paginas/Agendamentos/Agendamentos'
+
 import InicioProfissional from './paginas/InicioProfissional/InicioProfissional'
 import Perfil from './paginas/Perfil/Perfil'
 import Consultas from './paginas/Consultas/Consultas'
 import Horarios from './paginas/Horarios/Horarios'
 import Agenda from './paginas/Agenda/Agenda'
 import DetalhesConsulta from './paginas/DetalhesConsulta/DetalhesConsulta'
+
 import InicioAdmin from './paginas/InicioAdmin/InicioAdmin'
+
+import Detalhes from './paginas/Detalhes/Detalhes'
+import Reagendar from './paginas/Reagendar/Reagendar'
+import HorariosDisponiveis from './paginas/HorariosDisponiveis/HorariosDisponiveis'
+
 import { PERFIS } from './servicos/autenticacao'
+
+const consultasIniciais = [
+  {
+    icone: '🦴',
+    nome: 'Dr. Carlos Mendes',
+    especialidade: 'Ortopedia',
+    crm: 'CRM-PE 24.501',
+    clinica: 'Clínica Boa Saúde',
+    endereco: 'Av. Boa Viagem, 1200 - Boa Viagem',
+    data: '16 out 2026',
+    dataCompleta: '16 de outubro de 2026',
+    hora: '09:30',
+    status: 'Confirmado',
+    codigo: 'SR-2026-04817',
+  },
+  {
+    icone: '❤️',
+    nome: 'Dra. Luciana Ferreira',
+    especialidade: 'Cardiologia',
+    crm: 'CRM-PE 31.208',
+    clinica: 'Centro Médico Recife',
+    endereco: 'R. Setúbal, 445 - Boa Viagem',
+    data: '28 out 2026',
+    dataCompleta: '28 de outubro de 2026',
+    hora: '14:00',
+    status: 'Aguardando',
+    codigo: 'SR-2026-04822',
+  },
+]
 
 function App() {
   const [telaAtual, setTelaAtual] = useState('boas-vindas')
   const [emailRecuperacao, setEmailRecuperacao] = useState('')
   const [usuario, setUsuario] = useState(null)
-  const [consultaAberta, setConsultaAberta] = useState(null) // { consulta, profissional, origem }
-  const [filtroAgenda, setFiltroAgenda] = useState(null) // { visao, data }: lembra a aba e o dia da agenda
 
-  const [filtroConsultas, setFiltroConsultas] = useState(null) // 'hoje', 'proximas'...: lembra o filtro da aba Consultas
+  const [filtroConsultas, setFiltroConsultas] = useState(null)
+  const [consultasPaciente, setConsultasPaciente] = useState(consultasIniciais)
+  const [dataReagendamento, setDataReagendamento] = useState(null)
 
-  const guardarFiltroAgenda = useCallback((filtro) => setFiltroAgenda(filtro), [])
+  // Consultas do profissional
+  const [consultaAberta, setConsultaAberta] = useState(null)
+  const [filtroAgenda, setFiltroAgenda] = useState(null)
 
-  // Menu do profissional (rodapé e menu lateral)
+  // Consulta selecionada pelo paciente
+  const [consultaPaciente, setConsultaPaciente] = useState(null)
+
+  const guardarFiltroAgenda = useCallback(
+    (filtro) => setFiltroAgenda(filtro),
+    []
+  )
+
+function confirmarReagendamento(horario) {
+  if (!consultaPaciente || !dataReagendamento || !horario) return
+
+  const dataCurta = new Intl.DateTimeFormat('pt-BR', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  }).format(dataReagendamento).replace('.', '')
+
+  const dataCompleta = new Intl.DateTimeFormat('pt-BR', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  }).format(dataReagendamento)
+
+  const consultaAtualizada = {
+    ...consultaPaciente,
+    data: dataCurta,
+    dataCompleta,
+    hora: horario,
+    status: 'Confirmado',
+  }
+
+  setConsultasPaciente((anteriores) =>
+    anteriores.map((consulta) =>
+      consulta.codigo === consultaPaciente.codigo
+        ? consultaAtualizada
+        : consulta
+    )
+  )
+
+  setConsultaPaciente(consultaAtualizada)
+  setDataReagendamento(null)
+  setTelaAtual('agendamentos')
+}
   function navegarProfissional(id) {
-    if (id === 'inicio') setTelaAtual('inicio-profissional')
+    if (id === 'inicio') {
+      setTelaAtual('inicio-profissional')
+    }
+
     if (id === 'agenda') {
       setFiltroAgenda(null)
       setTelaAtual('agenda-profissional')
     }
-    if (id === 'horarios') setTelaAtual('horarios-profissional')
+    if (id === 'horarios') {
+      setTelaAtual('horarios-profissional')
+    }
+
     if (id === 'consultas') {
       setFiltroConsultas(null)
       setTelaAtual('consultas-profissional')
     }
-    if (id === 'perfil') setTelaAtual('perfil-profissional')
+
+    if (id === 'perfil') {
+      setTelaAtual('perfil-profissional')
+    }
   }
 
   const guardarFiltroConsultas = useCallback((filtro) => setFiltroConsultas(filtro), [])
@@ -50,18 +141,31 @@ function App() {
     }
   }
 
-  // Envia o usuário para a tela inicial do perfil dele
+  function abrirDetalhesPaciente(consulta) {
+    setConsultaPaciente(consulta)
+    setTelaAtual('detalhes-agendamento')
+  }
+
   function entrar(dadosUsuario) {
     setUsuario(dadosUsuario)
-    if (dadosUsuario.perfil === PERFIS.PROFISSIONAL) setTelaAtual('inicio-profissional')
-    else if (dadosUsuario.perfil === PERFIS.ADMIN) setTelaAtual('inicio-admin')
-    else setTelaAtual('inicio')
+
+    if (dadosUsuario.perfil === PERFIS.PROFISSIONAL) {
+      setTelaAtual('inicio-profissional')
+    } else if (dadosUsuario.perfil === PERFIS.ADMIN) {
+      setTelaAtual('inicio-admin')
+    } else {
+      setTelaAtual('inicio')
+    }
   }
 
   function sair() {
     setUsuario(null)
+    setConsultaAberta(null)
+    setConsultaPaciente(null)
     setTelaAtual('login')
   }
+
+  // BOAS-VINDAS
 
   if (telaAtual === 'boas-vindas') {
     return (
@@ -72,6 +176,8 @@ function App() {
     )
   }
 
+  // CADASTRO
+
   if (telaAtual === 'cadastro-paciente') {
     return (
       <CadastroPaciente
@@ -80,6 +186,8 @@ function App() {
       />
     )
   }
+
+  // LOGIN
 
   if (telaAtual === 'login') {
     return (
@@ -91,6 +199,8 @@ function App() {
       />
     )
   }
+
+  // RECUPERAÇÃO DE SENHA
 
   if (telaAtual === 'esqueci-senha') {
     return (
@@ -113,6 +223,8 @@ function App() {
     )
   }
 
+  // INÍCIO DO PACIENTE
+
   if (telaAtual === 'inicio') {
     return (
       <Inicio
@@ -120,6 +232,48 @@ function App() {
       />
     )
   }
+
+  // AGENDAMENTOS DO PACIENTE
+
+if (telaAtual === 'agendamentos') {
+  return (
+    <Agendamentos
+      consultas={consultasPaciente}
+      aoIrParaInicio={() => setTelaAtual('inicio')}
+      aoVerDetalhes={abrirDetalhesPaciente}
+    />
+  )
+}
+
+  // DETALHES DO AGENDAMENTO DO PACIENTE
+
+  if (telaAtual === 'detalhes-agendamento' && consultaPaciente) {
+    return (
+      <Detalhes
+        consulta={consultaPaciente}
+        aoVoltar={() => setTelaAtual('agendamentos')}
+        aoReagendar={() => setTelaAtual('reagendar')}
+        aoCancelar={() => setTelaAtual('agendamentos')}
+      />
+    )
+  }
+
+  // REAGENDAMENTO DO PACIENTE
+
+if (telaAtual === 'reagendar' && consultaPaciente) {
+  return (
+    <Reagendar
+      consulta={consultaPaciente}
+      aoVoltar={() => setTelaAtual('detalhes-agendamento')}
+      aoVerHorarios={(data) => {
+        setDataReagendamento(data)
+        setTelaAtual('horarios-disponiveis')
+      }}
+    />
+  )
+}
+
+  // INÍCIO DO PROFISSIONAL
 
   if (telaAtual === 'inicio-profissional') {
     return (
@@ -133,7 +287,13 @@ function App() {
   }
 
   if (telaAtual === 'perfil-profissional') {
-    return <Perfil usuario={usuario} aoNavegar={navegarProfissional} aoSair={sair} />
+    return (
+      <Perfil
+        usuario={usuario}
+        aoNavegar={navegarProfissional}
+        aoSair={sair}
+      />
+    )
   }
 
   if (telaAtual === 'consultas-profissional') {
@@ -149,8 +309,15 @@ function App() {
   }
 
   if (telaAtual === 'horarios-profissional') {
-    return <Horarios usuario={usuario} aoNavegar={navegarProfissional} />
+    return (
+      <Horarios
+        usuario={usuario}
+        aoNavegar={navegarProfissional}
+      />
+    )
   }
+
+  // AGENDA DO PROFISSIONAL
 
   if (telaAtual === 'agenda-profissional') {
     return (
@@ -164,7 +331,9 @@ function App() {
     )
   }
 
-  if (telaAtual === 'detalhes-consulta') {
+  // DETALHES DA CONSULTA DO PROFISSIONAL
+
+  if (telaAtual === 'detalhes-consulta' && consultaAberta) {
     return (
       <DetalhesConsulta
         usuario={usuario}
@@ -174,15 +343,28 @@ function App() {
       />
     )
   }
+  if (
+  telaAtual === 'horarios-disponiveis' &&
+  consultaPaciente &&
+  dataReagendamento
+) {
+  return (
+    <HorariosDisponiveis
+      consulta={consultaPaciente}
+      dataSelecionada={dataReagendamento}
+      aoVoltar={() => setTelaAtual('reagendar')}
+      aoConfirmar={confirmarReagendamento}
+    />
+  )
+}
+
+  // INÍCIO DO ADMINISTRADOR
 
   if (telaAtual === 'inicio-admin') {
-    return <InicioAdmin usuario={usuario} aoSair={sair} />
-  }
-
-  if (telaAtual === 'agendamentos') {
     return (
-      <Agendamentos
-        aoIrParaInicio={() => setTelaAtual('inicio')}
+      <InicioAdmin
+        usuario={usuario}
+        aoSair={sair}
       />
     )
   }
