@@ -79,3 +79,34 @@ export function montarDia(painel, data) {
   })
   return comIntervalos
 }
+
+// ---------- Aba Consultas: filtros ----------
+// Hoje: consultas de hoje, menos as canceladas.
+// Próximas: de amanhã em diante, aguardando ou confirmadas.
+// Realizadas / Canceladas: pela situação do agendamento, da mais recente para a mais antiga.
+export const filtrosConsultas = [
+  { id: 'hoje', rotulo: 'Hoje', vazio: 'Nenhuma consulta para hoje.' },
+  { id: 'proximas', rotulo: 'Próximas', vazio: 'Nenhuma consulta futura agendada.' },
+  { id: 'realizadas', rotulo: 'Realizadas', vazio: 'Nenhuma consulta realizada.' },
+  { id: 'canceladas', rotulo: 'Canceladas', vazio: 'Nenhuma consulta cancelada.' },
+]
+
+const porHorarioCrescente = (a, b) => `${a.data} ${a.hora}`.localeCompare(`${b.data} ${b.hora}`)
+
+export function consultasDoFiltro(painel, filtro, hoje) {
+  const todas = painel.agendamentos
+  switch (filtro) {
+    case 'hoje':
+      return todas.filter((a) => a.data === hoje && a.status !== 'CANCELADO').sort(porHorarioCrescente)
+    case 'proximas':
+      return todas
+        .filter((a) => a.data > hoje && (a.status === 'AGENDADO' || a.status === 'CONFIRMADO'))
+        .sort(porHorarioCrescente)
+    case 'realizadas':
+      return todas.filter((a) => a.status === 'REALIZADO').sort((a, b) => porHorarioCrescente(b, a))
+    case 'canceladas':
+      return todas.filter((a) => a.status === 'CANCELADO').sort((a, b) => porHorarioCrescente(b, a))
+    default:
+      return []
+  }
+}
