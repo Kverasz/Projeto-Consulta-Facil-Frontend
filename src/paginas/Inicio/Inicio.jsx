@@ -22,16 +22,6 @@ const acoes = [
   },
 ]
 
-const proximoAtendimento = {
-  icone: '🦴',
-  nome: 'Dr. Carlos Mendes',
-  especialidade: 'Ortopedia',
-  clinica: 'Clínica Boa Saúde',
-  data: '16 out',
-  hora: '09:30',
-  status: 'Confirmado',
-}
-
 const especialidades = [
   { icone: '❤️', nome: 'Cardiologia' },
   { icone: '🦴', nome: 'Ortopedia' },
@@ -41,8 +31,55 @@ const especialidades = [
   { icone: '🔬', nome: 'Dermatologia' },
 ]
 
-function Inicio({ aoIrParaAgendamentos }) {
+function Inicio({ usuario, consultas = [], aoIrParaAgendamentos, aoVerDetalhes }) {
   const [menuAberto, setMenuAberto] = useState(false)
+
+  const nomeCompleto = usuario?.nome ?? usuario?.name ?? usuario?.nomeCompleto ?? ''
+  const primeiroNome = nomeCompleto.trim().split(/\s+/)[0] || 'Paciente'
+
+  const consultasFuturas = consultas
+    .filter((consulta) => {
+      const partes = consulta.dataCompleta?.match(
+        /^(\d{1,2}) de ([a-zç]+) de (\d{4})$/i
+      )
+
+      if (!partes) return false
+
+      const meses = [
+        'janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho',
+        'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro',
+      ]
+
+      const mes = meses.indexOf(partes[2].toLowerCase())
+      if (mes === -1) return false
+
+      const [horas, minutos] = consulta.hora.split(':').map(Number)
+      const dataConsulta = new Date(Number(partes[3]), mes, Number(partes[1]), horas, minutos)
+
+      return dataConsulta >= new Date() && consulta.status !== 'Cancelado'
+    })
+    .sort((a, b) => {
+      const converter = (consulta) => {
+        const partes = consulta.dataCompleta.match(/^(\d{1,2}) de ([a-zç]+) de (\d{4})$/i)
+        const meses = [
+          'janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho',
+          'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro',
+        ]
+        const [horas, minutos] = consulta.hora.split(':').map(Number)
+
+        return new Date(
+          Number(partes[3]),
+          meses.indexOf(partes[2].toLowerCase()),
+          Number(partes[1]),
+          horas,
+          minutos
+        )
+      }
+
+      return converter(a) - converter(b)
+    })
+
+  const proximoAtendimento = consultasFuturas[0]
 
   return (
     <div className="pagina-fundo">
@@ -56,7 +93,7 @@ function Inicio({ aoIrParaAgendamentos }) {
       <div className="inicio">
         <div className="inicio-conteudo">
           <Cabecalho
-            nome="Maria"
+            nome={primeiroNome}
             titulo="Como podemos ajudar você hoje?"
             aoAbrirMenu={() => setMenuAberto(true)}
           />
@@ -75,7 +112,15 @@ function Inicio({ aoIrParaAgendamentos }) {
 
           <section className="inicio-secao">
             <h2 className="inicio-secao-titulo">Próximo atendimento</h2>
-            <CartaoAtendimento {...proximoAtendimento} />
+
+            {proximoAtendimento ? (
+              <CartaoAtendimento
+                {...proximoAtendimento}
+                aoClicar={() => aoVerDetalhes(proximoAtendimento)}
+              />
+            ) : (
+              <p>Você não possui atendimentos futuros agendados.</p>
+            )}
           </section>
 
           <section className="inicio-secao">
