@@ -47,9 +47,14 @@ function PerfilPaciente({
   aoIrParaAgendamentos,
   aoIrParaHistorico,
   aoSair,
+  abrirNotificacoesInicialmente = false,
+  aoVoltarNotificacoes,
 }) {
+
   const [painel, setPainel] = useState(null)
-  const [paginaNotificacoes, setPaginaNotificacoes] = useState(false)
+  const [paginaNotificacoes, setPaginaNotificacoes] = useState(
+  abrirNotificacoesInicialmente
+)
   const [mensagem, setMensagem] = useState('')
   const [dados, setDados] = useState({
     nome: usuario?.nome ?? usuario?.name ?? usuario?.nomeCompleto ?? '',
@@ -127,7 +132,13 @@ function PerfilPaciente({
             <header className="perfil-notificacoes-cabecalho">
               <button
                 type="button"
-                onClick={() => setPaginaNotificacoes(false)}
+                onClick={() => {
+                  if (abrirNotificacoesInicialmente) {
+                    aoVoltarNotificacoes?.()
+                  } else {
+                    setPaginaNotificacoes(false)
+                  }
+                }}
                 aria-label="Voltar ao perfil"
               >
                 ←

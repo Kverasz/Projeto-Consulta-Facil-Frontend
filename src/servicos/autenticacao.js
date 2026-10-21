@@ -55,7 +55,14 @@ export async function realizarLogin(email, senha) {
   const dados = await lerJson(resposta)
   const token = dados.token ?? dados.accessToken ?? dados.access_token ?? dados.jwt ?? null
   const usuarioLogin = dados.usuario ?? dados.user ?? dados
-  let perfil = normalizarPerfil(usuarioLogin.perfil ?? dados.perfil ?? dados.tipo ?? dados.role)
+  let perfil = normalizarPerfil(
+  usuarioLogin.perfil ??
+  usuarioLogin.tipo ??
+  usuarioLogin.role ??
+  dados.perfil ??
+  dados.tipo ??
+  dados.role
+)
   let usuario = usuarioLogin
 
   // Perfil não veio na resposta do login: pergunta ao back-end quem é o usuário

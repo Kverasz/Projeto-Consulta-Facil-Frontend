@@ -36,6 +36,11 @@ function Inicio({
   consultas = [],
   aoIrParaAgendamentos,
   aoIrParaHistorico,
+  aoIrParaPerfil,
+  aoAbrirNotificacoes,
+  aoPrecisoAtendimento,
+  aoJaSeiOQuePreciso,
+  aoSelecionarEspecialidade,
   aoVerDetalhes,
 }) {
 
@@ -90,22 +95,32 @@ function Inicio({
     <div className="pagina-fundo">
       <div className="inicio">
         <div className="inicio-conteudo">
-          <Cabecalho
-            nome={primeiroNome}
-            titulo="Como podemos ajudar você hoje?"
-          />
+          
+  <Cabecalho
+    nome={primeiroNome}
+    titulo="Como podemos ajudar você hoje?"
+    aoAbrirNotificacoes={aoAbrirNotificacoes}
+  />
 
-          <section className="inicio-acoes">
-            {acoes.map((acao) => (
-              <CartaoAcao
-                key={acao.titulo}
-                icone={acao.icone}
-                titulo={acao.titulo}
-                descricao={acao.descricao}
-                destaque={acao.destaque}
-              />
-            ))}
-          </section>
+        <section className="inicio-acoes">
+          {acoes.map((acao) => (
+            <CartaoAcao
+              key={acao.titulo}
+              icone={acao.icone}
+              titulo={acao.titulo}
+              descricao={acao.descricao}
+              destaque={acao.destaque}
+              aoClicar={
+                acao.titulo === 'Preciso de atendimento'
+                  ? aoPrecisoAtendimento
+                  : acao.titulo === 'Já sei o que preciso'
+                    ? aoJaSeiOQuePreciso
+                    : undefined
+              }
+            />
+          ))}
+        </section>
+
 
           <section className="inicio-secao">
             <h2 className="inicio-secao-titulo">Próximo atendimento</h2>
@@ -124,12 +139,25 @@ function Inicio({
             <h2 className="inicio-secao-titulo">Especialidades rápidas</h2>
             <div className="inicio-grade-especialidades">
               {especialidades.map((especialidade) => (
-                <CartaoEspecialidade
+                <div
                   key={especialidade.nome}
-                  icone={especialidade.icone}
-                  nome={especialidade.nome}
-                />
-              ))}
+                  role="button"
+                  tabIndex={0}
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => aoSelecionarEspecialidade?.(especialidade.nome)}
+                  onKeyDown={(evento) => {
+                    if (evento.key === 'Enter' || evento.key === ' ') {
+                      evento.preventDefault()
+                      aoSelecionarEspecialidade?.(especialidade.nome)
+                    }
+                  }}
+  >
+    <CartaoEspecialidade
+      icone={especialidade.icone}
+      nome={especialidade.nome}
+    />
+  </div>
+))}
             </div>
           </section>
         </div>

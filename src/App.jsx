@@ -23,6 +23,8 @@ import Reagendar from './paginas/Reagendar/Reagendar'
 import HorariosDisponiveis from './paginas/HorariosDisponiveis/HorariosDisponiveis'
 import Historico from './paginas/Historico/Historico'
 import PerfilPaciente from './paginas/PerfilPaciente/PerfilPaciente'
+import PreTriagem from './paginas/PreTriagem/PreTriagem'
+import NovoAgendamento from './paginas/NovoAgendamento/NovoAgendamento'
 
 import {
   obterDataHoraConsulta,
@@ -68,6 +70,7 @@ function App() {
   const [filtroConsultas, setFiltroConsultas] = useState(null)
   const [consultasPaciente, setConsultasPaciente] = useState(consultasIniciais)
   const [dataReagendamento, setDataReagendamento] = useState(null)
+  const [especialidadeInicial, setEspecialidadeInicial] = useState(null)
 
   // Consultas do profissional
   const [consultaAberta, setConsultaAberta] = useState(null)
@@ -196,7 +199,10 @@ function confirmarReagendamento(horario) {
     setTelaAtual('detalhes-agendamento')
   }
 
+
   function entrar(dadosUsuario) {
+    console.log('Campos do usuário:', Object.keys(dadosUsuario))
+
     setUsuario(dadosUsuario)
 
     if (dadosUsuario.perfil === PERFIS.PROFISSIONAL) {
@@ -208,13 +214,24 @@ function confirmarReagendamento(horario) {
     }
   }
 
+
   function sair() {
     setUsuario(null)
     setConsultaAberta(null)
     setConsultaPaciente(null)
     setTelaAtual('login')
   }
+  function confirmarNovoAgendamento(consulta) {
+    setConsultasPaciente((anteriores) => [
+      ...anteriores,
+      consulta,
+    ])
+  }
 
+  function verNovoAgendamento(consulta) {
+    setConsultaPaciente(consulta)
+    setTelaAtual('detalhes-agendamento')
+  }
   // BOAS-VINDAS
 
   if (telaAtual === 'boas-vindas') {
@@ -284,10 +301,41 @@ function confirmarReagendamento(horario) {
       aoIrParaHistorico={() => setTelaAtual('historico')}
       aoVerDetalhes={abrirDetalhesPaciente}
       aoIrParaPerfil={() => setTelaAtual('perfil-paciente')}
+      aoPrecisoAtendimento={() => setTelaAtual('pre-triagem')}
+      aoAbrirNotificacoes={() => setTelaAtual('notificacoes')}
+      aoJaSeiOQuePreciso={() => {
+        setEspecialidadeInicial(null)
+        setTelaAtual('novo-agendamento')
+      }}
+
+      aoSelecionarEspecialidade={(especialidade) => {
+        setEspecialidadeInicial(especialidade)
+        setTelaAtual('novo-agendamento')
+      }}
     />
   )
 }
-  
+// NOVO AGENDAMENTO DO PACIENTE
+
+  if (telaAtual === 'novo-agendamento') {
+    return (
+      <NovoAgendamento
+        especialidadeInicial={especialidadeInicial}
+        aoVoltar={() => setTelaAtual('inicio')}
+        aoConfirmar={confirmarNovoAgendamento}
+        aoVerAgendamento={verNovoAgendamento}
+      />
+  )
+}
+  // PRÉ-TRIAGEM DO PACIENTE
+
+if (telaAtual === 'pre-triagem') {
+  return (
+    <PreTriagem
+      aoVoltar={() => setTelaAtual('inicio')}
+    />
+  )
+}
 
   // AGENDAMENTOS DO PACIENTE
 
@@ -343,6 +391,22 @@ if (telaAtual === 'reagendar' && consultaPaciente) {
       />
     )
   }
+  
+  // NOTIFICAÇÕES DO PACIENTE
+
+  if (telaAtual === 'notificacoes') {
+    return (
+      <PerfilPaciente
+        usuario={usuario}
+        abrirNotificacoesInicialmente={true}
+        aoVoltarNotificacoes={() => setTelaAtual('inicio')}
+        aoIrParaInicio={() => setTelaAtual('inicio')}
+        aoIrParaAgendamentos={() => setTelaAtual('agendamentos')}
+        aoIrParaHistorico={() => setTelaAtual('historico')}
+      />
+    )
+  }
+
     // PERFIL DO PACIENTE
 
   if (telaAtual === 'perfil-paciente') {

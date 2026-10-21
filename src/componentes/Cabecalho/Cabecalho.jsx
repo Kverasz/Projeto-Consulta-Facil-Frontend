@@ -1,21 +1,28 @@
 
 import './Cabecalho.css'
 
-function Cabecalho({ nome, titulo, aoAbrirMenu }) {
+function Cabecalho({
+  nome,
+  titulo,
+  aoAbrirMenu,
+  aoAbrirNotificacoes,
+}) {
   return (
     <header className="cabecalho">
       <div className="cabecalho-topo">
         <div className="cabecalho-topo-esquerda">
 
           {aoAbrirMenu && (
-            <button
-              type="button"
-              className="cabecalho-menu"
-              onClick={aoAbrirMenu}
-              aria-label="Abrir menu"
-            >
-              ☰
-            </button>
+
+          <button
+            type="button"
+            className="cabecalho-sino"
+            aria-label="Abrir notificações"
+            onClick={aoAbrirNotificacoes}
+          >
+            🔔
+          </button>
+
           )}
 
           <p className="cabecalho-saudacao">
@@ -26,7 +33,10 @@ function Cabecalho({ nome, titulo, aoAbrirMenu }) {
         <button
           type="button"
           className="cabecalho-sino"
-          aria-label="Notificações"
+          aria-label="Abrir notificações"
+          onClick={() => {
+            aoAbrirNotificacoes?.()
+          }}
         >
           🔔
         </button>
