@@ -61,7 +61,14 @@ function Detalhes({ consulta, aoVoltar, aoReagendar, aoCancelar }) {
 
       {ativa && (
       <div className="detalhes-acoes">
-        <Botao texto="Reagendar" aoClicar={aoReagendar} />
+        {consulta.clinicaAtiva === false || consulta.especialidadeAtiva === false ? (
+          <p className="detalhes-erro" role="status">
+            {consulta.clinicaAtiva === false ? 'Esta clínica' : 'Esta especialidade'} está indisponível para novos
+            agendamentos no momento, por isso não é possível reagendar. Você ainda pode cancelar esta consulta.
+          </p>
+        ) : (
+          <Botao texto="Reagendar" aoClicar={aoReagendar} />
+        )}
 
         {!confirmando && (
           <button

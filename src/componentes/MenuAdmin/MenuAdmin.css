@@ -1,0 +1,61 @@
+.menu-admin {
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  display: flex;
+  padding: 8px 8px calc(8px + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid var(--cor-borda);
+  background: #ffffff;
+}
+
+.menu-admin-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 4px;
+  border: none;
+  background: none;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--cor-placeholder);
+}
+
+.menu-admin-item > span {
+  font-size: 1.125rem;
+}
+
+.menu-admin-item-ativo {
+  color: var(--cor-primaria);
+}
+
+.menu-admin-item-breve {
+  opacity: 0.8;
+}
+
+/* ☰ do topo: escondido no celular e no tablet */
+.menu-admin-botao {
+  display: none;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  margin-left: auto;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--cor-fundo-botao-voltar);
+  font-size: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Desktop: abas de baixo somem e o ☰ abre o menu lateral */
+@media (min-width: 1024px) {
+  .menu-admin {
+    display: none;
+  }
+
+  .menu-admin-botao {
+    display: flex;
+  }
+}

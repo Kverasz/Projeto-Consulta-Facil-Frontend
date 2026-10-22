@@ -17,3 +17,16 @@ export function telefoneValido(valor) {
 export function emailValido(valor) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(valor ?? '').trim())
 }
+
+// "12345678900" -> "123.456.789-00" (vai formatando enquanto a pessoa digita)
+export function formatarCpf(valor) {
+  const n = String(valor ?? '').replace(/\D/g, '').slice(0, 11)
+  return n
+    .replace(/^(\d{3})(\d)/, '$1.$2')
+    .replace(/^(\d{3})\.(\d{3})(\d)/, '$1.$2.$3')
+    .replace(/\.(\d{3})(\d)/, '.$1-$2')
+}
+
+export function cpfValido(valor) {
+  return String(valor ?? '').replace(/\D/g, '').length === 11
+}

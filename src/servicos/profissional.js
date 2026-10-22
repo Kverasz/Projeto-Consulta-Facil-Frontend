@@ -8,6 +8,7 @@
 // Ajustar um nome de campo é só mexer nas funções ler... deste arquivo.
 
 import { URL_API } from './autenticacao'
+import { mapaDeEspecialidades } from './especialidades'
 
 export async function buscar(caminho, token) {
   const resposta = await fetch(`${URL_API}${caminho}`, {
@@ -103,9 +104,9 @@ function lerAgendamento(item, disponibilidadePorId) {
     pacienteNome: item.paciente_nome ?? item.nome_paciente ?? item.paciente?.nome ?? null,
     especialidade: item.especialidade_nome ?? item.nome_especialidade ?? item.especialidade?.nome ?? null,
     clinica: item.clinica_nome ?? item.nome_clinica ?? item.clinica?.nome ?? null,
-    data: lerData(item.data ?? item.data_agendamento ?? item.disponibilidade?.data) || disponibilidade?.data || '',
+    data: lerData(item.data_consulta ?? item.data ?? item.data_agendamento ?? item.disponibilidade?.data) || disponibilidade?.data || '',
     hora:
-      lerHora(item.hora_inicio ?? item.hora ?? item.horario ?? item.disponibilidade?.hora_inicio) ||
+      lerHora(item.hora_consulta ?? item.hora_inicio ?? item.hora ?? item.horario ?? item.disponibilidade?.hora_inicio) ||
       disponibilidade?.horaInicio ||
       '',
     status: String(item.status || '').toUpperCase(),
@@ -157,7 +158,9 @@ export async function carregarPainelProfissional(usuario) {
     }
   }
 
+  const registroEspecialidades = await mapaDeEspecialidades(token)
   const especialidade =
+    registroEspecialidades.get(String(profissional.id_especialidade ?? profissional.especialidade?.id_especialidade))?.nome ??
     profissional.especialidade_nome ??
     profissional.nome_especialidade ??
     (typeof profissional.especialidade === 'string' ? profissional.especialidade : profissional.especialidade?.nome) ??
@@ -208,7 +211,23 @@ export async function enviar(caminho, metodo, corpo, token, mensagemErro, mensag
   } catch {
     throw new Error('Não foi possível conectar ao servidor.')
   }
-  if (!resposta.ok) throw new Error(mensagensPorStatus[resposta.status] ?? mensagemErro)
+  if (!resposta.ok) {
+    // O back end responde { erro: "..." } com mensagens em português e específicas (por exemplo,
+    // "CPF já cadastrado" ou "A senha deve possuir pelo menos 8 caracteres"). Em 400 e 409 elas são
+    // mais úteis que um texto genérico, então têm prioridade.
+    const doServidor = resposta.status === 400 || resposta.status === 409 ? await mensagemDoServidor(resposta) : null
+    throw new Error(doServidor ?? mensagensPorStatus[resposta.status] ?? mensagemErro)
+  }
+}
+
+export async function mensagemDoServidor(resposta) {
+  try {
+    const corpo = await resposta.json()
+    const texto = typeof corpo?.erro === 'string' ? corpo.erro.trim() : ''
+    return texto && texto.length <= 200 ? texto : null
+  } catch {
+    return null
+  }
 }
 
 // PUT /agendamentos/{id} com { status: 'CONFIRMADO' }
@@ -224,7 +243,6 @@ export function cancelarAgendamento(id, token) {
 // ---------- Perfil ----------
 
 // Dados do cadastro do profissional logado (GET /profissionais/{id}).
-// "cadastro" guarda o registro como veio da API: ele é reenviado inteiro ao salvar (ver salvarContato).
 export async function carregarPerfil(usuario) {
   const token = usuario.token
   const id = await descobrirIdProfissional(usuario)
@@ -240,7 +258,9 @@ export async function carregarPerfil(usuario) {
     }
   }
 
+  const registroEspecialidades = await mapaDeEspecialidades(token)
   const especialidade =
+    registroEspecialidades.get(String(bruto.id_especialidade ?? bruto.especialidade?.id_especialidade))?.nome ??
     bruto.especialidade_nome ??
     bruto.nome_especialidade ??
     (typeof bruto.especialidade === 'string' ? bruto.especialidade : bruto.especialidade?.nome) ??
@@ -263,22 +283,10 @@ export async function carregarPerfil(usuario) {
   }
 }
 
-// PUT /profissionais/{id}. A documentação não descreve o corpo do PUT, então enviamos o cadastro
-// completo (os mesmos campos do POST) com só telefone e e-mail trocados. Assim nada é apagado
-// e o nome continua gravado exatamente como estava.
+// PUT /profissionais/{id} é parcial no servidor: enviamos só telefone e e-mail, o resto fica como está.
+// (O e-mail é o login do profissional e é obrigatório; telefone vazio é gravado como nulo.)
 export function salvarContato(perfil, { telefone, email }, token) {
-  const c = perfil.cadastro
-  const corpo = {
-    id_clinica: c.id_clinica ?? c.clinica?.id_clinica,
-    id_especialidade: c.id_especialidade ?? c.especialidade?.id_especialidade,
-    nome: c.nome,
-    cpf: c.cpf,
-    registro_profissional: c.registro_profissional,
-    conselho: c.conselho,
-    telefone,
-    email
-  }
-  Object.keys(corpo).forEach((chave) => corpo[chave] == null && delete corpo[chave])
+  const corpo = { telefone, email }
 
   return enviar(`/profissionais/${perfil.id}`, 'PUT', corpo, token, 'Não foi possível salvar suas alterações.', {
     400: 'Confira o telefone e o e-mail informados.',

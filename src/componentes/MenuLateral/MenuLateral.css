@@ -23,17 +23,22 @@
   width: 260px;
   max-width: 80vw;
   background-color: #ffffff;
-  box-shadow: 8px 0 24px rgba(27, 35, 51, 0.15);
   padding: 20px;
   display: flex;
   flex-direction: column;
   transform: translateX(-100%);
-  transition: transform 0.25s ease;
+  /* Fechado, o painel sai da ordem de tabulação e do leitor de tela */
+  visibility: hidden;
+  transition: transform 0.25s ease, visibility 0s linear 0.25s;
   z-index: 50;
 }
 
 .menu-lateral-aberto {
   transform: translateX(0);
+  visibility: visible;
+  transition: transform 0.25s ease, visibility 0s;
+  /* A sombra só existe com o menu aberto; fechado, ela vazava na borda esquerda da tela */
+  box-shadow: 8px 0 24px rgba(27, 35, 51, 0.15);
 }
 
 .menu-lateral-topo {

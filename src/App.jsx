@@ -17,6 +17,9 @@ import Agenda from './paginas/Agenda/Agenda'
 import DetalhesConsulta from './paginas/DetalhesConsulta/DetalhesConsulta'
 
 import InicioAdmin from './paginas/InicioAdmin/InicioAdmin'
+import ClinicasAdmin from './paginas/ClinicasAdmin/ClinicasAdmin'
+import EquipeAdmin from './paginas/EquipeAdmin/EquipeAdmin'
+import EspecialidadesAdmin from './paginas/EspecialidadesAdmin/EspecialidadesAdmin'
 
 import Detalhes from './paginas/Detalhes/Detalhes'
 import Reagendar from './paginas/Reagendar/Reagendar'
@@ -503,8 +506,27 @@ function App() {
 
   // INÍCIO DO ADMINISTRADOR
 
+  function navegarAdmin(id) {
+    if (id === 'inicio') setTelaAtual('inicio-admin')
+    if (id === 'clinicas') setTelaAtual('clinicas-admin')
+    if (id === 'equipe') setTelaAtual('equipe-admin')
+    if (id === 'especialidades') setTelaAtual('especialidades-admin')
+  }
+
   if (telaAtual === 'inicio-admin') {
-    return <InicioAdmin usuario={usuario} aoSair={sair} />
+    return <InicioAdmin usuario={usuario} aoSair={sair} aoNavegar={navegarAdmin} />
+  }
+
+  if (telaAtual === 'clinicas-admin') {
+    return <ClinicasAdmin usuario={usuario} aoNavegar={navegarAdmin} />
+  }
+
+  if (telaAtual === 'equipe-admin') {
+    return <EquipeAdmin usuario={usuario} aoNavegar={navegarAdmin} />
+  }
+
+  if (telaAtual === 'especialidades-admin') {
+    return <EspecialidadesAdmin usuario={usuario} aoNavegar={navegarAdmin} />
   }
 
   return null
