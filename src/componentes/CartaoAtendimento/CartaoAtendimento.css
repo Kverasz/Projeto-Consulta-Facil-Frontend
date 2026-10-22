@@ -17,7 +17,7 @@
   flex-shrink: 0;
   border-radius: 14px;
   background-color: var(--cor-primaria-clara);
-  font-size: 20px;
+  font-size: 1.25rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -35,13 +35,13 @@
 }
 
 .cartao-atendimento-nome {
-  font-size: 15px;
+  font-size: 0.9375rem;
   font-weight: 700;
   color: var(--cor-titulo);
 }
 
 .cartao-atendimento-status {
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 600;
   color: var(--cor-sucesso);
   background-color: var(--cor-fundo-sucesso);
@@ -52,7 +52,7 @@
 
 .cartao-atendimento-especialidade {
   margin-top: 2px;
-  font-size: 13px;
+  font-size: 0.8125rem;
   color: var(--cor-texto-suave);
 }
 
@@ -62,7 +62,7 @@
   margin-top: 14px;
   padding-top: 14px;
   border-top: 1px solid var(--cor-borda);
-  font-size: 13px;
+  font-size: 0.8125rem;
   color: var(--cor-texto);
 }
 
@@ -71,7 +71,7 @@
   border: none;
   background: none;
   padding: 0;
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-weight: 600;
   color: var(--cor-primaria);
 }

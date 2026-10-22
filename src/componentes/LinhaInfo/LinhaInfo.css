@@ -11,20 +11,20 @@
 }
 
 .linha-info-icone {
-  font-size: 17px;
+  font-size: 1.0625rem;
   width: 22px;
   text-align: center;
   flex-shrink: 0;
 }
 
 .linha-info-rotulo {
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--cor-texto-suave);
 }
 
 .linha-info-valor {
   margin-top: 2px;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 600;
   color: var(--cor-titulo);
 }

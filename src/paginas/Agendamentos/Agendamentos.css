@@ -22,14 +22,14 @@
 }
 
 .agendamentos-cabecalho h1 {
-  font-size: 22px;
+  font-size: 1.375rem;
   font-weight: 700;
   color: var(--cor-titulo);
 }
 
 .agendamentos-cabecalho p {
   margin-top: 4px;
-  font-size: 14px;
+  font-size: 0.875rem;
   color: var(--cor-primaria);
   font-weight: 600;
 }
@@ -68,10 +68,19 @@
   }
 
   .agendamentos-cabecalho h1 {
-    font-size: 26px;
+    font-size: 1.625rem;
   }
 
   .agendamentos-lista {
     grid-template-columns: repeat(3, 1fr);
   }
+}
+
+.agendamentos-tentar-novamente {
+  border: none;
+  background: none;
+  color: var(--cor-primaria);
+  font-size: inherit;
+  font-weight: 700;
+  text-decoration: underline;
 }

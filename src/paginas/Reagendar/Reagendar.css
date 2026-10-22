@@ -15,21 +15,21 @@
 }
 
 .reagendar-profissional {
-  font-size: 15px;
+  font-size: 0.9375rem;
   font-weight: 700;
   color: var(--cor-atencao);
 }
 
 .reagendar-titulo {
   margin-top: 22px;
-  font-size: 19px;
+  font-size: 1.1875rem;
   font-weight: 700;
   color: var(--cor-titulo);
 }
 
 .reagendar-subtitulo {
   margin-top: 2px;
-  font-size: 13px;
+  font-size: 0.8125rem;
   color: var(--cor-texto-suave);
 }
 
@@ -42,7 +42,7 @@
 
 .reagendar-calendario th {
   padding-bottom: 10px;
-  font-size: 11px;
+  font-size: 0.6875rem;
   font-weight: 600;
   color: var(--cor-texto-suave);
 }
@@ -58,7 +58,7 @@
   border-radius: 50%;
   border: 1px solid transparent;
   background: none;
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-weight: 600;
   color: var(--cor-atencao);
 }
@@ -83,7 +83,7 @@
   border-radius: 20px;
   background-color: #8adbe8;
   color: #ffffff;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 700;
 }
 
@@ -117,7 +117,7 @@
   border-radius: 50%;
   background-color: #ffffff;
   color: var(--cor-primaria);
-  font-size: 24px;
+  font-size: 1.5rem;
   cursor: pointer;
 }
 
@@ -128,7 +128,7 @@
 
 .reagendar-navegacao-mes .reagendar-subtitulo {
   margin-top: 0;
-  font-size: 15px;
+  font-size: 0.9375rem;
   font-weight: 700;
   color: var(--cor-titulo);
 }
@@ -151,7 +151,7 @@
 
 .reagendar-botao:disabled {
   background-color: #d6e8eb;
-  color: #8a9ca0;
+  color: var(--cor-texto-claro);
   cursor: not-allowed;
 }
 /* Centralização do botão de horários */
@@ -191,4 +191,24 @@
   text-align: center;
 }
 
+}
+
+.reagendar-aviso {
+  margin: 0 0 12px;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--cor-texto-suave);
+}
+
+.reagendar-aviso-erro {
+  color: #b91c1c;
+}
+
+.reagendar-aviso button {
+  border: none;
+  background: none;
+  color: var(--cor-primaria);
+  font-weight: 700;
+  font-size: inherit;
+  text-decoration: underline;
 }

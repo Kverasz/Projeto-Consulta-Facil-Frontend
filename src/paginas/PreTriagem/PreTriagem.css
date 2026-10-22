@@ -25,7 +25,7 @@
   border: none;
   border-radius: 50%;
   background: #f0f4f8;
-  font-size: 25px;
+  font-size: 1.5625rem;
   cursor: pointer;
 }
 
@@ -33,7 +33,7 @@
   flex: 1;
   text-align: center;
   margin-right: 34px;
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 
 .triagem-conteudo {
@@ -62,26 +62,26 @@
   display: grid;
   place-items: center;
   background: #e4faff;
-  font-size: 32px;
+  font-size: 2rem;
   margin: 0 auto;
 }
 
 .triagem h1 {
-  font-size: 23px;
+  font-size: 1.4375rem;
   line-height: 1.3;
   text-align: center;
   margin: 0;
 }
 
 .triagem h2 {
-  font-size: 19px;
+  font-size: 1.1875rem;
   line-height: 1.4;
   margin: 0;
 }
 
 .triagem p {
   color: #7087a2;
-  font-size: 13px;
+  font-size: 0.8125rem;
   line-height: 1.6;
 }
 
@@ -91,13 +91,13 @@
   border-radius: 10px;
   background: #fffdf4;
   color: #b86d0c;
-  font-size: 12px;
+  font-size: 0.75rem;
   line-height: 1.5;
 }
 
 .triagem-apresentacao small {
   color: #94a6b8;
-  font-size: 11px;
+  font-size: 0.6875rem;
 }
 
 .triagem-botoes {
@@ -114,7 +114,7 @@
   width: 100%;
   padding: 12px;
   border-radius: 11px;
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-weight: 700;
   text-align: center;
   text-decoration: none;
@@ -141,8 +141,8 @@
 .triagem-progresso-topo {
   display: flex;
   justify-content: space-between;
-  font-size: 11px;
-  color: #8196b0;
+  font-size: 0.6875rem;
+  color: var(--cor-texto-claro);
 }
 
 .triagem-progresso {
@@ -188,7 +188,7 @@
   border-radius: 10px;
   text-align: left;
   color: #263b59;
-  font-size: 13px;
+  font-size: 0.8125rem;
   cursor: pointer;
 }
 
@@ -206,7 +206,7 @@
   height: 17px;
   display: grid;
   place-items: center;
-  font-size: 11px;
+  font-size: 0.6875rem;
 }
 
 .triagem-opcao small {
@@ -221,12 +221,12 @@
 
 .triagem-contador {
   text-align: center;
-  font-size: 11px;
+  font-size: 0.6875rem;
   color: #00a4c0;
 }
 
 .triagem-label {
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 600;
 }
 
@@ -263,7 +263,7 @@
 }
 
 .triagem-resumo h2 {
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 .triagem-resumo p {
@@ -321,7 +321,7 @@
   border-radius: 50%;
   background: #00b7d3;
   color: white;
-  font-size: 48px;
+  font-size: 3rem;
   cursor: pointer;
   box-shadow: 0 0 0 12px #00b7d31c;
   transition: transform .2s;
@@ -332,15 +332,15 @@
 }
 
 .triagem-instrucao {
-  color: #8196b0;
-  font-size: 12px;
+  color: var(--cor-texto-claro);
+  font-size: 0.75rem;
 }
 
 .triagem-tempo-gravacao {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 32px;
+  font-size: 2rem;
   font-weight: 700;
   color: #15233b;
 }
@@ -388,7 +388,7 @@
   border-radius: 50%;
   background: #ef4444;
   color: white;
-  font-size: 40px;
+  font-size: 2.5rem;
   cursor: pointer;
 }
 
@@ -400,7 +400,7 @@
   border-radius: 50%;
   background: #dcfce7;
   color: #16a34a;
-  font-size: 35px;
+  font-size: 2.1875rem;
 }
 
 .triagem-reprodutor {
@@ -417,7 +417,7 @@
   background: #fff8e7;
   border: 1px solid #f5d98b;
   border-radius: 10px;
-  font-size: 12px;
+  font-size: 0.75rem;
   line-height: 1.5;
   color: #8a6200;
 }

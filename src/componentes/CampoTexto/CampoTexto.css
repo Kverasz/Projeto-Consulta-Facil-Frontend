@@ -5,7 +5,7 @@
 }
 
 .campo-texto label {
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 500;
   color: var(--cor-texto);
 }
@@ -16,7 +16,7 @@
   border: 1px solid var(--cor-borda);
   border-radius: 16px;
   background-color: #ffffff;
-  font-size: 15px;
+  font-size: 0.9375rem;
   color: var(--cor-titulo);
   outline: none;
 }

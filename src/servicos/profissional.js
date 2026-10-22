@@ -9,7 +9,7 @@
 
 import { URL_API } from './autenticacao'
 
-async function buscar(caminho, token) {
+export async function buscar(caminho, token) {
   const resposta = await fetch(`${URL_API}${caminho}`, {
     headers: token ? { Authorization: `Bearer ${token}` } : {}
   })
@@ -22,23 +22,23 @@ async function buscar(caminho, token) {
 }
 
 // Algumas APIs devolvem a lista direto, outras dentro de { dados: [...] } etc.
-function comoLista(dados) {
+export function comoLista(dados) {
   if (Array.isArray(dados)) return dados
   const lista = dados?.dados ?? dados?.data ?? dados?.items ?? dados?.resultado
   return Array.isArray(lista) ? lista : []
 }
 
-function comoObjeto(dados) {
+export function comoObjeto(dados) {
   return dados?.dados ?? dados?.data ?? dados ?? {}
 }
 
 // "2026-10-20T00:00:00.000Z" ou "2026-10-20" -> "2026-10-20" (sem converter fuso, para não mudar o dia)
-function lerData(valor) {
+export function lerData(valor) {
   return typeof valor === 'string' ? valor.slice(0, 10) : ''
 }
 
 // "08:00:00" -> "08:00"
-function lerHora(valor) {
+export function lerHora(valor) {
   return typeof valor === 'string' ? valor.slice(0, 5) : ''
 }
 

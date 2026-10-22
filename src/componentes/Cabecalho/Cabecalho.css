@@ -11,7 +11,7 @@
 }
 
 .cabecalho-saudacao {
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 600;
   color: var(--cor-texto-suave);
 }
@@ -23,7 +23,7 @@
   border: none;
   border-radius: 50%;
   background-color: var(--cor-fundo-botao-voltar);
-  font-size: 16px;
+  font-size: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -32,7 +32,7 @@
 
 .cabecalho-titulo {
   margin-top: 10px;
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 700;
   line-height: 1.25;
   color: var(--cor-titulo);

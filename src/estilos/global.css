@@ -36,3 +36,50 @@ input {
 button {
   cursor: pointer;
 }
+
+/* ---------- Acessibilidade (Perfil > Acessibilidade) ----------
+   Os tamanhos de letra do projeto estão em rem, então "Letras maiores" aumenta o texto
+   mudando só o tamanho base da página. */
+html {
+  font-size: 100%;
+}
+
+html[data-fonte='grande'] {
+  font-size: 125%;
+}
+
+/* Cor de textos secundários que antes eram cinzas claros fixos */
+:root {
+  --cor-texto-claro: #8399b2;
+}
+
+/* Alto contraste: textos mais escuros, bordas visíveis e azul mais forte (contraste mínimo 4,5:1) */
+html[data-contraste='alto'] {
+  --cor-primaria: #006a82;
+  --cor-primaria-clara: #d6eff5;
+  --cor-titulo: #000000;
+  --cor-texto: #0b1220;
+  --cor-texto-suave: #2d3748;
+  --cor-subtitulo: #3f4a5c;
+  --cor-texto-claro: #3f4a5c;
+  --cor-borda: #6b7688;
+  --cor-placeholder: #5b6678;
+  --cor-fundo-botao-voltar: #e1e6ee;
+  --cor-sucesso: #14532d;
+  --cor-fundo-sucesso: #d5f5df;
+}
+
+html[data-contraste='alto'] button:focus-visible,
+html[data-contraste='alto'] input:focus-visible,
+html[data-contraste='alto'] select:focus-visible,
+html[data-contraste='alto'] textarea:focus-visible,
+html[data-contraste='alto'] a:focus-visible {
+  outline: 3px solid #000000;
+  outline-offset: 2px;
+}
+
+html[data-contraste='alto'] input,
+html[data-contraste='alto'] select,
+html[data-contraste='alto'] textarea {
+  border-color: #3f4a5c;
+}

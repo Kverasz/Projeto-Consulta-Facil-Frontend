@@ -83,3 +83,27 @@ export function celulasDoMes(ano, mes) {
   for (let dia = 1; dia <= total; dia++) celulas.push(paraISO(new Date(ano, mes, dia)))
   return celulas
 }
+
+// "2026-10-16" -> "16 out 2026"
+export function dataCurta(data) {
+  if (!data) return ''
+  const [ano, mes, dia] = data.split('-')
+  return `${Number(dia)} ${MESES_CURTOS[Number(mes) - 1]} ${ano}`
+}
+
+// "2026-10-16" -> "16 de outubro de 2026"
+export function dataCompleta(data) {
+  if (!data) return ''
+  const [ano, mes, dia] = data.split('-')
+  return `${Number(dia)} de ${MESES[Number(mes) - 1]} de ${ano}`
+}
+
+// "2026-10-16", "09:30" -> "Hoje, 09:30", "Amanhã, 09:30" ou "Qui, 29 out · 09:30"
+export function rotuloProximoHorario(data, hora, hoje) {
+  if (!data) return ''
+  const dias = Math.round((dataLocal(data) - dataLocal(hoje)) / 86400000)
+  if (dias === 0) return `Hoje, ${hora}`
+  if (dias === 1) return `Amanhã, ${hora}`
+  const [, mes, dia] = data.split('-')
+  return `${diaDaSemanaCurto(data)}, ${Number(dia)} ${MESES_CURTOS[Number(mes) - 1]} · ${hora}`
+}

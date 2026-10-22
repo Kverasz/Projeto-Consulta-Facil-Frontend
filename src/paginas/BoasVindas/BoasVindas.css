@@ -18,7 +18,7 @@
 }
 
 .boas-vindas-conteudo h1 {
-  font-size: 32px;
+  font-size: 2rem;
   color: #0b1e2d;
   margin-bottom: 16px;
   font-weight: 700;
@@ -26,7 +26,7 @@
 }
 
 .boas-vindas-conteudo p {
-  font-size: 15px;
+  font-size: 0.9375rem;
   color: #64748b;
   line-height: 1.5;
 }
@@ -45,7 +45,7 @@
   color: #0b1e2d;
   padding: 14px;
   border-radius: 12px;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s;

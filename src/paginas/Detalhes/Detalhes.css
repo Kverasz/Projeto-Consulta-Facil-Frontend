@@ -20,7 +20,7 @@
 }
 
 .detalhes-titulo {
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--cor-titulo);
 }
@@ -50,14 +50,14 @@
 }
 
 .detalhes-confirmacao-titulo {
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 700;
   color: var(--cor-sucesso);
 }
 
 .detalhes-confirmacao-codigo {
   margin-top: 2px;
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--cor-sucesso);
 }
 
@@ -82,7 +82,7 @@
   height: 50px;
   border: none;
   background: none;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 600;
   color: var(--cor-atencao);
 }
@@ -96,14 +96,14 @@
 }
 
 .detalhes-confirmar-titulo {
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 700;
   color: #c0392b;
 }
 
 .detalhes-confirmar-texto {
   margin-top: 2px;
-  font-size: 13px;
+  font-size: 0.8125rem;
   color: #c0392b;
 }
 
@@ -118,7 +118,7 @@
   flex: 1;
   height: 44px;
   border-radius: 14px;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 700;
 }
 
@@ -144,3 +144,26 @@
     min-height: 0;
   }
 }
+
+.detalhes-confirmacao-aguardando { background-color: #fef3c7; }
+.detalhes-confirmacao-aguardando .detalhes-confirmacao-titulo,
+.detalhes-confirmacao-aguardando .detalhes-confirmacao-icone { color: #92400e; }
+
+.detalhes-confirmacao-cancelada { background-color: #fee2e2; }
+.detalhes-confirmacao-cancelada .detalhes-confirmacao-titulo,
+.detalhes-confirmacao-cancelada .detalhes-confirmacao-icone { color: #991b1b; }
+
+.detalhes-confirmacao-realizada { background-color: var(--cor-fundo-botao-voltar); }
+.detalhes-confirmacao-realizada .detalhes-confirmacao-titulo,
+.detalhes-confirmacao-realizada .detalhes-confirmacao-icone { color: var(--cor-texto); }
+
+.detalhes-erro {
+  margin-top: 12px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #b91c1c;
+}
+
+.detalhes-confirmacao-aguardando .detalhes-confirmacao-codigo { color: #92400e; }
+.detalhes-confirmacao-cancelada .detalhes-confirmacao-codigo { color: #991b1b; }
+.detalhes-confirmacao-realizada .detalhes-confirmacao-codigo { color: var(--cor-texto-suave); }

@@ -131,7 +131,7 @@ function Horarios({ usuario, aoNavegar }) {
       />
 
       <div className="horarios">
-        <header className="horarios-topo">
+        <header className="horarios-cabecalho">
           <BotaoVoltar aoClicar={() => aoNavegar('inicio')} />
           <h1 className="horarios-titulo">Disponibilidade</h1>
           <button type="button" className="horarios-menu" onClick={() => setMenuAberto(true)} aria-label="Abrir menu">☰</button>

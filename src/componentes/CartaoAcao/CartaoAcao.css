@@ -16,7 +16,7 @@
   flex-shrink: 0;
   border-radius: 14px;
   background-color: var(--cor-primaria-clara);
-  font-size: 20px;
+  font-size: 1.25rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,19 +30,19 @@
 }
 
 .cartao-acao-titulo {
-  font-size: 15px;
+  font-size: 0.9375rem;
   font-weight: 700;
   color: var(--cor-titulo);
 }
 
 .cartao-acao-descricao {
-  font-size: 13px;
+  font-size: 0.8125rem;
   color: var(--cor-texto-suave);
   line-height: 1.35;
 }
 
 .cartao-acao-seta {
-  font-size: 22px;
+  font-size: 1.375rem;
   color: var(--cor-placeholder);
 }
 

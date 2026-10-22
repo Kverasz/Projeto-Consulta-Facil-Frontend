@@ -1,65 +1,69 @@
 .novo-agendamento{width:100%;max-width:430px;min-height:100vh;min-height:100dvh;background:#effbfc;display:flex;flex-direction:column;color:#12223c}
 .novo-agendamento *{box-sizing:border-box}
 .novo-agendamento-cabecalho{height:60px;display:flex;align-items:center;justify-content:space-between;background:#fff;padding:10px 18px}
-.novo-agendamento-cabecalho button{border:0;border-radius:50%;width:34px;height:34px;background:#eef3f7;font-size:25px;color:#19304b;cursor:pointer}
-.novo-agendamento-cabecalho strong{font-size:13px}
+.novo-agendamento-cabecalho button{border:0;border-radius:50%;width:34px;height:34px;background:#eef3f7;font-size:1.5625rem;color:#19304b;cursor:pointer}
+.novo-agendamento-cabecalho strong{font-size:0.8125rem}
 .novo-agendamento-cabecalho span{width:34px}
 .novo-agendamento-conteudo{flex:1;display:flex;flex-direction:column;padding:16px 20px 22px;min-height:0}
-.novo-agendamento h1{font-size:19px;line-height:1.3;margin:0 0 5px;font-weight:750}
-.novo-agendamento-subtitulo{font-size:12px;color:#8399b2;margin:0 0 16px}
-.novo-agendamento-busca{border:1px solid #eef1f6;border-radius:12px;background:#f9fbfd;padding:13px;width:100%;font-size:13px;outline-color:#00b6d2;margin:8px 0 15px}
+.novo-agendamento h1{font-size:1.1875rem;line-height:1.3;margin:0 0 5px;font-weight:750}
+.novo-agendamento-subtitulo{font-size:0.75rem;color:var(--cor-texto-claro);margin:0 0 16px}
+.novo-agendamento-busca{border:1px solid #eef1f6;border-radius:12px;background:#f9fbfd;padding:13px;width:100%;font-size:0.8125rem;outline-color:#00b6d2;margin:8px 0 15px}
 .novo-agendamento-lista{display:flex;flex-direction:column;gap:8px}
-.novo-agendamento-item,.novo-agendamento-profissional{border:0;border-radius:12px;background:#f1fbfd;padding:15px 12px;display:flex;align-items:center;gap:12px;text-align:left;cursor:pointer;color:#1d3654;font-size:13px;width:100%}
-.novo-agendamento-item>span:first-child{font-size:19px;width:24px;text-align:center}
-.novo-agendamento-seta{margin-left:auto;color:#9aafc1;font-size:21px}
+.novo-agendamento-item,.novo-agendamento-profissional{border:0;border-radius:12px;background:#f1fbfd;padding:15px 12px;display:flex;align-items:center;gap:12px;text-align:left;cursor:pointer;color:#1d3654;font-size:0.8125rem;width:100%}
+.novo-agendamento-item>span:first-child{font-size:1.1875rem;width:24px;text-align:center}
+.novo-agendamento-seta{margin-left:auto;color:#9aafc1;font-size:1.3125rem}
 .novo-agendamento-clinicas{display:flex;flex-direction:column;gap:12px}
 .novo-agendamento-cartao{padding:13px;border-radius:13px;background:#fff;border:1px solid #e6eff5;box-shadow:0 2px 6px #16344b0a}
 .novo-agendamento-linha{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.novo-agendamento-linha strong{font-size:13px}
-.novo-agendamento-linha small{font-size:11px;color:#dfad16}
-.novo-agendamento-cartao p{font-size:11px;color:#8297af;margin:6px 0}
+.novo-agendamento-linha strong{font-size:0.8125rem}
+.novo-agendamento-linha small{font-size:0.6875rem;color:#dfad16}
+.novo-agendamento-cartao p{font-size:0.6875rem;color:#8297af;margin:6px 0}
 .novo-agendamento-cartao .novo-agendamento-disponibilidade,.novo-agendamento-disponibilidade{color:#06a18d!important}
-.novo-agendamento-primario{width:100%;min-height:43px;background:#00b5d0;border:1px solid #00b5d0;border-radius:10px;color:white;font-size:12px;font-weight:700;cursor:pointer;padding:10px}
+.novo-agendamento-primario{width:100%;min-height:43px;background:#00b5d0;border:1px solid #00b5d0;border-radius:10px;color:white;font-size:0.75rem;font-weight:700;cursor:pointer;padding:10px}
 .novo-agendamento-primario:disabled{opacity:.42;cursor:not-allowed}
-.novo-agendamento-secundario{width:100%;min-height:43px;border:1px solid #d9e5ed;border-radius:10px;background:transparent;color:#25435e;font-weight:650;font-size:12px;cursor:pointer;padding:10px}
+.novo-agendamento-secundario{width:100%;min-height:43px;border:1px solid #d9e5ed;border-radius:10px;background:transparent;color:#25435e;font-weight:650;font-size:0.75rem;cursor:pointer;padding:10px}
 .novo-agendamento-cartao .novo-agendamento-primario{margin-top:4px}
 .novo-agendamento-profissional{padding:14px;background:#f0f9fc}
-.novo-agendamento-avatar{display:grid;place-items:center;flex-shrink:0;width:45px;height:45px;border-radius:12px;background:#ccfbf1;color:#058b80;font-weight:750;font-size:13px}
+.novo-agendamento-avatar{display:grid;place-items:center;flex-shrink:0;width:45px;height:45px;border-radius:12px;background:#ccfbf1;color:#058b80;font-weight:750;font-size:0.8125rem}
 .novo-agendamento-avatar.avatar-1{background:#f0d9ff;color:#9225c9}
 .novo-agendamento-avatar.avatar-2{background:#dce9ff;color:#2c56c9}
 .novo-agendamento-profissional-info{display:flex;flex-direction:column;gap:3px}
-.novo-agendamento-profissional-info strong{font-size:12px}
-.novo-agendamento-profissional-info small{font-size:10px;color:#8197ae}
+.novo-agendamento-profissional-info strong{font-size:0.75rem}
+.novo-agendamento-profissional-info small{font-size:0.625rem;color:#8197ae}
 .novo-agendamento-calendario{background:#f9fbfe;border-radius:14px;padding:12px 8px}
 .novo-agendamento-meses{display:flex;justify-content:space-between;align-items:center;gap:5px;margin-bottom:12px}
-.novo-agendamento-meses strong{font-size:12px;text-transform:capitalize}
-.novo-agendamento-meses button{border:0;background:transparent;color:#00a9c5;font-size:25px;cursor:pointer;width:30px;height:30px}
+.novo-agendamento-meses strong{font-size:0.75rem;text-transform:capitalize}
+.novo-agendamento-meses button{border:0;background:transparent;color:#00a9c5;font-size:1.5625rem;cursor:pointer;width:30px;height:30px}
 .novo-agendamento-meses button:disabled{opacity:.2;cursor:not-allowed}
 .novo-agendamento-grade-dias{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;text-align:center}
-.novo-agendamento-dia-semana{font-size:10px;color:#8299b5;padding:8px 0}
-.novo-agendamento-grade-dias button{aspect-ratio:1;border:1px solid transparent;border-radius:9px;background:transparent;color:#203957;font-size:11px;cursor:pointer}
+.novo-agendamento-dia-semana{font-size:0.625rem;color:#8299b5;padding:8px 0}
+.novo-agendamento-grade-dias button{aspect-ratio:1;border:1px solid transparent;border-radius:9px;background:transparent;color:#203957;font-size:0.6875rem;cursor:pointer}
 .novo-agendamento-grade-dias button:disabled{opacity:.2;cursor:not-allowed}
 .novo-agendamento-grade-dias button.selecionado{border-color:#00b6d2;background:#dffaff;color:#008ca8;font-weight:750}
 .novo-agendamento-rodape{margin-top:auto;padding-top:20px;display:flex;flex-direction:column;gap:10px}
-.novo-agendamento-legenda{display:flex;justify-content:space-between;gap:5px;flex-wrap:wrap;color:#8399b2;font-size:10px;margin:6px 0 16px}
+.novo-agendamento-legenda{display:flex;justify-content:space-between;gap:5px;flex-wrap:wrap;color:var(--cor-texto-claro);font-size:0.625rem;margin:6px 0 16px}
 .novo-agendamento-grade-horarios{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}
-.novo-agendamento-grade-horarios button{border:1px solid #e8f0f6;border-radius:10px;background:white;min-height:47px;font-size:12px;color:#1d3554;cursor:pointer}
+.novo-agendamento-grade-horarios button{border:1px solid #e8f0f6;border-radius:10px;background:white;min-height:47px;font-size:0.75rem;color:#1d3554;cursor:pointer}
 .novo-agendamento-grade-horarios button:disabled{color:#c9d3de;background:#f4f7f9;text-decoration:line-through;cursor:not-allowed}
 .novo-agendamento-grade-horarios button.selecionado{background:#dffaff;border-color:#00b6d2;color:#008da7;font-weight:750}
 .novo-agendamento-resumo{border-radius:13px;background:#f8fafc;padding:4px 14px}
 .novo-agendamento-resumo-linha{display:flex;gap:12px;align-items:center;border-bottom:1px solid #e8edf2;padding:11px 0}
 .novo-agendamento-resumo-linha:last-child{border:0}
-.novo-agendamento-resumo-linha>span{font-size:19px}
+.novo-agendamento-resumo-linha>span{font-size:1.1875rem}
 .novo-agendamento-resumo-linha div{display:flex;flex-direction:column;gap:3px}
-.novo-agendamento-resumo-linha small{font-size:10px;color:#8ca0b7}
-.novo-agendamento-resumo-linha strong{font-size:12px}
-.novo-agendamento-aviso{border:1px solid #c9e1ff;background:#f1f7ff;color:#4a76c2;padding:12px;border-radius:11px;font-size:11px;line-height:1.5;margin-top:16px}
+.novo-agendamento-resumo-linha small{font-size:0.625rem;color:var(--cor-texto-claro)}
+.novo-agendamento-resumo-linha strong{font-size:0.75rem}
+.novo-agendamento-aviso{border:1px solid #c9e1ff;background:#f1f7ff;color:#4a76c2;padding:12px;border-radius:11px;font-size:0.6875rem;line-height:1.5;margin-top:16px}
 .novo-agendamento-sucesso{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding-top:55px;gap:10px}
-.novo-agendamento-check{width:70px;height:70px;border-radius:50%;background:#e6fbef;display:grid;place-items:center;color:#14aa60;font-size:40px}
-.novo-agendamento-sucesso p{color:#8399b2;font-size:12px;margin:0 0 12px}
+.novo-agendamento-check{width:70px;height:70px;border-radius:50%;background:#e6fbef;display:grid;place-items:center;color:#14aa60;font-size:2.5rem}
+.novo-agendamento-sucesso p{color:var(--cor-texto-claro);font-size:0.75rem;margin:0 0 12px}
 .novo-agendamento-resumo-final{width:100%;text-align:left}
-.novo-agendamento-resumo-final>div{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #e7edf4;font-size:11px}
+.novo-agendamento-resumo-final>div{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #e7edf4;font-size:0.6875rem}
 .novo-agendamento-resumo-final>div:last-child{border:0}
-.novo-agendamento-resumo-final span{color:#8ca0b7}
+.novo-agendamento-resumo-final span{color:var(--cor-texto-claro)}
 .novo-agendamento-sucesso .novo-agendamento-rodape{width:100%}
 @media(min-width:700px){.novo-agendamento{max-width:700px}.novo-agendamento-conteudo{padding:28px 40px}}
+.novo-agendamento-estado{display:flex;flex-direction:column;gap:12px;font-size:0.875rem;color:var(--cor-texto-suave);padding:8px 0}
+.novo-agendamento-estado-erro{color:#dc2626}
+.novo-agendamento-aviso-erro{background:#fee2e2;border-color:#fecaca;color:#991b1b}
+.novo-agendamento-profissional:disabled{opacity:.55;cursor:not-allowed}

@@ -6,33 +6,40 @@ import './EsqueciSenha.css'
 
 function EsqueciSenha({ aoVoltar, aoEnviarSucesso }) {
   const [email, setEmail] = useState('')
+  const [erro, setErro] = useState('')
+  const [enviando, setEnviando] = useState(false)
 
   async function realizarEnvio(evento) {
     evento.preventDefault()
+    setErro('')
 
-    if (!email) {
-      alert('Por favor, informe o seu e-mail cadastrado.')
+    if (!email.trim()) {
+      setErro('Informe o e-mail cadastrado.')
       return
     }
 
+    setEnviando(true)
     try {
-      const urlApi = 'https://back-end-pi-ihs1.onrender.com/recuperar-senha' 
-      
-      const resposta = await fetch(urlApi, {
+      const resposta = await fetch('https://back-end-pi-ihs1.onrender.com/recuperar-senha', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim() }),
       })
 
-      // passa o email inserido para a tela de confirmação seguinte
-      if (aoEnviarSucesso) aoEnviarSucesso(email)
+      if (!resposta.ok) {
+        setErro(
+          resposta.status === 404
+            ? 'A recuperação de senha por e-mail ainda não está disponível. Procure a unidade de saúde para redefinir seu acesso.'
+            : 'Não foi possível enviar o link agora. Tente novamente em instantes.'
+        )
+        return
+      }
 
-    } catch (erro) {
-      console.error('Erro na requisição:', erro)
-      // avvança para a tela de sucesso mesmo em simulação para garantir o fluxo visual
-      if (aoEnviarSucesso) aoEnviarSucesso(email)
+      aoEnviarSucesso?.(email.trim())
+    } catch {
+      setErro('Não foi possível conectar ao servidor. Verifique sua internet e tente novamente.')
+    } finally {
+      setEnviando(false)
     }
   }
 
@@ -63,8 +70,10 @@ function EsqueciSenha({ aoVoltar, aoEnviarSucesso }) {
           aoMudar={(e) => setEmail(e.target.value)} 
         />
 
+        {erro && <p className="esqueci-erro" role="alert">{erro}</p>}
+
         <div className="esqueci-botoes">
-          <Botao texto="Enviar link de recuperação" tipo="submit" />
+          <Botao texto={enviando ? 'Enviando...' : 'Enviar link de recuperação'} tipo="submit" />
           
           <button 
             type="button" 
