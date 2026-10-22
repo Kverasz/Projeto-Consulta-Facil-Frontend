@@ -1,13 +1,23 @@
 import CartaoAtendimento from '../../componentes/CartaoAtendimento/CartaoAtendimento'
 import BarraNavegacao from '../../componentes/BarraNavegacao/BarraNavegacao'
+import { obterDataHoraConsulta } from '../../servicos/datasConsultas'
 import './Agendamentos.css'
 
 function Agendamentos({
-  consultas,
+  consultas = [],
+  estadoConsultas = 'ok',
+  erroConsultas = '',
+  aoTentarNovamente,
   aoIrParaInicio,
   aoIrParaHistorico,
+  aoIrParaPerfil,
   aoVerDetalhes,
 }) {
+  // Mais próximas primeiro
+  const ordenadas = [...consultas].sort(
+    (a, b) => (obterDataHoraConsulta(a)?.getTime() ?? 0) - (obterDataHoraConsulta(b)?.getTime() ?? 0)
+  )
+
   return (
     <div className="pagina-fundo">
       <div className="agendamentos">
@@ -18,7 +28,22 @@ function Agendamentos({
           </header>
 
           <section className="agendamentos-lista">
-            {consultas.map((consulta) => (
+            {estadoConsultas === 'carregando' && <p>Carregando seus agendamentos...</p>}
+
+            {estadoConsultas === 'erro' && (
+              <p role="alert">
+                {erroConsultas || 'Não foi possível carregar seus agendamentos.'}{' '}
+                <button type="button" className="agendamentos-tentar-novamente" onClick={aoTentarNovamente}>
+                  Tentar de novo
+                </button>
+              </p>
+            )}
+
+            {estadoConsultas === 'ok' && ordenadas.length === 0 && (
+              <p>Você não possui consultas agendadas.</p>
+            )}
+
+            {estadoConsultas === 'ok' && ordenadas.map((consulta) => (
               <CartaoAtendimento
                 key={consulta.codigo}
                 {...consulta}

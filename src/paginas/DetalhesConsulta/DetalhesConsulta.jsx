@@ -71,53 +71,53 @@ function DetalhesConsulta({ usuario, consulta, profissional, aoVoltar }) {
   ]
 
   return (
-    <div className="detalhes">
+    <div className="detprof">
       <AvisoToast aviso={aviso} aoFechar={() => setAviso(null)} />
 
-      <header className="detalhes-topo">
-        <div className="detalhes-topo-interno">
+      <header className="detprof-topo">
+        <div className="detprof-topo-interno">
           <BotaoVoltar aoClicar={aoVoltar} />
-          <h1 className="detalhes-titulo">Detalhes da consulta</h1>
+          <h1 className="detprof-titulo">Detalhes da consulta</h1>
         </div>
       </header>
 
-      <main className="detalhes-conteudo">
-        <div className={`detalhes-status detalhes-status-${situacao.classe}`}>
-          <span className="detalhes-status-icone">{situacao.icone}</span>
+      <main className="detprof-conteudo">
+        <div className={`detprof-status detprof-status-${situacao.classe}`}>
+          <span className="detprof-status-icone">{situacao.icone}</span>
           <div>
-            <p className="detalhes-status-titulo">{situacao.titulo}</p>
-            <p className="detalhes-status-subtitulo">Status atual da consulta</p>
+            <p className="detprof-status-titulo">{situacao.titulo}</p>
+            <p className="detprof-status-subtitulo">Status atual da consulta</p>
           </div>
         </div>
 
-        <section className="detalhes-cartao">
-          <div className="detalhes-paciente">
-            <span className="detalhes-avatar">🧑</span>
+        <section className="detprof-cartao">
+          <div className="detprof-paciente">
+            <span className="detprof-avatar">🧑</span>
             <div>
-              <p className="detalhes-paciente-nome">{consulta.pacienteNome}</p>
-              <p className="detalhes-paciente-papel">Paciente</p>
+              <p className="detprof-paciente-nome">{consulta.pacienteNome}</p>
+              <p className="detprof-paciente-papel">Paciente</p>
             </div>
           </div>
 
           {linhas.map((linha) => (
-            <div key={linha.rotulo} className="detalhes-linha">
-              <span className="detalhes-linha-icone">{linha.icone}</span>
+            <div key={linha.rotulo} className="detprof-linha">
+              <span className="detprof-linha-icone">{linha.icone}</span>
               <div>
-                <p className="detalhes-linha-rotulo">{linha.rotulo}</p>
-                <p className="detalhes-linha-valor">{linha.valor || '—'}</p>
+                <p className="detprof-linha-rotulo">{linha.rotulo}</p>
+                <p className="detprof-linha-valor">{linha.valor || '—'}</p>
               </div>
             </div>
           ))}
         </section>
 
-        <div className="detalhes-acoes">
+        <div className="detprof-acoes">
           {podeConfirmar && (
-            <button type="button" className="detalhes-botao detalhes-botao-principal" onClick={() => setFolha('confirmar')}>
+            <button type="button" className="detprof-botao detprof-botao-principal" onClick={() => setFolha('confirmar')}>
               ✓ Confirmar atendimento
             </button>
           )}
           {podeCancelar && (
-            <button type="button" className="detalhes-botao detalhes-botao-secundario" onClick={() => setFolha('cancelar')}>
+            <button type="button" className="detprof-botao detprof-botao-secundario" onClick={() => setFolha('cancelar')}>
               Cancelar consulta
             </button>
           )}

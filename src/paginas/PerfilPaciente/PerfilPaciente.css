@@ -15,7 +15,7 @@
 
 .perfil-paciente-titulo {
   margin: 0 0 22px;
-  font-size: 22px;
+  font-size: 1.375rem;
   color: #14233d;
 }
 
@@ -39,7 +39,7 @@
   border-radius: 12px;
   background: #00b5d1;
   color: white;
-  font-size: 19px;
+  font-size: 1.1875rem;
   font-weight: 700;
 }
 
@@ -51,12 +51,12 @@
 }
 
 .perfil-paciente-identidade-texto strong {
-  font-size: 14px;
+  font-size: 0.875rem;
   color: #15233b;
 }
 
 .perfil-paciente-identidade-texto span {
-  font-size: 12px;
+  font-size: 0.75rem;
   color: #8495ab;
   overflow-wrap: anywhere;
 }
@@ -81,7 +81,7 @@
   background: transparent;
   text-align: left;
   color: #22324c;
-  font-size: 13px;
+  font-size: 0.8125rem;
   cursor: pointer;
 }
 
@@ -92,13 +92,13 @@
 .perfil-paciente-opcao-icone {
   width: 24px;
   text-align: center;
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 .perfil-paciente-seta {
   margin-left: auto;
-  font-size: 23px;
-  color: #9cabc0;
+  font-size: 1.4375rem;
+  color: var(--cor-texto-claro);
 }
 
 .perfil-paciente-sair {
@@ -109,7 +109,7 @@
   border-radius: 10px;
   background: transparent;
   color: #ff3445;
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-weight: 600;
   cursor: pointer;
 }
@@ -117,15 +117,15 @@
 .perfil-paciente-versao {
   margin-top: 20px;
   text-align: center;
-  color: #9cabc0;
-  font-size: 10px;
+  color: var(--cor-texto-claro);
+  font-size: 0.625rem;
 }
 
 .perfil-paciente-mensagem {
   margin-top: 12px;
   text-align: center;
   color: #078ba4;
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 
 .perfil-modal-fundo {
@@ -167,7 +167,7 @@
 
 .perfil-modal-cabecalho h2 {
   margin: 0;
-  font-size: 16px;
+  font-size: 1rem;
   color: #14233d;
 }
 
@@ -178,7 +178,7 @@
   border-radius: 50%;
   background: #f0f4f8;
   color: #65768d;
-  font-size: 21px;
+  font-size: 1.3125rem;
   cursor: pointer;
 }
 
@@ -192,7 +192,7 @@
   display: flex;
   flex-direction: column;
   gap: 7px;
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 600;
   color: #263b59;
 }
@@ -226,12 +226,12 @@
 }
 
 .perfil-preferencia strong {
-  font-size: 12px;
+  font-size: 0.75rem;
   color: #22324c;
 }
 
 .perfil-preferencia small {
-  font-size: 11px;
+  font-size: 0.6875rem;
   color: #8797ad;
   line-height: 1.4;
 }
@@ -249,7 +249,7 @@
   width: 100%;
   min-height: 44px;
   border-radius: 10px;
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-weight: 700;
   cursor: pointer;
 }
@@ -274,8 +274,8 @@
 
 .perfil-modal-aviso {
   margin: 0;
-  font-size: 12px;
-  color: #71849a;
+  font-size: 0.75rem;
+  color: var(--cor-texto-claro);
 }
 
 .perfil-confirmacao {
@@ -283,8 +283,8 @@
 }
 
 .perfil-confirmacao p {
-  color: #71849a;
-  font-size: 13px;
+  color: var(--cor-texto-claro);
+  font-size: 0.8125rem;
   line-height: 1.6;
 }
 
@@ -302,13 +302,13 @@
 
 .perfil-ajuda-introducao strong {
   color: #078ba4;
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
 
 .perfil-ajuda-introducao p,
 .perfil-ajuda-seguranca p {
   margin: 7px 0 0;
-  font-size: 12px;
+  font-size: 0.75rem;
   line-height: 1.5;
 }
 
@@ -321,7 +321,7 @@
 .perfil-ajuda-grupo h3 {
   margin: 0 0 12px;
   color: #172b45;
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
 
 .perfil-ajuda-passo {
@@ -344,14 +344,14 @@
   border-radius: 50%;
   background: #dff7fb;
   color: #009ab7;
-  font-size: 11px;
+  font-size: 0.6875rem;
   font-weight: 700;
 }
 
 .perfil-ajuda-passo p {
   margin: 2px 0;
   color: #526681;
-  font-size: 12px;
+  font-size: 0.75rem;
   line-height: 1.5;
 }
 
@@ -361,7 +361,7 @@
   border-radius: 12px;
   background: #fffaf0;
   color: #b96a00;
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 
 .perfil-notificacoes-cabecalho {
@@ -379,7 +379,7 @@
 }
 
 .perfil-notificacoes-cabecalho h1 {
-  font-size: 20px;
+  font-size: 1.25rem;
   color: #14233d;
 }
 
@@ -390,16 +390,16 @@
 }
 
 .perfil-notificacoes-vazio span {
-  font-size: 32px;
+  font-size: 2rem;
 }
 
 .perfil-notificacoes-vazio h2 {
-  font-size: 16px;
+  font-size: 1rem;
   color: #14233d;
 }
 
 .perfil-notificacoes-vazio p {
-  font-size: 13px;
+  font-size: 0.8125rem;
   line-height: 1.5;
 }
 

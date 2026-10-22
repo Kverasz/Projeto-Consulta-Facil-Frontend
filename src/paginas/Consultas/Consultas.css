@@ -21,7 +21,7 @@
 
 .consultas-titulo {
   flex: 1;
-  font-size: 22px;
+  font-size: 1.375rem;
   font-weight: 700;
   color: var(--cor-titulo);
 }
@@ -34,7 +34,7 @@
   border: none;
   border-radius: 50%;
   background-color: var(--cor-fundo-botao-voltar);
-  font-size: 16px;
+  font-size: 1rem;
   align-items: center;
   justify-content: center;
 }
@@ -59,7 +59,7 @@
   border: none;
   border-radius: 999px;
   background-color: var(--cor-fundo-botao-voltar);
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 700;
   color: var(--cor-texto-suave);
 }
@@ -84,7 +84,7 @@
 
 .consultas-vazio {
   padding: 16px 0;
-  font-size: 14px;
+  font-size: 0.875rem;
   color: var(--cor-texto-suave);
 }
 
@@ -93,7 +93,7 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 8px;
-  font-size: 14px;
+  font-size: 0.875rem;
   color: var(--cor-texto-suave);
 }
 
@@ -101,7 +101,7 @@
   border: none;
   background: none;
   color: var(--cor-primaria);
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 700;
 }
 
@@ -135,7 +135,7 @@
   flex-shrink: 0;
   border-radius: 16px;
   background-color: var(--cor-fundo-botao-voltar);
-  font-size: 26px;
+  font-size: 1.625rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -161,13 +161,13 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--cor-titulo);
 }
 
 .consultas-especialidade {
-  font-size: 14px;
+  font-size: 0.875rem;
   color: var(--cor-subtitulo);
 }
 
@@ -176,7 +176,7 @@
   flex-wrap: wrap;
   gap: 4px 12px;
   margin-top: 2px;
-  font-size: 13px;
+  font-size: 0.8125rem;
   color: var(--cor-texto-suave);
 }
 
@@ -188,7 +188,7 @@
   flex-shrink: 0;
   padding: 4px 10px;
   border-radius: 999px;
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 600;
   white-space: nowrap;
 }

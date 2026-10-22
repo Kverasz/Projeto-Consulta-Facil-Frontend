@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import BoasVindas from './paginas/BoasVindas/BoasVindas'
 import CadastroPaciente from './paginas/Cadastro/Paciente/CadastroPaciente'
@@ -26,41 +26,17 @@ import PerfilPaciente from './paginas/PerfilPaciente/PerfilPaciente'
 import PreTriagem from './paginas/PreTriagem/PreTriagem'
 import NovoAgendamento from './paginas/NovoAgendamento/NovoAgendamento'
 
-import {
-  obterDataHoraConsulta,
-  obterStatusConsulta,
-} from './servicos/datasConsultas'
-
+import { obterDataHoraConsulta, obterStatusConsulta } from './servicos/datasConsultas'
 import { PERFIS } from './servicos/autenticacao'
-
-const consultasIniciais = [
-  {
-    icone: '🦴',
-    nome: 'Dr. Carlos Mendes',
-    especialidade: 'Ortopedia',
-    crm: 'CRM-PE 24.501',
-    clinica: 'Clínica Boa Saúde',
-    endereco: 'Av. Boa Viagem, 1200 - Boa Viagem',
-    data: '16 out 2026',
-    dataCompleta: '16 de outubro de 2026',
-    hora: '09:30',
-    status: 'Confirmado',
-    codigo: 'SR-2026-04817',
-  },
-  {
-    icone: '❤️',
-    nome: 'Dra. Luciana Ferreira',
-    especialidade: 'Cardiologia',
-    crm: 'CRM-PE 31.208',
-    clinica: 'Centro Médico Recife',
-    endereco: 'R. Setúbal, 445 - Boa Viagem',
-    data: '28 out 2026',
-    dataCompleta: '28 de outubro de 2026',
-    hora: '14:00',
-    status: 'Aguardando',
-    codigo: 'SR-2026-04822',
-  },
-]
+import { carregarCatalogo, criarAgendamento, especialidadesDoCatalogo } from './servicos/catalogo'
+import {
+  cancelarAgendamento,
+  carregarConsultasPaciente,
+  carregarPaciente,
+  descobrirIdPaciente,
+  reagendarConsulta,
+} from './servicos/paciente'
+import { dataDeHoje, horaAgora } from './servicos/profissional'
 
 function App() {
   const [telaAtual, setTelaAtual] = useState('boas-vindas')
@@ -68,124 +44,139 @@ function App() {
   const [usuario, setUsuario] = useState(null)
 
   const [filtroConsultas, setFiltroConsultas] = useState(null)
-  const [consultasPaciente, setConsultasPaciente] = useState(consultasIniciais)
-  const [dataReagendamento, setDataReagendamento] = useState(null)
   const [especialidadeInicial, setEspecialidadeInicial] = useState(null)
 
   // Consultas do profissional
   const [consultaAberta, setConsultaAberta] = useState(null)
   const [filtroAgenda, setFiltroAgenda] = useState(null)
 
-  // Consulta selecionada pelo paciente
+  // Paciente: tudo vem da API
+  const [paciente, setPaciente] = useState(null)
+  const [catalogo, setCatalogo] = useState(null)
+  const [consultasPaciente, setConsultasPaciente] = useState([])
+  const [estadoConsultas, setEstadoConsultas] = useState('carregando')
+  const [erroConsultas, setErroConsultas] = useState('')
   const [consultaPaciente, setConsultaPaciente] = useState(null)
+  const [dataReagendamento, setDataReagendamento] = useState(null)
+  const [horariosReagendamento, setHorariosReagendamento] = useState([])
 
-  const guardarFiltroAgenda = useCallback(
-    (filtro) => setFiltroAgenda(filtro),
-    []
+  const guardarFiltroAgenda = useCallback((filtro) => setFiltroAgenda(filtro), [])
+  const guardarFiltroConsultas = useCallback((filtro) => setFiltroConsultas(filtro), [])
+
+  const ehPaciente = usuario && usuario.perfil !== PERFIS.PROFISSIONAL && usuario.perfil !== PERFIS.ADMIN
+  const token = usuario?.token
+
+  // Carrega cadastro, catálogo e consultas do paciente logado
+  const carregarSessao = useCallback(async (u) => {
+    setEstadoConsultas('carregando')
+    setErroConsultas('')
+    try {
+      const id = await descobrirIdPaciente(u)
+      const [cadastro, cat] = await Promise.all([
+        carregarPaciente(id, u.token).catch(() => null),
+        carregarCatalogo(u.token),
+      ])
+      setPaciente(cadastro ?? { id, cadastro: null, nome: '', email: '', telefone: '', dataNascimento: '' })
+      setCatalogo(cat)
+      setConsultasPaciente(await carregarConsultasPaciente(id, u.token, cat))
+      setEstadoConsultas('ok')
+      return id
+    } catch (e) {
+      setErroConsultas(e.message)
+      setEstadoConsultas('erro')
+      return null
+    }
+  }, [])
+
+  const recarregarConsultas = useCallback(async () => {
+    if (!usuario || !paciente) return []
+    const lista = await carregarConsultasPaciente(paciente.id, usuario.token, catalogo ?? undefined)
+    setConsultasPaciente(lista)
+    return lista
+  }, [usuario, paciente, catalogo])
+
+  useEffect(() => {
+    if (ehPaciente && !paciente && estadoConsultas !== 'erro') carregarSessao(usuario)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ehPaciente])
+
+  // Usuário que as telas veem: login + cadastro vindo da API
+  const usuarioPaciente = useMemo(() => {
+    if (!usuario) return usuario
+    if (!paciente) return usuario
+    return {
+      ...usuario,
+      idPaciente: paciente.id,
+      nome: paciente.nome || usuario.nome,
+      email: paciente.email || usuario.email,
+      telefone: paciente.telefone || usuario.telefone,
+      dataNascimento: paciente.dataNascimento || usuario.dataNascimento,
+    }
+  }, [usuario, paciente])
+
+  const especialidades = useMemo(
+    () => (catalogo ? especialidadesDoCatalogo(catalogo, dataDeHoje(), horaAgora()) : []),
+    [catalogo]
   )
-    const agora = new Date()
+
+  const agora = new Date()
 
   const consultasAgendadas = consultasPaciente.filter((consulta) => {
     const status = obterStatusConsulta(consulta)
     const data = obterDataHoraConsulta(consulta)
-
-    return (
-      status !== 'cancelado' &&
-      status !== 'realizado' &&
-      data !== null &&
-      data >= agora
-    )
+    return status !== 'cancelado' && status !== 'realizado' && data !== null && data >= agora
   })
 
   const consultasHistorico = consultasPaciente.filter((consulta) => {
     const status = obterStatusConsulta(consulta)
     const data = obterDataHoraConsulta(consulta)
-
-    return (
-      status === 'cancelado' ||
-      status === 'realizado' ||
-      (data !== null && data < agora)
-    )
+    return status === 'cancelado' || status === 'realizado' || (data !== null && data < agora)
   })
 
-function confirmarReagendamento(horario) {
-  if (!consultaPaciente || !dataReagendamento || !horario) return
-
-  const dataCurta = new Intl.DateTimeFormat('pt-BR', {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-  }).format(dataReagendamento).replace('.', '')
-
-  const dataCompleta = new Intl.DateTimeFormat('pt-BR', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  }).format(dataReagendamento)
-
-  const consultaAtualizada = {
-    ...consultaPaciente,
-    data: dataCurta,
-    dataCompleta,
-    hora: horario,
-    status: 'Confirmado',
+  async function confirmarReagendamento(horario) {
+    if (!consultaPaciente || !horario) return
+    await reagendarConsulta(consultaPaciente, horario.id, paciente.id, token)
+    await recarregarConsultas()
+    setConsultaPaciente(null)
+    setDataReagendamento(null)
+    setTelaAtual('agendamentos')
   }
 
-  setConsultasPaciente((anteriores) =>
-    anteriores.map((consulta) =>
-      consulta.codigo === consultaPaciente.codigo
-        ? consultaAtualizada
-        : consulta
-    )
-  )
-
-  setConsultaPaciente(consultaAtualizada)
-  setDataReagendamento(null)
-  setTelaAtual('agendamentos')
-}
-  function cancelarConsultaPaciente() {
+  async function cancelarConsultaPaciente() {
     if (!consultaPaciente) return
-
-    const consultaCancelada = {
-      ...consultaPaciente,
-      status: 'Cancelado',
-    }
-
-    setConsultasPaciente((anteriores) =>
-      anteriores.map((consulta) =>
-        consulta.codigo === consultaPaciente.codigo
-          ? consultaCancelada
-          : consulta
-      )
-    )
-
-    setConsultaPaciente(consultaCancelada)
+    await cancelarAgendamento(consultaPaciente.id, token)
+    await recarregarConsultas()
+    setConsultaPaciente(null)
     setTelaAtual('historico')
   }
-  function navegarProfissional(id) {
-    if (id === 'inicio') {
-      setTelaAtual('inicio-profissional')
-    }
 
+  // Agenda na API e devolve a consulta criada (ou null se a lista ainda não a trouxe)
+  async function agendarNovaConsulta({ idProfissional, idDisponibilidade }) {
+    await criarAgendamento({ idPaciente: paciente.id, idProfissional, idDisponibilidade }, token)
+    const lista = await recarregarConsultas()
+    return (
+      lista.find(
+        (c) =>
+          String(c.idDisponibilidade) === String(idDisponibilidade) &&
+          String(c.idProfissional) === String(idProfissional) &&
+          c.statusApi !== 'CANCELADO'
+      ) ?? null
+    )
+  }
+
+  function navegarProfissional(id) {
+    if (id === 'inicio') setTelaAtual('inicio-profissional')
     if (id === 'agenda') {
       setFiltroAgenda(null)
       setTelaAtual('agenda-profissional')
     }
-    if (id === 'horarios') {
-      setTelaAtual('horarios-profissional')
-    }
-
+    if (id === 'horarios') setTelaAtual('horarios-profissional')
     if (id === 'consultas') {
       setFiltroConsultas(null)
       setTelaAtual('consultas-profissional')
     }
-
-    if (id === 'perfil') {
-      setTelaAtual('perfil-profissional')
-    }
+    if (id === 'perfil') setTelaAtual('perfil-profissional')
   }
-
-  const guardarFiltroConsultas = useCallback((filtro) => setFiltroConsultas(filtro), [])
 
   function abrirDetalhes(origem) {
     return (consulta, profissional) => {
@@ -199,10 +190,12 @@ function confirmarReagendamento(horario) {
     setTelaAtual('detalhes-agendamento')
   }
 
-
   function entrar(dadosUsuario) {
-    console.log('Campos do usuário:', Object.keys(dadosUsuario))
-
+    setPaciente(null)
+    setCatalogo(null)
+    setConsultasPaciente([])
+    setEstadoConsultas('carregando')
+    setErroConsultas('')
     setUsuario(dadosUsuario)
 
     if (dadosUsuario.perfil === PERFIS.PROFISSIONAL) {
@@ -214,24 +207,18 @@ function confirmarReagendamento(horario) {
     }
   }
 
-
   function sair() {
     setUsuario(null)
+    setPaciente(null)
+    setCatalogo(null)
+    setConsultasPaciente([])
     setConsultaAberta(null)
     setConsultaPaciente(null)
     setTelaAtual('login')
   }
-  function confirmarNovoAgendamento(consulta) {
-    setConsultasPaciente((anteriores) => [
-      ...anteriores,
-      consulta,
-    ])
-  }
 
-  function verNovoAgendamento(consulta) {
-    setConsultaPaciente(consulta)
-    setTelaAtual('detalhes-agendamento')
-  }
+  const tentarNovamente = () => usuario && carregarSessao(usuario)
+
   // BOAS-VINDAS
 
   if (telaAtual === 'boas-vindas') {
@@ -290,52 +277,64 @@ function confirmarReagendamento(horario) {
     )
   }
 
+
   // INÍCIO DO PACIENTE
 
   if (telaAtual === 'inicio') {
-  return (
-    <Inicio
-      usuario={usuario}
-      consultas={consultasAgendadas}
-      aoIrParaAgendamentos={() => setTelaAtual('agendamentos')}
-      aoIrParaHistorico={() => setTelaAtual('historico')}
-      aoVerDetalhes={abrirDetalhesPaciente}
-      aoIrParaPerfil={() => setTelaAtual('perfil-paciente')}
-      aoPrecisoAtendimento={() => setTelaAtual('pre-triagem')}
-      aoAbrirNotificacoes={() => setTelaAtual('notificacoes')}
-      aoJaSeiOQuePreciso={() => {
-        setEspecialidadeInicial(null)
-        setTelaAtual('novo-agendamento')
-      }}
+    return (
+      <Inicio
+        usuario={usuarioPaciente}
+        consultas={consultasAgendadas}
+        especialidades={especialidades}
+        estadoConsultas={estadoConsultas}
+        erroConsultas={erroConsultas}
+        aoTentarNovamente={tentarNovamente}
+        aoIrParaAgendamentos={() => setTelaAtual('agendamentos')}
+        aoIrParaHistorico={() => setTelaAtual('historico')}
+        aoVerDetalhes={abrirDetalhesPaciente}
+        aoIrParaPerfil={() => setTelaAtual('perfil-paciente')}
+        aoPrecisoAtendimento={() => setTelaAtual('pre-triagem')}
+        aoAbrirNotificacoes={() => setTelaAtual('notificacoes')}
+        aoJaSeiOQuePreciso={() => {
+          setEspecialidadeInicial(null)
+          setTelaAtual('novo-agendamento')
+        }}
+        aoSelecionarEspecialidade={(especialidade) => {
+          setEspecialidadeInicial(especialidade)
+          setTelaAtual('novo-agendamento')
+        }}
+      />
+    )
+  }
 
-      aoSelecionarEspecialidade={(especialidade) => {
-        setEspecialidadeInicial(especialidade)
-        setTelaAtual('novo-agendamento')
-      }}
-    />
-  )
-}
-// NOVO AGENDAMENTO DO PACIENTE
+  // NOVO AGENDAMENTO DO PACIENTE
 
   if (telaAtual === 'novo-agendamento') {
     return (
       <NovoAgendamento
+        usuario={usuarioPaciente}
         especialidadeInicial={especialidadeInicial}
         aoVoltar={() => setTelaAtual('inicio')}
-        aoConfirmar={confirmarNovoAgendamento}
-        aoVerAgendamento={verNovoAgendamento}
+        aoAgendar={agendarNovaConsulta}
+        aoVerAgendamento={abrirDetalhesPaciente}
+        aoVerAgendamentos={() => setTelaAtual('agendamentos')}
       />
-  )
-}
+    )
+  }
+
   // PRÉ-TRIAGEM DO PACIENTE
 
-if (telaAtual === 'pre-triagem') {
-  return (
-    <PreTriagem
-      aoVoltar={() => setTelaAtual('inicio')}
-    />
-  )
-}
+  if (telaAtual === 'pre-triagem') {
+    return (
+      <PreTriagem
+        aoVoltar={() => setTelaAtual('inicio')}
+        aoAgendar={() => {
+          setEspecialidadeInicial(null)
+          setTelaAtual('novo-agendamento')
+        }}
+      />
+    )
+  }
 
   // AGENDAMENTOS DO PACIENTE
 
@@ -343,6 +342,9 @@ if (telaAtual === 'pre-triagem') {
     return (
       <Agendamentos
         consultas={consultasAgendadas}
+        estadoConsultas={estadoConsultas}
+        erroConsultas={erroConsultas}
+        aoTentarNovamente={tentarNovamente}
         aoIrParaInicio={() => setTelaAtual('inicio')}
         aoIrParaHistorico={() => setTelaAtual('historico')}
         aoVerDetalhes={abrirDetalhesPaciente}
@@ -366,59 +368,60 @@ if (telaAtual === 'pre-triagem') {
 
   // REAGENDAMENTO DO PACIENTE
 
-if (telaAtual === 'reagendar' && consultaPaciente) {
-  return (
-    <Reagendar
-      consulta={consultaPaciente}
-      aoVoltar={() => setTelaAtual('detalhes-agendamento')}
-      aoVerHorarios={(data) => {
-        setDataReagendamento(data)
-        setTelaAtual('horarios-disponiveis')
-      }}
-    />
-  )
-}
+  if (telaAtual === 'reagendar' && consultaPaciente) {
+    return (
+      <Reagendar
+        usuario={usuarioPaciente}
+        consulta={consultaPaciente}
+        aoVoltar={() => setTelaAtual('detalhes-agendamento')}
+        aoVerHorarios={(data, horarios) => {
+          setDataReagendamento(data)
+          setHorariosReagendamento(horarios ?? [])
+          setTelaAtual('horarios-disponiveis')
+        }}
+      />
+    )
+  }
 
-// HISTÓRICO DO PACIENTE
+  if (telaAtual === 'horarios-disponiveis' && consultaPaciente && dataReagendamento) {
+    return (
+      <HorariosDisponiveis
+        consulta={consultaPaciente}
+        dataSelecionada={dataReagendamento}
+        horarios={horariosReagendamento}
+        aoVoltar={() => setTelaAtual('reagendar')}
+        aoConfirmar={confirmarReagendamento}
+      />
+    )
+  }
+
+  // HISTÓRICO DO PACIENTE
 
   if (telaAtual === 'historico') {
     return (
       <Historico
         consultas={consultasHistorico}
+        estadoConsultas={estadoConsultas}
+        erroConsultas={erroConsultas}
+        aoTentarNovamente={tentarNovamente}
         aoIrParaInicio={() => setTelaAtual('inicio')}
         aoIrParaAgendamentos={() => setTelaAtual('agendamentos')}
         aoIrParaPerfil={() => setTelaAtual('perfil-paciente')}
       />
     )
   }
-  
-  // NOTIFICAÇÕES DO PACIENTE
 
-  if (telaAtual === 'notificacoes') {
+  // NOTIFICAÇÕES E PERFIL DO PACIENTE
+
+  if (telaAtual === 'notificacoes' || telaAtual === 'perfil-paciente') {
     return (
       <PerfilPaciente
-        usuario={usuario}
-        abrirNotificacoesInicialmente={true}
+        usuario={usuarioPaciente}
+        paciente={paciente}
+        consultas={consultasPaciente}
+        aoAtualizarPaciente={setPaciente}
+        abrirNotificacoesInicialmente={telaAtual === 'notificacoes'}
         aoVoltarNotificacoes={() => setTelaAtual('inicio')}
-        aoIrParaInicio={() => setTelaAtual('inicio')}
-        aoIrParaAgendamentos={() => setTelaAtual('agendamentos')}
-        aoIrParaHistorico={() => setTelaAtual('historico')}
-      />
-    )
-  }
-
-    // PERFIL DO PACIENTE
-
-  if (telaAtual === 'perfil-paciente') {
-    return (
-      <PerfilPaciente
-        usuario={usuario}
-        aoAtualizarUsuario={(dados) =>
-          setUsuario((anterior) => ({
-            ...anterior,
-            ...dados,
-          }))
-        }
         aoIrParaInicio={() => setTelaAtual('inicio')}
         aoIrParaAgendamentos={() => setTelaAtual('agendamentos')}
         aoIrParaHistorico={() => setTelaAtual('historico')}
@@ -497,30 +500,11 @@ if (telaAtual === 'reagendar' && consultaPaciente) {
       />
     )
   }
-  if (
-  telaAtual === 'horarios-disponiveis' &&
-  consultaPaciente &&
-  dataReagendamento
-) {
-  return (
-    <HorariosDisponiveis
-      consulta={consultaPaciente}
-      dataSelecionada={dataReagendamento}
-      aoVoltar={() => setTelaAtual('reagendar')}
-      aoConfirmar={confirmarReagendamento}
-    />
-  )
-}
 
   // INÍCIO DO ADMINISTRADOR
 
   if (telaAtual === 'inicio-admin') {
-    return (
-      <InicioAdmin
-        usuario={usuario}
-        aoSair={sair}
-      />
-    )
+    return <InicioAdmin usuario={usuario} aoSair={sair} />
   }
 
   return null

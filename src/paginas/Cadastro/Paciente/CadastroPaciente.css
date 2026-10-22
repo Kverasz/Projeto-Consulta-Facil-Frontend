@@ -17,7 +17,7 @@
 
 .cadastro-topo h1,
 .cadastro-topo-titulo {
-  font-size: 18px;
+  font-size: 1.125rem;
   color: #0b1e2d;
   font-weight: 600;
 }
@@ -27,14 +27,14 @@
 }
 
 .cadastro-boas-vindas h2 {
-  font-size: 26px;
+  font-size: 1.625rem;
   color: #0b1e2d;
   margin-bottom: 8px;
   font-weight: 700;
 }
 
 .cadastro-boas-vindas p {
-  font-size: 14px;
+  font-size: 0.875rem;
   color: #64748b;
 }
 
@@ -49,7 +49,7 @@
   margin-top: auto;
   text-align: center;
   padding: 24px 0;
-  font-size: 14px;
+  font-size: 0.875rem;
   color: #64748b;
   display: flex;
   justify-content: center;
@@ -62,6 +62,6 @@
   color: #00bcd4;
   font-weight: 600;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 0.875rem;
   padding: 0;
 }

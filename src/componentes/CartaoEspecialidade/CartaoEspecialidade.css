@@ -11,11 +11,11 @@
 }
 
 .cartao-especialidade-icone {
-  font-size: 22px;
+  font-size: 1.375rem;
 }
 
 .cartao-especialidade-nome {
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 600;
   color: var(--cor-texto);
   text-align: center;

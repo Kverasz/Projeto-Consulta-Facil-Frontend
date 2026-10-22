@@ -29,6 +29,9 @@ function formatarData(consulta) {
 
 function Historico({
   consultas = [],
+  estadoConsultas = 'ok',
+  erroConsultas = '',
+  aoTentarNovamente,
   aoIrParaInicio,
   aoIrParaAgendamentos,
   aoIrParaPerfil,
@@ -90,6 +93,18 @@ function Historico({
             </label>
           </div>
 
+          {estadoConsultas === 'carregando' && <p className="historico-estado">Carregando seu histórico...</p>}
+
+          {estadoConsultas === 'erro' && (
+            <p className="historico-estado" role="alert">
+              {erroConsultas || 'Não foi possível carregar seu histórico.'}{' '}
+              <button type="button" className="historico-tentar-novamente" onClick={aoTentarNovamente}>
+                Tentar de novo
+              </button>
+            </p>
+          )}
+
+          {estadoConsultas === 'ok' && (
           <section className="historico-lista">
             {consultasFiltradas.length > 0 ? (
               consultasFiltradas.map((consulta) => {
@@ -146,6 +161,7 @@ function Historico({
               </div>
             )}
           </section>
+          )}
         </div>
 
         <BarraNavegacao

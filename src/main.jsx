@@ -9,6 +9,10 @@ import '@fontsource/plus-jakarta-sans/700.css'
 
 import './estilos/global.css'
 import App from './App.jsx'
+import { aplicarPreferencias, lerPreferencias } from './servicos/preferencias'
+
+// Letras maiores e alto contraste valem desde a primeira tela, antes do login
+aplicarPreferencias(lerPreferencias())
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

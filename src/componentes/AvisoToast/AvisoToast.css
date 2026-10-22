@@ -21,7 +21,7 @@
   height: 28px;
   flex-shrink: 0;
   border-radius: 50%;
-  font-size: 15px;
+  font-size: 0.9375rem;
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -40,12 +40,12 @@
 }
 
 .aviso-toast-texto strong {
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 700;
 }
 
 .aviso-toast-texto span {
-  font-size: 12px;
+  font-size: 0.75rem;
   color: #cbd5e1;
 }
 
@@ -53,5 +53,5 @@
   border: none;
   background: none;
   color: #94a3b8;
-  font-size: 14px;
+  font-size: 0.875rem;
 }

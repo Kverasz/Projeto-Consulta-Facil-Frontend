@@ -44,7 +44,7 @@
 }
 
 .menu-lateral-titulo {
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--cor-titulo);
 }
@@ -55,7 +55,7 @@
   border: none;
   border-radius: 50%;
   background-color: var(--cor-fundo-botao-voltar);
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 
 .menu-lateral-lista {
@@ -74,14 +74,14 @@
   background: none;
   padding: 12px 14px;
   border-radius: 14px;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 600;
   color: var(--cor-texto);
   text-align: left;
 }
 
 .menu-lateral-icone {
-  font-size: 18px;
+  font-size: 1.125rem;
 }
 
 .menu-lateral-item-ativo {

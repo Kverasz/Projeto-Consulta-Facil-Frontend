@@ -1,6 +1,9 @@
-
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import BarraNavegacao from '../../componentes/BarraNavegacao/BarraNavegacao'
+import { alterarSenha, carregarPaciente, salvarPaciente } from '../../servicos/paciente'
+import { emailValido, formatarTelefone, telefoneValido } from '../../servicos/formatos'
+import { gerarNotificacoesPaciente, lerNotificacoesLidas, salvarNotificacoesLidas } from '../../servicos/notificacoesPaciente'
+import { lerPreferencias, salvarPreferencias } from '../../servicos/preferencias'
 import './PerfilPaciente.css'
 
 const itensPerfil = [
@@ -16,33 +19,35 @@ const instrucoes = [
   {
     titulo: 'Agendar uma consulta',
     passos: [
-      'Na tela Início, toque em Agendar consulta.',
-      'Responda à pré-triagem com calma.',
-      'Escolha clínica, profissional, data e horário.',
+      'Na tela Início, toque em "Já sei o que preciso" para escolher a especialidade, ou em "Preciso de atendimento" para responder à pré-triagem.',
+      'Escolha a clínica e o profissional.',
+      'Escolha uma data e um horário livres.',
       'Revise os dados e confirme o agendamento.',
     ],
   },
   {
-    titulo: 'Ver ou cancelar um agendamento',
+    titulo: 'Ver, reagendar ou cancelar um agendamento',
     passos: [
       'Abra Agendamentos no menu inferior.',
       'Toque na consulta que deseja consultar.',
-      'Confira os detalhes ou use a opção de cancelamento.',
+      'Confira os detalhes ou use as opções Reagendar e Cancelar agendamento.',
     ],
   },
   {
     titulo: 'Usar a pré-triagem por áudio',
     passos: [
-      'Na pré-triagem, escolha Responder por áudio.',
+      'Na pré-triagem, escolha Falar sobre o que estou sentindo.',
       'Toque no microfone e fale perto do aparelho.',
-      'Revise o texto identificado antes de continuar.',
+      'Escreva um resumo do relato para continuar.',
     ],
   },
 ]
 
 function PerfilPaciente({
   usuario,
-  aoAtualizarUsuario,
+  paciente,
+  consultas = [],
+  aoAtualizarPaciente,
   aoIrParaInicio,
   aoIrParaAgendamentos,
   aoIrParaHistorico,
@@ -50,26 +55,65 @@ function PerfilPaciente({
   abrirNotificacoesInicialmente = false,
   aoVoltarNotificacoes,
 }) {
-
   const [painel, setPainel] = useState(null)
-  const [paginaNotificacoes, setPaginaNotificacoes] = useState(
-  abrirNotificacoesInicialmente
-)
+  const [paginaNotificacoes, setPaginaNotificacoes] = useState(abrirNotificacoesInicialmente)
   const [mensagem, setMensagem] = useState('')
+  const [preferencias, setPreferencias] = useState(lerPreferencias)
+  const [lidas, setLidas] = useState(() => lerNotificacoesLidas(paciente?.id ?? usuario?.idPaciente))
+
   const [dados, setDados] = useState({
     nome: usuario?.nome ?? usuario?.name ?? usuario?.nomeCompleto ?? '',
     email: usuario?.email ?? '',
-    telefone: usuario?.telefone ?? '',
+    telefone: formatarTelefone(usuario?.telefone ?? ''),
     dataNascimento: usuario?.dataNascimento ?? '',
   })
-  const [preferencias, setPreferencias] = useState({
-    biometria: false,
-    alertaAcesso: true,
-    lembrete: '1',
-    economiaDados: false,
-    fonteMaior: false,
-    altoContraste: false,
-  })
+  const [errosDados, setErrosDados] = useState({})
+  const [salvandoDados, setSalvandoDados] = useState(false)
+  const [erroDados, setErroDados] = useState('')
+
+  const [senhas, setSenhas] = useState({ atual: '', nova: '', confirmar: '' })
+  const [mostrarSenhas, setMostrarSenhas] = useState(false)
+  const [erroSenha, setErroSenha] = useState('')
+  const [salvandoSenha, setSalvandoSenha] = useState(false)
+
+  const idPaciente = paciente?.id ?? usuario?.idPaciente
+
+  // Se o cadastro não chegou junto com o login, tenta buscar de novo ao abrir o perfil
+  useEffect(() => {
+    if (paciente || !idPaciente || !usuario?.token) return
+    let ativo = true
+    carregarPaciente(idPaciente, usuario.token)
+      .then((carregado) => ativo && aoAtualizarPaciente?.(carregado))
+      .catch(() => {})
+    return () => { ativo = false }
+  }, [paciente, idPaciente, usuario?.token, aoAtualizarPaciente])
+
+  // Mantém o perfil em dia quando o cadastro chega ou muda
+  useEffect(() => {
+    setDados({
+      nome: usuario?.nome ?? usuario?.name ?? usuario?.nomeCompleto ?? '',
+      email: usuario?.email ?? '',
+      telefone: formatarTelefone(usuario?.telefone ?? ''),
+      dataNascimento: usuario?.dataNascimento ?? '',
+    })
+  }, [usuario?.nome, usuario?.name, usuario?.nomeCompleto, usuario?.email, usuario?.telefone, usuario?.dataNascimento])
+
+  useEffect(() => {
+    setLidas(lerNotificacoesLidas(idPaciente))
+  }, [idPaciente])
+
+  const notificacoes = useMemo(
+    () => gerarNotificacoesPaciente(consultas, preferencias.lembreteDias).map((n) => ({ ...n, lida: lidas.has(n.id) })),
+    [consultas, preferencias.lembreteDias, lidas]
+  )
+  const naoLidas = notificacoes.filter((n) => !n.lida)
+  const anteriores = notificacoes.filter((n) => n.lida)
+
+  function marcarComoLidas(ids) {
+    const novas = new Set([...lidas, ...ids])
+    setLidas(novas)
+    salvarNotificacoesLidas(idPaciente, novas)
+  }
 
   const iniciais = (dados.nome || 'Paciente')
     .trim()
@@ -81,6 +125,9 @@ function PerfilPaciente({
 
   function abrirPainel(id) {
     setMensagem('')
+    setErrosDados({})
+    setErroDados('')
+    setErroSenha('')
     if (id === 'notificacoes') {
       setPaginaNotificacoes(true)
     } else {
@@ -88,34 +135,85 @@ function PerfilPaciente({
     }
   }
 
+  function fecharPainel() {
+    setPainel(null)
+    setSenhas({ atual: '', nova: '', confirmar: '' })
+    setMostrarSenhas(false)
+  }
+
   function alterarDado(campo, valor) {
     setDados((anterior) => ({ ...anterior, [campo]: valor }))
   }
 
-  function alterarPreferencia(campo, valor) {
-    setPreferencias((anterior) => ({
-      ...anterior,
-      [campo]: valor,
-    }))
-  }
-
-  function salvarDados(evento) {
+  async function salvarDados(evento) {
     evento.preventDefault()
 
-    aoAtualizarUsuario?.({
-      nome: dados.nome,
-      email: dados.email,
-      telefone: dados.telefone,
-      dataNascimento: dados.dataNascimento,
-    })
+    const erros = {}
+    if (dados.nome.trim().length < 3) erros.nome = 'Informe seu nome completo.'
+    if (!emailValido(dados.email)) erros.email = 'Informe um e-mail válido.'
+    if (dados.telefone.trim() && !telefoneValido(dados.telefone)) {
+      erros.telefone = 'Informe o telefone com DDD, por exemplo (81) 99999-0000.'
+    }
+    if (dados.dataNascimento && dados.dataNascimento > new Date().toISOString().slice(0, 10)) {
+      erros.dataNascimento = 'A data de nascimento não pode estar no futuro.'
+    }
+    setErrosDados(erros)
+    if (Object.keys(erros).length > 0) return
 
-    setPainel(null)
-    setMensagem('Dados atualizados nesta sessão.')
+    if (!paciente) {
+      setErroDados('Seu cadastro ainda não foi carregado. Tente de novo em instantes.')
+      return
+    }
+
+    const novos = {
+      nome: dados.nome.trim(),
+      email: dados.email.trim(),
+      telefone: dados.telefone.trim(),
+      dataNascimento: dados.dataNascimento,
+    }
+
+    setSalvandoDados(true)
+    setErroDados('')
+    try {
+      await salvarPaciente(paciente, novos, usuario.token)
+      aoAtualizarPaciente?.({ ...paciente, ...novos, cadastro: { ...paciente.cadastro, nome: novos.nome, email: novos.email, telefone: novos.telefone } })
+      fecharPainel()
+      setMensagem('Dados atualizados com sucesso.')
+    } catch (e) {
+      setErroDados(e.message)
+    } finally {
+      setSalvandoDados(false)
+    }
   }
 
-  function salvarPreferencias() {
-    setPainel(null)
-    setMensagem('Preferências salvas nesta sessão.')
+  async function trocarSenha(evento) {
+    evento.preventDefault()
+    setErroSenha('')
+
+    if (!senhas.atual) return setErroSenha('Informe a senha atual.')
+    if (senhas.nova.length < 8) return setErroSenha('A nova senha precisa ter pelo menos 8 caracteres.')
+    if (senhas.nova === senhas.atual) return setErroSenha('A nova senha precisa ser diferente da atual.')
+    if (senhas.nova !== senhas.confirmar) return setErroSenha('A confirmação não é igual à nova senha.')
+    if (!paciente) return setErroSenha('Seu cadastro ainda não foi carregado. Tente de novo em instantes.')
+
+    setSalvandoSenha(true)
+    try {
+      await alterarSenha(paciente, senhas.atual, senhas.nova, usuario.token)
+      fecharPainel()
+      setMensagem('Senha alterada com sucesso.')
+    } catch (e) {
+      setErroSenha(e.message)
+    } finally {
+      setSalvandoSenha(false)
+    }
+  }
+
+  function alterarPreferencia(campo, valor) {
+    const novas = { ...preferencias, [campo]: valor }
+    setPreferencias(novas)
+    // Aplica na hora (o efeito aparece na própria tela) e guarda neste aparelho
+    const guardou = salvarPreferencias(novas)
+    setMensagem(guardou ? '' : 'Não foi possível guardar a preferência neste navegador. Ela vale só enquanto o app estiver aberto.')
   }
 
   function navegar(id) {
@@ -123,6 +221,27 @@ function PerfilPaciente({
     if (id === 'agendamentos') aoIrParaAgendamentos?.()
     if (id === 'historico') aoIrParaHistorico?.()
   }
+
+  function renderizarNotificacao(notificacao) {
+    return (
+      <li key={notificacao.id}>
+        <button
+          type="button"
+          className={notificacao.lida ? 'notificacao' : 'notificacao notificacao-nao-lida'}
+          onClick={() => marcarComoLidas([notificacao.id])}
+        >
+          <span className="notificacao-icone">{notificacao.icone}</span>
+          <span className="notificacao-texto">
+            <span className="notificacao-titulo">{notificacao.titulo}</span>
+            <span className="notificacao-descricao">{notificacao.texto}</span>
+          </span>
+          {!notificacao.lida && <span className="notificacao-ponto" aria-label="Não lida" />}
+        </button>
+      </li>
+    )
+  }
+
+  const tipoCampoSenha = mostrarSenhas ? 'text' : 'password'
 
   return (
     <div className="pagina-fundo">
@@ -146,14 +265,43 @@ function PerfilPaciente({
               <h1>Notificações</h1>
             </header>
 
-            <div className="perfil-notificacoes-vazio">
-              <span>🔔</span>
-              <h2>Nenhuma notificação no momento</h2>
-              <p>
-                As notificações de consultas aparecerão aqui
-                quando estiverem disponíveis.
-              </p>
-            </div>
+            {notificacoes.length === 0 ? (
+              <div className="perfil-notificacoes-vazio">
+                <span>🔔</span>
+                <h2>Nenhuma notificação no momento</h2>
+                <p>
+                  Avisos sobre suas consultas, como confirmações, cancelamentos e lembretes,
+                  aparecerão aqui.
+                </p>
+              </div>
+            ) : (
+              <div className="perfil-notificacoes-lista">
+                {naoLidas.length > 0 && (
+                  <section>
+                    <div className="perfil-notificacoes-secao-topo">
+                      <h3 className="painel-notif-secao">
+                        Não lidas <span className="painel-notif-contador">{naoLidas.length}</span>
+                      </h3>
+                      <button
+                        type="button"
+                        className="perfil-notificacoes-ler-todas"
+                        onClick={() => marcarComoLidas(notificacoes.map((n) => n.id))}
+                      >
+                        Marcar todas como lidas
+                      </button>
+                    </div>
+                    <ul className="painel-notif-lista">{naoLidas.map(renderizarNotificacao)}</ul>
+                  </section>
+                )}
+
+                {anteriores.length > 0 && (
+                  <section>
+                    <h3 className="painel-notif-secao">Anteriores</h3>
+                    <ul className="painel-notif-lista">{anteriores.map(renderizarNotificacao)}</ul>
+                  </section>
+                )}
+              </div>
+            )}
           </div>
         ) : (
           <div className="perfil-paciente-conteudo">
@@ -180,6 +328,9 @@ function PerfilPaciente({
                     {item.icone}
                   </span>
                   <span>{item.titulo}</span>
+                  {item.id === 'notificacoes' && naoLidas.length > 0 && (
+                    <span className="painel-notif-contador">{naoLidas.length}</span>
+                  )}
                   <span className="perfil-paciente-seta">›</span>
                 </button>
               ))}
@@ -213,7 +364,7 @@ function PerfilPaciente({
         {painel && (
           <div
             className="perfil-modal-fundo"
-            onClick={() => setPainel(null)}
+            onClick={fecharPainel}
           >
             <section
               className="perfil-modal"
@@ -236,7 +387,7 @@ function PerfilPaciente({
                 <button
                   type="button"
                   className="perfil-modal-fechar"
-                  onClick={() => setPainel(null)}
+                  onClick={fecharPainel}
                   aria-label="Fechar"
                 >
                   ×
@@ -244,14 +395,15 @@ function PerfilPaciente({
               </div>
 
               {painel === 'dados' && (
-                <form onSubmit={salvarDados} className="perfil-modal-formulario">
+                <form onSubmit={salvarDados} className="perfil-modal-formulario" noValidate>
                   <label>
                     Nome completo
                     <input
                       value={dados.nome}
                       onChange={(e) => alterarDado('nome', e.target.value)}
-                      required
+                      autoComplete="name"
                     />
+                    {errosDados.nome && <small className="perfil-erro" role="alert">{errosDados.nome}</small>}
                   </label>
                   <label>
                     E-mail
@@ -259,16 +411,21 @@ function PerfilPaciente({
                       type="email"
                       value={dados.email}
                       onChange={(e) => alterarDado('email', e.target.value)}
-                      required
+                      autoComplete="email"
                     />
+                    {errosDados.email && <small className="perfil-erro" role="alert">{errosDados.email}</small>}
                   </label>
                   <label>
                     Telefone
                     <input
                       type="tel"
+                      inputMode="tel"
+                      placeholder="(81) 99999-0000"
                       value={dados.telefone}
-                      onChange={(e) => alterarDado('telefone', e.target.value)}
+                      onChange={(e) => alterarDado('telefone', formatarTelefone(e.target.value))}
+                      autoComplete="tel"
                     />
+                    {errosDados.telefone && <small className="perfil-erro" role="alert">{errosDados.telefone}</small>}
                   </label>
                   <label>
                     Data de nascimento
@@ -279,64 +436,71 @@ function PerfilPaciente({
                         alterarDado('dataNascimento', e.target.value)
                       }
                     />
+                    {errosDados.dataNascimento && <small className="perfil-erro" role="alert">{errosDados.dataNascimento}</small>}
                   </label>
-                  <button className="perfil-botao-primario" type="submit">
-                    Salvar alterações
+                  {erroDados && <p className="perfil-erro" role="alert">{erroDados}</p>}
+                  <button className="perfil-botao-primario" type="submit" disabled={salvandoDados}>
+                    {salvandoDados ? 'Salvando...' : 'Salvar alterações'}
                   </button>
                 </form>
               )}
 
               {painel === 'privacidade' && (
-                <div className="perfil-modal-formulario">
-                  <label className="perfil-preferencia">
-                    <span>
-                      <strong>Acesso com biometria</strong>
-                      <small>
-                        Recurso indisponível até a integração
-                        com autenticação biométrica.
-                      </small>
-                    </span>
-                    <input type="checkbox" disabled />
-                  </label>
-                  <label className="perfil-preferencia">
-                    <span>
-                      <strong>Alertas de novo acesso</strong>
-                      <small>
-                        Preferência local. O envio de alertas
-                        depende do servidor.
-                      </small>
-                    </span>
+                <form onSubmit={trocarSenha} className="perfil-modal-formulario" noValidate>
+                  <p className="perfil-modal-aviso">
+                    Para sua segurança, informe a senha atual antes de escolher uma nova.
+                    Nunca compartilhe sua senha com outras pessoas.
+                  </p>
+                  <label>
+                    Senha atual
                     <input
-                      type="checkbox"
-                      checked={preferencias.alertaAcesso}
-                      onChange={(e) =>
-                        alterarPreferencia('alertaAcesso', e.target.checked)
-                      }
+                      type={tipoCampoSenha}
+                      value={senhas.atual}
+                      onChange={(e) => setSenhas((a) => ({ ...a, atual: e.target.value }))}
+                      autoComplete="current-password"
                     />
                   </label>
-                  <button
-                    type="button"
-                    className="perfil-botao-secundario"
-                    onClick={() =>
-                      setMensagem('Alteração de senha requer integração com a API.')
-                    }
-                  >
-                    Alterar minha senha
+                  <label>
+                    Nova senha
+                    <input
+                      type={tipoCampoSenha}
+                      placeholder="Mínimo 8 caracteres"
+                      value={senhas.nova}
+                      onChange={(e) => setSenhas((a) => ({ ...a, nova: e.target.value }))}
+                      autoComplete="new-password"
+                    />
+                  </label>
+                  <label>
+                    Confirmar nova senha
+                    <input
+                      type={tipoCampoSenha}
+                      value={senhas.confirmar}
+                      onChange={(e) => setSenhas((a) => ({ ...a, confirmar: e.target.value }))}
+                      autoComplete="new-password"
+                    />
+                  </label>
+                  <label className="perfil-preferencia">
+                    <span><strong>Mostrar senhas</strong></span>
+                    <input
+                      type="checkbox"
+                      checked={mostrarSenhas}
+                      onChange={(e) => setMostrarSenhas(e.target.checked)}
+                    />
+                  </label>
+                  {erroSenha && <p className="perfil-erro" role="alert">{erroSenha}</p>}
+                  <button className="perfil-botao-primario" type="submit" disabled={salvandoSenha}>
+                    {salvandoSenha ? 'Alterando...' : 'Alterar minha senha'}
                   </button>
-                  <button
-                    type="button"
-                    className="perfil-botao-primario"
-                    onClick={salvarPreferencias}
-                  >
-                    Salvar preferências
-                  </button>
-                </div>
+                </form>
               )}
 
               {painel === 'acessibilidade' && (
                 <div className="perfil-modal-formulario">
                   <label className="perfil-preferencia">
-                    <span><strong>Aumentar tamanho do texto</strong></span>
+                    <span>
+                      <strong>Letras maiores</strong>
+                      <small>Aumenta o tamanho do texto em todo o aplicativo.</small>
+                    </span>
                     <input
                       type="checkbox"
                       checked={preferencias.fonteMaior}
@@ -346,7 +510,10 @@ function PerfilPaciente({
                     />
                   </label>
                   <label className="perfil-preferencia">
-                    <span><strong>Alto contraste</strong></span>
+                    <span>
+                      <strong>Alto contraste</strong>
+                      <small>Deixa textos mais escuros e bordas mais visíveis.</small>
+                    </span>
                     <input
                       type="checkbox"
                       checked={preferencias.altoContraste}
@@ -356,15 +523,14 @@ function PerfilPaciente({
                     />
                   </label>
                   <p className="perfil-modal-aviso">
-                    Estas preferências serão aplicadas à interface
-                    em uma próxima etapa.
+                    As mudanças valem na hora e ficam salvas neste aparelho.
                   </p>
                   <button
                     type="button"
                     className="perfil-botao-primario"
-                    onClick={salvarPreferencias}
+                    onClick={fecharPainel}
                   >
-                    Salvar preferências
+                    Concluir
                   </button>
                 </div>
               )}
@@ -374,9 +540,9 @@ function PerfilPaciente({
                   <label>
                     Lembrete de consulta
                     <select
-                      value={preferencias.lembrete}
+                      value={String(preferencias.lembreteDias)}
                       onChange={(e) =>
-                        alterarPreferencia('lembrete', e.target.value)
+                        alterarPreferencia('lembreteDias', Number(e.target.value))
                       }
                     >
                       <option value="1">1 dia antes</option>
@@ -384,28 +550,16 @@ function PerfilPaciente({
                       <option value="7">7 dias antes</option>
                     </select>
                   </label>
-                  <label className="perfil-preferencia">
-                    <span>
-                      <strong>Economia de dados</strong>
-                      <small>
-                        Preferência local, ainda não aplicada
-                        ao consumo de dados.
-                      </small>
-                    </span>
-                    <input
-                      type="checkbox"
-                      checked={preferencias.economiaDados}
-                      onChange={(e) =>
-                        alterarPreferencia('economiaDados', e.target.checked)
-                      }
-                    />
-                  </label>
+                  <p className="perfil-modal-aviso">
+                    O lembrete aparece em Notificações quando sua consulta estiver a esse
+                    número de dias (ou menos). A escolha fica salva neste aparelho.
+                  </p>
                   <button
                     type="button"
                     className="perfil-botao-primario"
-                    onClick={salvarPreferencias}
+                    onClick={fecharPainel}
                   >
-                    Salvar configurações
+                    Concluir
                   </button>
                 </div>
               )}
@@ -458,7 +612,7 @@ function PerfilPaciente({
                   <button
                     type="button"
                     className="perfil-botao-secundario"
-                    onClick={() => setPainel(null)}
+                    onClick={fecharPainel}
                   >
                     Cancelar
                   </button>

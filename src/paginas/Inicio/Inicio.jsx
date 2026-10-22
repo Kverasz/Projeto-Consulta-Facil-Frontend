@@ -4,9 +4,10 @@ import CartaoAcao from '../../componentes/CartaoAcao/CartaoAcao'
 import CartaoAtendimento from '../../componentes/CartaoAtendimento/CartaoAtendimento'
 import CartaoEspecialidade from '../../componentes/CartaoEspecialidade/CartaoEspecialidade'
 import BarraNavegacao from '../../componentes/BarraNavegacao/BarraNavegacao'
+import { obterDataHoraConsulta } from '../../servicos/datasConsultas'
 import './Inicio.css'
 
-// Dados de exemplo. Depois isso pode vir de uma API ou do back-end.
+// Textos fixos dos dois atalhos da tela. O resto da tela vem da API.
 const acoes = [
   {
     icone: '🩺',
@@ -22,18 +23,13 @@ const acoes = [
   },
 ]
 
-const especialidades = [
-  { icone: '❤️', nome: 'Cardiologia' },
-  { icone: '🦴', nome: 'Ortopedia' },
-  { icone: '👁️', nome: 'Oftalmologia' },
-  { icone: '🧠', nome: 'Neurologia' },
-  { icone: '🧒', nome: 'Pediatria' },
-  { icone: '🔬', nome: 'Dermatologia' },
-]
-
 function Inicio({
   usuario,
   consultas = [],
+  especialidades = [],
+  estadoConsultas = 'ok',
+  erroConsultas = '',
+  aoTentarNovamente,
   aoIrParaAgendamentos,
   aoIrParaHistorico,
   aoIrParaPerfil,
@@ -47,47 +43,10 @@ function Inicio({
   const nomeCompleto = usuario?.nome ?? usuario?.name ?? usuario?.nomeCompleto ?? ''
   const primeiroNome = nomeCompleto.trim().split(/\s+/)[0] || 'Paciente'
 
-  const consultasFuturas = consultas
-    .filter((consulta) => {
-      const partes = consulta.dataCompleta?.match(
-        /^(\d{1,2}) de ([a-zç]+) de (\d{4})$/i
-      )
-
-      if (!partes) return false
-
-      const meses = [
-        'janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho',
-        'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro',
-      ]
-
-      const mes = meses.indexOf(partes[2].toLowerCase())
-      if (mes === -1) return false
-
-      const [horas, minutos] = consulta.hora.split(':').map(Number)
-      const dataConsulta = new Date(Number(partes[3]), mes, Number(partes[1]), horas, minutos)
-
-      return dataConsulta >= new Date() && consulta.status !== 'Cancelado'
-    })
-    .sort((a, b) => {
-      const converter = (consulta) => {
-        const partes = consulta.dataCompleta.match(/^(\d{1,2}) de ([a-zç]+) de (\d{4})$/i)
-        const meses = [
-          'janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho',
-          'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro',
-        ]
-        const [horas, minutos] = consulta.hora.split(':').map(Number)
-
-        return new Date(
-          Number(partes[3]),
-          meses.indexOf(partes[2].toLowerCase()),
-          Number(partes[1]),
-          horas,
-          minutos
-        )
-      }
-
-      return converter(a) - converter(b)
-    })
+  // "consultas" já chega só com as que ainda vão acontecer; aqui só pegamos a mais próxima
+  const consultasFuturas = [...consultas].sort(
+    (a, b) => (obterDataHoraConsulta(a)?.getTime() ?? 0) - (obterDataHoraConsulta(b)?.getTime() ?? 0)
+  )
 
   const proximoAtendimento = consultasFuturas[0]
 
@@ -125,16 +84,30 @@ function Inicio({
           <section className="inicio-secao">
             <h2 className="inicio-secao-titulo">Próximo atendimento</h2>
 
-            {proximoAtendimento ? (
+            {estadoConsultas === 'carregando' && <p>Carregando seus atendimentos...</p>}
+
+            {estadoConsultas === 'erro' && (
+              <p role="alert">
+                {erroConsultas || 'Não foi possível carregar seus atendimentos.'}{' '}
+                <button type="button" className="inicio-tentar-novamente" onClick={aoTentarNovamente}>
+                  Tentar de novo
+                </button>
+              </p>
+            )}
+
+            {estadoConsultas === 'ok' && proximoAtendimento && (
               <CartaoAtendimento
                 {...proximoAtendimento}
                 aoClicar={() => aoVerDetalhes(proximoAtendimento)}
               />
-            ) : (
+            )}
+
+            {estadoConsultas === 'ok' && !proximoAtendimento && (
               <p>Você não possui atendimentos futuros agendados.</p>
             )}
           </section>
 
+          {especialidades.length > 0 && (
           <section className="inicio-secao">
             <h2 className="inicio-secao-titulo">Especialidades rápidas</h2>
             <div className="inicio-grade-especialidades">
@@ -160,6 +133,7 @@ function Inicio({
 ))}
             </div>
           </section>
+          )}
         </div>
 
         <BarraNavegacao

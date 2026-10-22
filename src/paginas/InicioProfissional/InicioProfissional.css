@@ -31,7 +31,7 @@
   border: none;
   background: none;
   color: var(--cor-primaria);
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 700;
 }
 
@@ -50,21 +50,21 @@
 }
 
 .inicio-prof-saudacao {
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 600;
   opacity: 0.9;
 }
 
 .inicio-prof-nome {
   margin-top: 4px;
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 700;
   line-height: 1.25;
 }
 
 .inicio-prof-subtitulo {
   margin-top: 4px;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 600;
   color: var(--cor-primaria-clara);
 }
@@ -88,7 +88,7 @@
 .inicio-prof-sino {
   position: relative;
   width: 40px;
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 .inicio-prof-sino-ponto {
@@ -119,14 +119,14 @@
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.22);
   color: #ffffff;
-  font-size: 16px;
+  font-size: 1rem;
   align-items: center;
   justify-content: center;
 }
 
 .inicio-prof-sair {
   padding: 0 14px;
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-weight: 700;
 }
 
@@ -149,12 +149,12 @@
 }
 
 .inicio-prof-numero strong {
-  font-size: 26px;
+  font-size: 1.625rem;
   font-weight: 700;
 }
 
 .inicio-prof-numero span {
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 500;
 }
 
@@ -180,7 +180,7 @@
 }
 
 .inicio-prof-secao-titulo {
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -200,20 +200,20 @@
   flex-shrink: 0;
   border-radius: 16px;
   background-color: var(--cor-primaria-clara);
-  font-size: 26px;
+  font-size: 1.625rem;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .inicio-prof-proxima-nome {
-  font-size: 17px;
+  font-size: 1.0625rem;
   font-weight: 700;
   color: var(--cor-titulo);
 }
 
 .inicio-prof-proxima-especialidade {
-  font-size: 14px;
+  font-size: 0.875rem;
   color: var(--cor-subtitulo);
 }
 
@@ -222,7 +222,7 @@
   flex-wrap: wrap;
   gap: 4px 12px;
   margin-top: 4px;
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-weight: 500;
   color: var(--cor-texto-suave);
 }
@@ -235,7 +235,7 @@
   border-radius: 16px;
   background-color: var(--cor-primaria);
   color: #ffffff;
-  font-size: 15px;
+  font-size: 0.9375rem;
   font-weight: 700;
 }
 
@@ -251,7 +251,7 @@
   border: none;
   background: none;
   color: var(--cor-primaria);
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-weight: 700;
 }
 
@@ -277,7 +277,7 @@
 }
 
 .inicio-prof-hora {
-  font-size: 15px;
+  font-size: 0.9375rem;
   font-weight: 700;
   color: var(--cor-titulo);
 }
@@ -288,13 +288,13 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: 14px;
+  font-size: 0.875rem;
   color: var(--cor-texto);
 }
 
 .inicio-prof-vazio {
   margin-top: 12px;
-  font-size: 14px;
+  font-size: 0.875rem;
   color: var(--cor-texto-suave);
 }
 
@@ -303,7 +303,7 @@
   flex-shrink: 0;
   padding: 4px 10px;
   border-radius: 999px;
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 600;
   white-space: nowrap;
 }

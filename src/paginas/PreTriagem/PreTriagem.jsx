@@ -37,7 +37,7 @@ const intensidades = [
   ['😖', 'Muito intenso'],
 ]
 
-function PreTriagem({ aoVoltar }) {
+function PreTriagem({ aoVoltar, aoAgendar }) {
   const [tela, setTela] = useState('apresentacao')
   const [etapa, setEtapa] = useState(1)
   const [modalidade, setModalidade] = useState('escrito')
@@ -731,6 +731,15 @@ useEffect(() => {
             >
               Emergência — SAMU 192
             </button>
+
+            {aoAgendar && (
+              <button
+                className="triagem-botao-secundario"
+                onClick={aoAgendar}
+              >
+                Agendar uma consulta
+              </button>
+            )}
 
             <button
               className="triagem-botao-secundario"

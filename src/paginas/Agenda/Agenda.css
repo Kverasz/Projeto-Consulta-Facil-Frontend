@@ -22,7 +22,7 @@
 
 .agenda-titulo {
   flex: 1;
-  font-size: 22px;
+  font-size: 1.375rem;
   font-weight: 700;
   color: var(--cor-titulo);
 }
@@ -35,7 +35,7 @@
   border: none;
   border-radius: 50%;
   background-color: var(--cor-fundo-botao-voltar);
-  font-size: 16px;
+  font-size: 1rem;
   align-items: center;
   justify-content: center;
 }
@@ -55,7 +55,7 @@
   border: none;
   border-radius: 12px;
   background: none;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 700;
   color: var(--cor-subtitulo);
 }
@@ -81,7 +81,7 @@
 
 .agenda-vazio {
   padding: 16px 0;
-  font-size: 14px;
+  font-size: 0.875rem;
   color: var(--cor-texto-suave);
 }
 
@@ -90,7 +90,7 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 8px;
-  font-size: 14px;
+  font-size: 0.875rem;
   color: var(--cor-texto-suave);
 }
 
@@ -98,20 +98,20 @@
   border: none;
   background: none;
   color: var(--cor-primaria);
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 700;
 }
 
 .agenda-data-dia {
   margin-bottom: 12px;
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-weight: 700;
   color: var(--cor-texto-suave);
 }
 
 .agenda-secao-titulo {
   margin: 20px 0 12px;
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -156,7 +156,7 @@
 .agenda-hora {
   width: 44px;
   flex-shrink: 0;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 700;
   color: var(--cor-texto-suave);
 }
@@ -164,7 +164,7 @@
 .agenda-hora-escura {
   width: auto;
   color: var(--cor-titulo);
-  font-size: 15px;
+  font-size: 0.9375rem;
 }
 
 .agenda-livre .agenda-hora,
@@ -173,7 +173,7 @@
 }
 
 .agenda-livre-texto {
-  font-size: 15px;
+  font-size: 0.9375rem;
   font-weight: 700;
 }
 
@@ -198,7 +198,7 @@
 }
 
 .agenda-consulta-nome {
-  font-size: 15px;
+  font-size: 0.9375rem;
   font-weight: 700;
   color: var(--cor-titulo);
   overflow: hidden;
@@ -214,7 +214,7 @@
 }
 
 .agenda-consulta-especialidade {
-  font-size: 13px;
+  font-size: 0.8125rem;
   color: var(--cor-subtitulo);
 }
 
@@ -231,7 +231,7 @@
   flex-shrink: 0;
   padding: 4px 10px;
   border-radius: 999px;
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 600;
   white-space: nowrap;
 }
@@ -246,7 +246,7 @@
   align-items: center;
   gap: 12px;
   padding: 2px 4px;
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 600;
   color: var(--cor-subtitulo);
 }
@@ -277,13 +277,13 @@
   border-radius: 16px;
   background-color: #ffffff;
   box-shadow: 0 2px 8px rgba(27, 35, 51, 0.06);
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-weight: 600;
   color: var(--cor-texto);
 }
 
 .agenda-semana-dia strong {
-  font-size: 18px;
+  font-size: 1.125rem;
   color: var(--cor-titulo);
 }
 
@@ -318,7 +318,7 @@
   border: none;
   border-radius: 12px;
   background-color: var(--cor-fundo-botao-voltar);
-  font-size: 20px;
+  font-size: 1.25rem;
   color: var(--cor-texto);
 }
 
@@ -326,7 +326,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 15px;
+  font-size: 0.9375rem;
   color: var(--cor-titulo);
 }
 
@@ -336,7 +336,7 @@
   border-radius: 999px;
   background: none;
   color: var(--cor-primaria);
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 700;
 }
 
@@ -349,7 +349,7 @@
 
 .agenda-calendario-semana {
   padding-bottom: 6px;
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 700;
   color: var(--cor-subtitulo);
 }
@@ -361,7 +361,7 @@
   border: none;
   border-radius: 12px;
   background: none;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 600;
   color: var(--cor-texto);
 }
