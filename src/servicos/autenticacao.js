@@ -2,9 +2,11 @@
 //   POST /auth/login    corpo: { email, senha }, único para PACIENTE, PROFISSIONAL e ADMIN.
 //                       Erros: 400, 401 (credenciais inválidas), 403 (usuário inativo), 500.
 //   GET  /auth/perfil   dados do usuário autenticado (Bearer JWT).
-// A documentação não descreve o corpo da resposta do login. Por isso o código procura o token e o
-// perfil em nomes comuns e, se o perfil não vier no login, consulta /auth/perfil.
-// Se o back-end usar outros nomes de campo, ajuste só este arquivo.
+// Resposta do login: { mensagem, token, usuario: { id, nome, email, perfil } }, com perfil PACIENTE,
+// PROFISSIONAL ou ADMIN (token JWT válido por 8 horas). Erros vêm como { erro: "..." }:
+//   400 campos ausentes ou e-mail inválido, 401 credenciais inválidas, 403 conta inativa,
+//   409 e-mail vinculado a mais de um perfil (o administrador precisa resolver).
+// O código ainda aceita nomes alternativos de campo por segurança.
 
 export const URL_API = 'https://back-end-pi-ihs1.onrender.com'
 
@@ -25,6 +27,15 @@ function normalizarPerfil(valor) {
   if (texto.includes('profission') || texto.includes('medic')) return PERFIS.PROFISSIONAL
   if (texto.includes('admin')) return PERFIS.ADMIN
   return null
+}
+
+async function mensagemDoErro(resposta) {
+  try {
+    const corpo = await resposta.json()
+    return typeof corpo?.erro === 'string' && corpo.erro.length <= 200 ? corpo.erro : null
+  } catch {
+    return null
+  }
 }
 
 async function lerJson(resposta) {
@@ -50,6 +61,9 @@ export async function realizarLogin(email, senha) {
   if (resposta.status === 400) throw new Error('Informe e-mail e senha.')
   if (resposta.status === 401) throw new Error('E-mail ou senha incorretos.')
   if (resposta.status === 403) throw new Error('Esta conta está inativa.')
+  if (resposta.status === 409) {
+    throw new Error((await mensagemDoErro(resposta)) ?? 'Este e-mail está ligado a mais de um perfil. Fale com o administrador.')
+  }
   if (!resposta.ok) throw new Error('Erro ao entrar. Tente novamente em instantes.')
 
   const dados = await lerJson(resposta)

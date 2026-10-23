@@ -94,7 +94,7 @@ function Horarios({ usuario, aoNavegar }) {
 
     setAviso(
       falhas > 0
-        ? { tipo: 'erro', titulo: 'Salvo só em parte', texto: `${falhas} horário(s) não puderam ser salvos. Confira a lista.` }
+        ? { tipo: 'erro', titulo: 'Salvo só em parte', texto: `${falhas} horário(s) não puderam ser salvos. Horário que já teve consulta marcada não pode ser excluído. Confira a lista.` }
         : { tipo: 'sucesso', titulo: bloco ? 'Horário atualizado' : 'Horário adicionado', texto: 'Sua disponibilidade foi salva.' }
     )
   }
@@ -108,7 +108,7 @@ function Horarios({ usuario, aoNavegar }) {
 
     setAviso(
       falhas > 0
-        ? { tipo: 'erro', titulo: 'Não foi possível excluir tudo', texto: `${falhas} horário(s) continuam na lista.` }
+        ? { tipo: 'erro', titulo: 'Não foi possível excluir tudo', texto: `${falhas} horário(s) continuam na lista. Horário que já teve consulta marcada não pode ser excluído.` }
         : { tipo: 'sucesso', titulo: 'Horário excluído', texto: 'O horário foi removido da sua agenda.' }
     )
   }

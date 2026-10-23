@@ -111,8 +111,9 @@ export async function salvarPaciente(paciente, { nome, email, telefone, dataNasc
   )
 }
 
-// A API não documenta uma rota própria de troca de senha. Tentamos pelo PUT do cadastro e CONFERIMOS
-// o resultado entrando com a senha nova: só dizemos que deu certo se o servidor realmente aceitou.
+// Não há rota própria de troca de senha: o PUT /pacientes/{id} troca a senha quando recebe "senha"
+// (mínimo 8 caracteres), mas o servidor não pede a senha atual. Por isso conferimos a atual entrando
+// com ela antes e, depois, entramos com a nova para ter certeza de que foi aplicada.
 export async function alterarSenha(paciente, senhaAtual, senhaNova, token) {
   try {
     await realizarLogin(paciente.email, senhaAtual)
@@ -152,9 +153,9 @@ function montarConsulta(item, { profissionais, clinicas, disponibilidades }) {
   const clinica = profissional ? clinicas.get(String(profissional.idClinica)) : undefined
   const disponibilidade = disponibilidades.get(String(idDisponibilidade))
 
-  const dataISO = lerData(item.data ?? item.data_agendamento ?? item.disponibilidade?.data) || disponibilidade?.data || ''
+  const dataISO = lerData(item.data_consulta ?? item.data ?? item.data_agendamento ?? item.disponibilidade?.data) || disponibilidade?.data || ''
   const hora =
-    lerHora(item.hora_inicio ?? item.hora ?? item.horario ?? item.disponibilidade?.hora_inicio) ||
+    lerHora(item.hora_consulta ?? item.hora_inicio ?? item.hora ?? item.horario ?? item.disponibilidade?.hora_inicio) ||
     disponibilidade?.horaInicio ||
     ''
   const statusApi = String(item.status || '').toUpperCase()
@@ -172,6 +173,10 @@ function montarConsulta(item, { profissionais, clinicas, disponibilidades }) {
     crm: profissional?.crm ?? '',
     clinica: item.clinica_nome ?? item.nome_clinica ?? clinica?.nome ?? profissional?.clinicaNome ?? '',
     endereco: clinica?.endereco ?? '',
+    // false quando o administrador desativou a clínica: nova data/reagendamento ficam bloqueados
+    clinicaAtiva: clinica ? clinica.ativo : true,
+    // false quando o administrador desativou a especialidade
+    especialidadeAtiva: profissional ? profissional.especialidadeAtiva !== false : true,
     dataISO,
     data: dataCurta(dataISO) || 'Data não informada',
     dataCompleta: dataCompleta(dataISO) || 'Data não informada',
@@ -197,8 +202,8 @@ export async function carregarConsultasPaciente(idPaciente, token, catalogoPront
 
   const catalogo = catalogoPronto ?? (await carregarCatalogo(token))
   const contexto = {
-    profissionais: new Map(catalogo.profissionais.map((p) => [String(p.id), p])),
-    clinicas: new Map(catalogo.clinicas.map((c) => [String(c.id), c])),
+    profissionais: new Map((catalogo.todosProfissionais ?? catalogo.profissionais).map((p) => [String(p.id), p])),
+    clinicas: new Map((catalogo.todasClinicas ?? catalogo.clinicas).map((c) => [String(c.id), c])),
     disponibilidades: new Map(catalogo.disponibilidades.map((d) => [String(d.id), d])),
   }
 

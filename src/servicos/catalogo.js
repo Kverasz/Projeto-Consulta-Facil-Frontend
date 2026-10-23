@@ -1,5 +1,6 @@
 // Catálogo para agendar consultas: especialidades, clínicas, profissionais e horários livres.
-// Tudo vem da API (/api-docs). A API não tem rota de especialidades, então a lista de especialidades
+// Tudo vem da API (/api-docs). As especialidades vêm do cadastro do administrador (servicos/especialidades.js);
+// especialidade desativada some do agendamento. Se a rota /especialidades não existir no servidor, a lista
 // é montada a partir dos profissionais cadastrados (cada profissional informa a sua).
 //
 // A documentação não descreve os campos de resposta. As funções "ler..." aceitam nomes comuns;
@@ -7,6 +8,7 @@
 
 import { URL_API } from './autenticacao'
 import { buscar, comoLista, comoObjeto, lerData, lerHora, formatarNomeProfissional } from './profissional'
+import { mapaDeEspecialidades } from './especialidades'
 
 function semAcento(texto) {
   return String(texto || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
@@ -82,7 +84,7 @@ async function buscarLista(caminho, token) {
 }
 
 // Quando a lista de profissionais não traz o nome da especialidade, consulta o cadastro de cada um
-async function completarEspecialidades(profissionais, token) {
+export async function completarEspecialidades(profissionais, token) {
   const faltando = profissionais.filter((p) => !p.especialidade && p.id != null).slice(0, 40)
   await Promise.all(
     faltando.map(async (p) => {
@@ -105,18 +107,36 @@ async function completarEspecialidades(profissionais, token) {
 // Uma consulta por tela: profissionais, clínicas e horários, buscados juntos.
 // "falhas" diz o que não pôde ser carregado, para a tela avisar em vez de mostrar uma lista vazia.
 export async function carregarCatalogo(token) {
-  const [profs, clins, disps] = await Promise.all([
+  const [profs, clins, disps, registro] = await Promise.all([
     buscarLista('/profissionais', token),
     buscarLista('/clinicas', token),
     buscarLista('/disponibilidades', token),
+    mapaDeEspecialidades(token),
   ])
 
-  const profissionais = profs.lista.map(lerProfissional).filter((p) => p.id != null && p.ativo)
+  const todosProfissionais = profs.lista.map(lerProfissional).filter((p) => p.id != null)
+  // Nome oficial da especialidade (cadastro do admin) e se ela está ativa
+  todosProfissionais.forEach((p) => {
+    const cadastro = registro.get(String(p.idEspecialidade))
+    p.especialidadeAtiva = cadastro ? cadastro.ativo : true
+    if (cadastro) p.especialidade = cadastro.nome
+  })
+  const todasClinicas = clins.lista.map(lerClinica).filter((c) => c.id != null)
+
+  // Clínica desativada pelo administrador: some do agendamento. Os profissionais dela somem junto,
+  // para não sobrarem especialidades ou horários que levem a uma clínica inacessível.
+  const idsClinicasInativas = new Set(todasClinicas.filter((c) => !c.ativo).map((c) => String(c.id)))
+  const profissionais = todosProfissionais.filter(
+    (p) => p.ativo && p.especialidadeAtiva && !(p.idClinica != null && idsClinicasInativas.has(String(p.idClinica)))
+  )
   await completarEspecialidades(profissionais, token)
 
   return {
     profissionais,
-    clinicas: clins.lista.map(lerClinica).filter((c) => c.id != null && c.ativo),
+    clinicas: todasClinicas.filter((c) => c.ativo),
+    // Listas completas, só para mostrar nomes em consultas que o paciente já tem
+    todosProfissionais,
+    todasClinicas,
     disponibilidades: disps.lista.map(lerDisponibilidade).filter((d) => d.id != null),
     falhas: [profs.falhou && 'profissionais', clins.falhou && 'clinicas', disps.falhou && 'horários'].filter(Boolean),
   }

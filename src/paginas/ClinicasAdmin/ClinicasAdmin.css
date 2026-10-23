@@ -1,0 +1,262 @@
+.clinicas {
+  position: relative;
+  width: 100%;
+  max-width: 430px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, #f0f9ff 0%, #f3fbfa 100%);
+}
+
+.clinicas-topo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  background: #ffffff;
+}
+
+.clinicas-topo h1 {
+  font-size: 1.125rem;
+  color: var(--cor-titulo);
+}
+
+.clinicas-conteudo {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 16px 20px 96px;
+}
+
+.clinicas-estado {
+  font-size: 0.9375rem;
+  color: var(--cor-texto-suave);
+  line-height: 1.5;
+}
+
+.clinicas-link {
+  border: none;
+  background: none;
+  padding: 0;
+  color: var(--cor-primaria);
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.clinicas-lista {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.clinicas-cartao {
+  padding: 16px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 4px 14px #14233d0d;
+}
+
+.clinicas-cartao-topo {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.clinicas-cartao-topo h2 {
+  font-size: 1.0625rem;
+  color: var(--cor-titulo);
+  overflow-wrap: anywhere;
+}
+
+.clinicas-selo {
+  flex-shrink: 0;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.clinicas-selo-ativo {
+  background: var(--cor-fundo-sucesso);
+  color: var(--cor-sucesso);
+}
+
+.clinicas-selo-inativo {
+  background: var(--cor-fundo-botao-voltar);
+  color: var(--cor-texto-suave);
+}
+
+.clinicas-linha {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: var(--cor-texto);
+  overflow-wrap: anywhere;
+}
+
+.clinicas-linha-suave {
+  color: var(--cor-texto-suave);
+}
+
+.clinicas-acoes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.clinicas-acoes button {
+  padding: 11px 8px;
+  border-radius: 12px;
+  background: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.clinicas-botao-editar {
+  border: 1px solid #8fe3f1;
+  color: #0a7d96;
+}
+
+.clinicas-botao-desativar {
+  border: 1px solid #ffc9cf;
+  color: #d92d3f;
+}
+
+.clinicas-botao-ativar {
+  border: 1px solid #b6e6c5;
+  color: var(--cor-sucesso);
+}
+
+.clinicas-novo {
+  position: sticky;
+  align-self: flex-end;
+  bottom: 84px;
+  margin: -56px 20px 0 0;
+  width: 56px;
+  height: 56px;
+  border: none;
+  border-radius: 50%;
+  background: var(--cor-primaria);
+  color: #ffffff;
+  font-size: 2rem;
+  line-height: 1;
+  box-shadow: 0 8px 20px #00b8dd66;
+  z-index: 9;
+}
+
+/* Formulário */
+.clinicas-formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-bottom: 28px;
+}
+
+.clinicas-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--cor-texto);
+}
+
+.clinicas-campo input,
+.clinicas-campo select {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 14px;
+  background: #ffffff;
+  color: var(--cor-texto);
+  font-size: 0.9375rem;
+}
+
+.clinicas-campo input[aria-invalid='true'] {
+  border-color: #d92d3f;
+}
+
+.clinicas-campo small {
+  color: #b3261e;
+  font-weight: 500;
+  font-size: 0.8125rem;
+}
+
+.clinicas-erro-envio {
+  color: #b3261e;
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.clinicas-botao-principal,
+.clinicas-botao-secundario {
+  width: 100%;
+  padding: 16px;
+  border-radius: 16px;
+  font-size: 1.0625rem;
+  font-weight: 700;
+}
+
+.clinicas-botao-principal {
+  border: none;
+  background: var(--cor-primaria);
+  color: #ffffff;
+}
+
+.clinicas-botao-principal:disabled {
+  opacity: 0.7;
+}
+
+.clinicas-botao-secundario {
+  border: 2px solid var(--cor-borda);
+  background: transparent;
+  color: var(--cor-titulo);
+}
+
+@media (min-width: 700px) {
+  .clinicas {
+    max-width: 700px;
+  }
+
+  .clinicas-topo {
+    padding: 20px 40px;
+  }
+
+  .clinicas-conteudo {
+    padding: 24px 40px 96px;
+  }
+
+  .clinicas-formulario {
+    max-width: 560px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .clinicas {
+    max-width: 960px;
+  }
+
+  /* Sem as abas de baixo, o botão + desce */
+  .clinicas-novo {
+    bottom: 28px;
+  }
+
+  .clinicas-conteudo {
+    padding: 28px 56px 96px;
+  }
+
+  .clinicas-lista {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .clinicas-formulario {
+    max-width: 560px;
+  }
+}

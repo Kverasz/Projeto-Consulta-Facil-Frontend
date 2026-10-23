@@ -1,0 +1,160 @@
+/* Usa também as classes "clinicas-*" (ClinicasAdmin.css) para topo, cartão, formulário e botões. */
+
+.equipe-cartao-topo {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.equipe-avatar {
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.0625rem;
+  font-weight: 800;
+}
+
+.equipe-avatar-0 { background: #d5f6ee; color: #0b7a62; }
+.equipe-avatar-1 { background: #f1e6fd; color: #7c22d6; }
+.equipe-avatar-2 { background: #dce9fd; color: #1f55c9; }
+
+.equipe-cartao-nome {
+  flex: 1;
+  min-width: 0;
+}
+
+.equipe-cartao-nome h2 {
+  font-size: 1.0625rem;
+  color: var(--cor-titulo);
+  overflow-wrap: anywhere;
+}
+
+.equipe-cartao-nome p {
+  margin-top: 2px;
+  font-size: 0.8125rem;
+  color: var(--cor-texto-suave);
+  overflow-wrap: anywhere;
+}
+
+.equipe-botao-disponibilidade {
+  border: 1px solid var(--cor-borda);
+  color: var(--cor-titulo);
+}
+
+.equipe-duas-colunas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.equipe-dica {
+  font-weight: 500;
+  color: var(--cor-texto-suave) !important;
+}
+
+/* Grade de disponibilidade */
+.equipe-grade-conteudo {
+  padding-bottom: 32px;
+}
+
+.equipe-rotulo-secao {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cor-texto-claro);
+}
+
+.equipe-seletor {
+  width: 100%;
+  margin-top: 8px;
+  padding: 14px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 14px;
+  background: #ffffff;
+  color: var(--cor-texto);
+  font-size: 0.9375rem;
+}
+
+.equipe-grade-titulo {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.equipe-dica-topo {
+  font-size: 0.75rem;
+  color: var(--cor-texto-claro);
+}
+
+.equipe-grade-nota {
+  margin-top: 6px;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--cor-texto-suave);
+}
+
+.equipe-dia {
+  margin-top: 14px;
+}
+
+.equipe-dia h2 {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--cor-texto);
+}
+
+.equipe-horas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.equipe-hora {
+  min-width: 56px;
+  padding: 8px 10px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 10px;
+  background: #ffffff;
+  color: var(--cor-texto-suave);
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.equipe-hora-ativa {
+  border-color: var(--cor-primaria);
+  background: var(--cor-primaria);
+  color: #ffffff;
+}
+
+.equipe-hora-reservada {
+  border-style: dashed;
+  border-width: 2px;
+  border-color: #0a7d96;
+}
+
+.equipe-hora:disabled {
+  opacity: 0.6;
+}
+
+.equipe-salvar-grade {
+  margin-top: 22px;
+}
+
+.equipe-salvar-grade:disabled {
+  opacity: 0.5;
+}
+
+@media (min-width: 1024px) {
+  .equipe-grade-conteudo {
+    max-width: 640px;
+  }
+}

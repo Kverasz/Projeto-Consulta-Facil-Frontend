@@ -74,7 +74,7 @@ export function planejarAlteracao(disponibilidades, { data, inicio, fim }, bloco
 }
 
 // Faz as chamadas em grupos pequenos, para não sobrecarregar o servidor. Devolve quantas falharam.
-async function emLotes(tarefas, tamanho = 6) {
+export async function emLotes(tarefas, tamanho = 6) {
   let falhas = 0
   for (let i = 0; i < tarefas.length; i += tamanho) {
     const resultados = await Promise.allSettled(tarefas.slice(i, i + tamanho).map((tarefa) => tarefa()))
@@ -90,7 +90,7 @@ export async function aplicarAlteracao(plano, idProfissional, token) {
       enviar(
         '/disponibilidades',
         'POST',
-        { id_profissional: idProfissional, data: h.data, hora_inicio: `${h.horaInicio}:00`, hora_fim: `${h.horaFim}:00` },
+        { id_profissional: idProfissional, data: h.data, hora_inicio: h.horaInicio, hora_fim: h.horaFim },
         token,
         'Não foi possível cadastrar o horário.'
       )
