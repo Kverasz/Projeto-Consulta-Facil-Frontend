@@ -37,20 +37,6 @@
   color: var(--cor-texto-suave);
 }
 
-.admin-logo {
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  background: var(--cor-primaria);
-  color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.75rem;
-  font-weight: 700;
-  line-height: 1;
-}
-
 .admin-topo-acoes {
   display: flex;
   align-items: center;
@@ -125,7 +111,6 @@
 }
 
 .admin-cartao,
-.admin-bloco,
 .admin-relatorios,
 .admin-atividade {
   background: #ffffff;
@@ -163,42 +148,11 @@
   color: var(--cor-texto-claro);
 }
 
-.admin-bloco {
-  margin-top: 16px;
-  padding: 16px;
-}
-
 .admin-titulo-secao {
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--cor-texto-claro);
-}
-
-.admin-resumo {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  margin-top: 12px;
-  text-align: center;
-}
-
-.admin-resumo-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  font-size: 1.25rem;
-}
-
-.admin-resumo-item strong {
-  font-size: 1.5rem;
-  color: var(--cor-titulo);
-}
-
-.admin-resumo-item > span:last-child {
-  font-size: 0.8125rem;
   color: var(--cor-texto-claro);
 }
 

@@ -11,10 +11,22 @@
 }
 
 .boas-vindas-conteudo {
-  margin-top: 100px;
+  margin-top: 56px;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.boas-vindas-logo {
+  margin-bottom: 12px;
+}
+
+.boas-vindas-conteudo .boas-vindas-marca {
+  margin-bottom: 28px;
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--cor-primaria);
 }
 
 .boas-vindas-conteudo h1 {

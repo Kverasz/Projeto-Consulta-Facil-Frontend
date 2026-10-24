@@ -9,6 +9,7 @@ import {
   periodoPadrao,
 } from '../../servicos/admin'
 import { paraISO } from '../../servicos/datas'
+import Logo from '../../componentes/Logo/Logo'
 import MenuAdmin, { BotaoMenuAdmin } from '../../componentes/MenuAdmin/MenuAdmin'
 import './InicioAdmin.css'
 
@@ -92,18 +93,13 @@ function InicioAdmin({ usuario, aoSair, aoNavegar }) {
     { icone: '🩺', valor: painel?.totais.especialidades, rotulo: 'Especialidades' },
     { icone: '👤', valor: painel?.totais.usuarios, rotulo: 'Usuários' },
   ]
-  const resumo = [
-    { icone: '📅', valor: painel?.resumoHoje.agendamentos, rotulo: 'Agendamentos hoje' },
-    { icone: '✅', valor: painel?.resumoHoje.consultas, rotulo: 'Consultas hoje' },
-    { icone: '❌', valor: painel?.resumoHoje.cancelamentos, rotulo: 'Cancelamentos' },
-  ]
 
   return (
     <div className="pagina-fundo">
       <div className="admin">
         <header className="admin-topo">
           <div className="admin-marca">
-            <span className="admin-logo" aria-hidden="true">+</span>
+            <Logo tamanho={44} decorativa />
             <div>
               <strong>Consulta Fácil</strong>
               <span>Painel administrativo</span>
@@ -156,19 +152,6 @@ function InicioAdmin({ usuario, aoSair, aoNavegar }) {
                 <span>{cartao.rotulo}</span>
               </div>
             ))}
-          </section>
-
-          <section className="admin-bloco" aria-label="Resumo de hoje">
-            <h2 className="admin-titulo-secao">Resumo de hoje</h2>
-            <div className="admin-resumo">
-              {resumo.map((item) => (
-                <div className="admin-resumo-item" key={item.rotulo}>
-                  <span aria-hidden="true">{item.icone}</span>
-                  <strong>{estado === 'carregando' ? '...' : numero(item.valor)}</strong>
-                  <span>{item.rotulo}</span>
-                </div>
-              ))}
-            </div>
           </section>
 
           <button type="button" className="admin-relatorios" onClick={abrirModal} disabled={estado === 'carregando'}>

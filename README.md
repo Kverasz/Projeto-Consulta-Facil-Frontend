@@ -6,7 +6,7 @@ Projeto Integrado desenvolvido por estudantes do **3º período do curso de Aná
 
 O projeto busca reunir, em uma única plataforma, recursos de orientação inicial ao paciente, pré-triagem, agendamento de consultas e acompanhamento de atendimentos.
 
-> ⚠️ **Aviso:** O Saúde Recife é um projeto acadêmico em desenvolvimento e não substitui avaliação, diagnóstico ou atendimento médico. Em situações de emergência, ligue **192 (SAMU)**.
+> ⚠️ **Aviso:** O Consulta Fácil é um projeto acadêmico em desenvolvimento e não substitui avaliação, diagnóstico ou atendimento médico. Em situações de emergência, ligue **192 (SAMU)**.
 
 ---
 
@@ -377,4 +377,4 @@ Projeto desenvolvido por estudantes de **Análise e Desenvolvimento de Sistemas 
 
 ---
 
-**Saúde Recife | Consulta Fácil** — Tecnologia para facilitar o acesso à saúde.
+**Consulta Fácil** — Tecnologia para facilitar o acesso à saúde.
