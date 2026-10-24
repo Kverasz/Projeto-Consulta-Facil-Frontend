@@ -2,6 +2,7 @@ import { useState } from 'react'
 import BotaoVoltar from '../../componentes/BotaoVoltar/BotaoVoltar'
 import CampoTexto from '../../componentes/CampoTexto/CampoTexto'
 import Botao from '../../componentes/Botao/Botao'
+import Logo from '../../componentes/Logo/Logo'
 import { realizarLogin } from '../../servicos/autenticacao'
 import './Login.css'
 
@@ -37,6 +38,7 @@ function Login({ aoVoltar, aoIrParaCadastro, aoEsqueciSenha, aoLoginSucesso }) {
       </div>
 
       <div className="login-boas-vindas">
+        <Logo tamanho={72} className="login-logo" />
         <h2>Bem-vindo de volta</h2>
         <p>Entre com seus dados para continuar</p>
       </div>

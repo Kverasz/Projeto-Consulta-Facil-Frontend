@@ -1,10 +1,13 @@
 import Botao from '../../componentes/Botao/Botao'
+import Logo from '../../componentes/Logo/Logo'
 import './BoasVindas.css'
 
 function BoasVindas({ aoComecar, aoIrParaLogin }) {
   return (
     <div className="boas-vindas-container">
       <div className="boas-vindas-conteudo">
+        <Logo tamanho={112} className="boas-vindas-logo" />
+        <p className="boas-vindas-marca">Consulta Fácil</p>
         <h1>Cuide do seu próximo passo.</h1>
         <p>Encontre o atendimento que você precisa de forma simples e segura.</p>
       </div>

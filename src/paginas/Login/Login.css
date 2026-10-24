@@ -25,6 +25,10 @@
   margin-bottom: 28px;
 }
 
+.login-logo {
+  margin-bottom: 14px;
+}
+
 .login-boas-vindas h2 {
   font-size: 1.625rem;
   color: #0b1e2d;

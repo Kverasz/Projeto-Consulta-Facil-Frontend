@@ -145,7 +145,6 @@ export function calcularPainelAdmin(base, hoje = paraISO(new Date())) {
   // Só mostramos o total de usuários quando as três listas foram carregadas
   const usuariosCompletos = !['pacientes', 'profissionais', 'administradores'].some((n) => base.falhas.includes(n))
 
-  const doDia = montarAgendamentos(base).filter((a) => a.data === hoje)
   const dados = {
     clinicas: base.falhas.includes('clinicas') ? null : clinicas.length,
     profissionais: base.falhas.includes('profissionais') ? null : profissionais.length,
@@ -155,14 +154,7 @@ export function calcularPainelAdmin(base, hoje = paraISO(new Date())) {
     usuarios: usuariosCompletos ? base.pacientes.length + base.profissionais.length + base.administradores.length : null,
   }
 
-  const hojeOk = !base.falhas.includes('agendamentos') && !base.falhas.includes('disponibilidades')
-  const resumoHoje = {
-    agendamentos: hojeOk ? doDia.length : null,
-    consultas: hojeOk ? doDia.filter((a) => a.status === 'CONFIRMADO' || a.status === 'REALIZADO').length : null,
-    cancelamentos: hojeOk ? doDia.filter((a) => a.status === 'CANCELADO').length : null,
-  }
-
-  return { totais: dados, resumoHoje }
+  return { totais: dados }
 }
 
 // ---------- Atividade recente ----------
