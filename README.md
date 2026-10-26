@@ -392,10 +392,10 @@ Referência: [WCAG](https://www.w3.org/WAI/standards-guidelines/wcag/). O projet
 
 | Componente | Situação |
 |---|---|
-| Código-fonte | GitHub (repositório do front-end da equipe) |
+| Código-fonte | GitHub https://github.com/felipemitchell/Projeto-Consulta-Facil-Frontend |
 | Back-end | Render: `https://back-end-pi-ihs1.onrender.com` |
 | Documentação da API | Swagger em `/api-docs/` |
-| Publicação do front-end | A informar pela equipe |
+| Publicação do front-end | https://projeto-consulta-facil-frontend-three.vercel.app/ |
 | Build | `npm run build` gera a pasta `dist/` com arquivos estáticos, que podem ser servidos por qualquer hospedagem estática com HTTPS |
 
 ---
